@@ -2,7 +2,14 @@
 
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
 
-"weiV" = "View".reversed()，它意味着控制反转，你始终应该直接操作 UI 的描述 Widget 而不是直接操作 View。
+```kotlin
+if ("weiV" == "View".reversed()) {
+    Log.d(
+        "weiV",
+        "它意味着控制反转，你始终应该直接操作 UI 的描述 Widget 而不是直接操作 View。"
+    )
+}
+```
 
 它具有以下优势：
 

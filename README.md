@@ -2,8 +2,14 @@
 
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
 
-"weiV" = "View".reversed(), It means Inversion of Control, you should always manipulate the UI's
-description Widget directly instead of the View.
+```kotlin
+if ("weiV" == "View".reversed()) {
+    Log.d(
+        "weiV",
+        "It means Inversion of Control, you should always manipulate the UI 's description Widget directly instead of the View."
+    )
+}
+```
 
 It has the following advantages:
 
