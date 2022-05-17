@@ -1,5 +1,6 @@
 import android.content.Context
 import android.widget.TextView
+import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 
@@ -25,4 +26,20 @@ class weiVText(
         }
         return view
     }
+}
+
+fun WeiV.Text(
+    key: Key? = null,
+    text: String? = null,
+    textSize: Float? = null,
+    textColor: Int? = null
+) {
+    addLeafRenderWidget(
+        weiVText(
+            key = key,
+            text = text,
+            textSize = textSize,
+            textColor = textColor
+        )
+    )
 }

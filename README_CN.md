@@ -35,7 +35,7 @@ class MainActivity : WeiVActivity() {
     override fun build(): Widget {
         return WeiV {
             Flex(orientation = LinearLayout.HORIZONTAL) {
-                Text(text = text)
+                Text(text = text, textSize = 14f)
                 Text(text = text)
                 Flex(
                     key = Key(),
@@ -46,7 +46,12 @@ class MainActivity : WeiVActivity() {
                     } else {
                         Text(text = text)
                     }
-                    Button(text = text)
+                    repeat(10) {
+                        Button(text = text + it)
+                    }
+                    for (i in 1..5) {
+                        Text(text = text + i)
+                    }
                 }
             }
         }
@@ -107,6 +112,10 @@ Flutter 那样简单的列表用法，不需要写 Adapter。
 # 支持我
 
 如果它对你帮助很大，可以考虑赞助我一杯奶茶，或者给个 star。你的支持是我继续维护的动力。
+
+从长远看，weiV 可能成为继 React Native 和 Flutter 之后的第三个高性能跨平台开发框架。它的前端采用 kotlin DSL，后端使用平台原生 View 渲染。并达到或超越原生
+View 系统的性能。
+
 [Paypal](https://www.paypal.com/paypalme/hackware1993)
 ![support.webp](https://github.com/hackware1993/weiV/blob/master/support.webp?raw=true)
 

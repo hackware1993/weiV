@@ -2,11 +2,9 @@ package cn.flutterfirst.weiv.core
 
 import android.util.Log
 import cn.flutterfirst.weiv.core.elements.Element
-import cn.flutterfirst.weiv.core.keys.Key
-import cn.flutterfirst.weiv.core.widgets.RenderWidget
+import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
+import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
-import weiVFlex
-import weiVText
 
 val weiVDummyWidget = WeiV {
 }
@@ -34,43 +32,29 @@ open class WeiV(block: WeiV.(weiV: WeiV) -> Unit) : Widget() {
     private fun iteratorWidgetTree(widgets: ArrayList<Widget>, filter: (widget: Widget) -> Unit) {
         widgets.forEach {
             filter.invoke(it)
-            if (it is RenderWidget<*>) {
+            if (it is ContainerRenderWidget<*>) {
                 iteratorWidgetTree(it.childWidgets, filter)
             }
         }
     }
 
+    fun addLeafRenderWidget(widget: LeafRenderWidget<*>) {
+        currentWidgetContext.add(widget)
+    }
+
+    fun addContainerRenderWidget(
+        widget: ContainerRenderWidget<*>,
+        block: WeiV.(widget: ContainerRenderWidget<*>) -> Unit
+    ) {
+        currentWidgetContext.add(widget)
+        val temp = currentWidgetContext
+        widget.childWidgets = ArrayList<Widget>()
+        currentWidgetContext = widget.childWidgets
+        block(widget)
+        currentWidgetContext = temp
+    }
+
     override fun createElement(): Element {
         return WeiVElement()
-    }
-
-    fun Text(
-        key: Key? = null,
-        text: String? = null,
-        textSize: Float? = null,
-        textColor: Int? = null
-    ) {
-        currentWidgetContext.add(
-            weiVText(
-                key = key,
-                text = text,
-                textSize = textSize,
-                textColor = textColor
-            )
-        )
-    }
-
-    fun Flex(
-        key: Key? = null,
-        orientation: Int? = null,
-        block: WeiV.(widget: weiVFlex) -> Unit
-    ) {
-        val flex = weiVFlex(key = key, orientation = orientation)
-        currentWidgetContext.add(flex)
-        val temp = currentWidgetContext
-        flex.childWidgets = ArrayList<Widget>()
-        currentWidgetContext = flex.childWidgets
-        block(flex)
-        currentWidgetContext = temp
     }
 }

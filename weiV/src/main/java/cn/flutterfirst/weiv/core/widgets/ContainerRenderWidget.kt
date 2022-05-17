@@ -1,16 +1,16 @@
 package cn.flutterfirst.weiv.core.widgets
 
 import android.content.Context
-import android.view.View
+import android.view.ViewGroup
+import cn.flutterfirst.weiv.core.elements.ContainerRenderElement
 import cn.flutterfirst.weiv.core.elements.Element
-import cn.flutterfirst.weiv.core.elements.RenderElement
 import cn.flutterfirst.weiv.core.keys.Key
 
-abstract class RenderWidget<T : View>(key: Key? = null) : Widget(key) {
+abstract class ContainerRenderWidget<T : ViewGroup>(key: Key? = null) : Widget(key) {
     open var childWidgets = ArrayList<Widget>()
 
     override fun createElement(): Element {
-        return RenderElement(this)
+        return ContainerRenderElement(this)
     }
 
     fun createViewInstance(context: Context): T {

@@ -1,5 +1,7 @@
 package cn.flutterfirst.weiv
 
+import Flex
+import Text
 import android.widget.LinearLayout
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.WeiVActivity
@@ -14,7 +16,7 @@ class MainActivity : WeiVActivity() {
     override fun build(): Widget {
         return WeiV {
             Flex(orientation = LinearLayout.HORIZONTAL) {
-                Text(text = text)
+                Text(text = text, textSize = 14f)
                 Text(text = text)
                 Flex(
                     key = Key(),
@@ -25,7 +27,12 @@ class MainActivity : WeiVActivity() {
                     } else {
                         Text(text = text)
                     }
-                    Button(text = text)
+                    repeat(10) {
+                        Button(text = text + it)
+                    }
+                    for (i in 1..5) {
+                        Text(text = text + i)
+                    }
                 }
             }
         }

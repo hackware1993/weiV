@@ -1,10 +1,11 @@
 import android.content.Context
 import android.widget.LinearLayout
+import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.keys.Key
-import cn.flutterfirst.weiv.core.widgets.RenderWidget
+import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
 
 class weiVFlex(override var key: Key? = null, var orientation: Int? = null) :
-    RenderWidget<LinearLayout>(key) {
+    ContainerRenderWidget<LinearLayout>(key) {
 
     override fun createView(context: Context): LinearLayout = LinearLayout(context)
 
@@ -17,4 +18,12 @@ class weiVFlex(override var key: Key? = null, var orientation: Int? = null) :
         }
         return view
     }
+}
+
+fun WeiV.Flex(
+    key: Key? = null,
+    orientation: Int? = null,
+    block: WeiV.(widget: ContainerRenderWidget<*>) -> Unit
+) {
+    addContainerRenderWidget(weiVFlex(key = key, orientation = orientation), block)
 }

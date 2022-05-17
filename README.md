@@ -38,7 +38,7 @@ class MainActivity : WeiVActivity() {
     override fun build(): Widget {
         return WeiV {
             Flex(orientation = LinearLayout.HORIZONTAL) {
-                Text(text = text)
+                Text(text = text, textSize = 14f)
                 Text(text = text)
                 Flex(
                     key = Key(),
@@ -49,7 +49,12 @@ class MainActivity : WeiVActivity() {
                     } else {
                         Text(text = text)
                     }
-                    Button(text = text)
+                    repeat(10) {
+                        Button(text = text + it)
+                    }
+                    for (i in 1..5) {
+                        Text(text = text + i)
+                    }
                 }
             }
         }
@@ -115,6 +120,11 @@ some high-quality, unique, and thoughtful Flutter and Android technical articles
 
 If it helps you a lot, consider sponsoring me a cup of milk tea, or giving a star. Your support is
 the driving force for me to continue to maintain.
+
+In the long run, weiV may become the third high-performance cross-platform development framework
+after React Native and Flutter. Its front end uses kotlin DSL, and the back end uses platform native
+View rendering. And meet or exceed the performance of the native View system.
+
 [Paypal](https://www.paypal.com/paypalme/hackware1993)
 ![support.webp](https://github.com/hackware1993/weiV/blob/master/support.webp?raw=true)
 
