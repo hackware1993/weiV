@@ -36,7 +36,7 @@ fun WeiV.Button(
     textSize: Float? = null,
     textColor: Int? = null
 ) {
-    currentWidgetContext.add(
+    addLeafRenderWidget(
         weiVButton(
             key = key,
             text = text,
