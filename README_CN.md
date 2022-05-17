@@ -1,5 +1,7 @@
 # weiV（发音同 wave）
 
+[English](https://github.com/hackware1993/weiV/blob/master/README.md)
+
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
 
 ```kotlin
@@ -20,8 +22,6 @@ if ("weiV" == "View".reversed()) {
     2. xml 将被抛弃
 3. 你所有的现有 View 系统的经验都将得到保留
 4. 所有的现有 UI 组件都将得以复用
-
-[English](https://github.com/hackware1993/weiV/blob/master/README.md)
 
 # 进展
 

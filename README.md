@@ -1,5 +1,7 @@
 # weiV(pronounced the same as wave)
 
+[简体中文](https://github.com/hackware1993/weiV/blob/master/README_CN.md)
+
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
 
 ```kotlin
@@ -22,8 +24,6 @@ It has the following advantages:
     2. xml will be discarded
 3. All your existing View system experience will be retained
 4. All existing UI components will be reused
-
-[简体中文](https://github.com/hackware1993/weiV/blob/master/README_CN.md)
 
 # Progress
 
