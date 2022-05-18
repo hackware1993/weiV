@@ -121,7 +121,7 @@ some high-quality, unique, and thoughtful Flutter and Android technical articles
 If it helps you a lot, consider sponsoring me a cup of milk tea, or giving a star. Your support is
 the driving force for me to continue to maintain.
 
-In the long run, weiV may become the third high-performance cross-platform development framework
+In the long run, weiV may become the third(class) high-performance cross-platform development framework
 after React Native and Flutter. Its front end uses kotlin DSL, and the back end uses platform native
 View rendering. And meet or exceed the performance of the native View system. It is also possible to
 develop a self-drawing engine like Flutter, which ensures full pixel consistency across platforms.
