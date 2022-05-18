@@ -123,7 +123,10 @@ the driving force for me to continue to maintain.
 
 In the long run, weiV may become the third high-performance cross-platform development framework
 after React Native and Flutter. Its front end uses kotlin DSL, and the back end uses platform native
-View rendering. And meet or exceed the performance of the native View system.
+View rendering. And meet or exceed the performance of the native View system. It is also possible to
+develop a self-drawing engine like Flutter, which ensures full pixel consistency across platforms.
+Even native rendering and self-drawing can be combined, and self-drawing is preferred. When WebView
+needs to be embedded in the page, switch to native rendering.
 
 [Paypal](https://www.paypal.com/paypalme/hackware1993)
 ![support.webp](https://github.com/hackware1993/weiV/blob/master/support.webp?raw=true)
