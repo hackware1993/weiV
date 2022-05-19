@@ -7,6 +7,7 @@ import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.extension.IWeiVExtension
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.JavaOnly
+import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.wrappers.textview.TextConst
 
@@ -70,6 +71,7 @@ class weiVButton(
     }
 }
 
+@KotlinOnly
 fun WeiV.Button(
     key: Key? = null,
     text: String = "",
