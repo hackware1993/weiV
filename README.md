@@ -121,9 +121,9 @@ class weiVButton(
     var text: String = "",
     var textSize: Float = TextConst.defaultTextSize,
     var textColor: Int = TextConst.defaultTextColor,
-    var onClick: View.OnClickListener?
+    var onClick: View.OnClickListener? = null
 ) :
-    LeafRenderWidget<Button>(key) {
+    LeafRenderWidget<Button>(key), IWeiVExtension {
 
     override fun createView(context: Context): Button = Button(context)
 
@@ -176,6 +176,7 @@ class weiVButton(
     }
 }
 
+@KotlinOnly
 fun WeiV.Button(
     key: Key? = null,
     text: String = "",
