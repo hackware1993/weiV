@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="cn.flutterfirst.weiv">
+    package="cn.flutterfirst.weiv_example">
 
     <application
         android:allowBackup="true"
@@ -10,15 +10,18 @@
         android:supportsRtl="true"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="cn.flutterfirst.weiv_example.WeiVCounter"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="weiV Kotlin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="cn.flutterfirst.weiv_example.WeiVJavaCounter"
+            android:label="weiV Java" />
     </application>
 
 </manifest>

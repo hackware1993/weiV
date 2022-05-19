@@ -1,15 +1,24 @@
 package cn.flutterfirst.weiv.core.elements
 
+import android.content.Context
 import cn.flutterfirst.weiv.core.widgets.Widget
 
-abstract class Element(open var widget: Widget) {
+abstract class Element(var widget: Widget) {
+    var parent: Element? = null
 
-    abstract fun build(): Widget?
-
-    open fun update(widget: Widget?) {
+    fun assignParent(element: Element) {
+        parent = element
     }
 
-    open fun mount() {
+    // The context of the current activity
+    lateinit var context: Context
+
+    open fun mount(context: Context) {
+        this.context = context
+    }
+
+    open fun update(newWidget: Widget) {
+        widget = newWidget
     }
 
     open fun unmount() {

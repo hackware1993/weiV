@@ -1,10 +1,10 @@
-package cn.flutterfirst.weiv.widgets.constraintlayout
+package cn.flutterfirst.weiv.wrappers.constraintlayout
 
 import android.content.Context
 import android.view.ViewGroup
 
 // ConstraintLayout design for weiV
-class WeiVLayout(context: Context?) : ViewGroup(context) {
+class WConstraintLayout(context: Context?) : ViewGroup(context) {
 
     init {
 

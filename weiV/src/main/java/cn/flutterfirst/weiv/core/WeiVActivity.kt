@@ -2,27 +2,35 @@ package cn.flutterfirst.weiv.core
 
 import android.app.Activity
 import android.os.Bundle
-import cn.flutterfirst.weiv.core.widgets.Widget
+import android.view.ViewGroup
 
 abstract class WeiVActivity : Activity() {
-    private lateinit var weiVRoot: WeiVRoot
+    lateinit var weiVRoot: WeiVRoot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         weiVRoot = WeiVRoot(this)
         weiVRoot.init(build())
-        setContentView(weiVRoot)
+        if (containerId() == 0) {
+            setContentView(weiVRoot)
+        } else {
+            val weiVContainer = findViewById<ViewGroup>(containerId())
+            weiVContainer.addView(
+                weiVRoot,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
     }
 
-    abstract fun build(): Widget
+    abstract fun build(): WeiV
 
     fun setState(block: () -> Unit) {
         block()
         weiVRoot.update(build())
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
+    open fun containerId(): Int {
+        return 0
     }
 }

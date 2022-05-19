@@ -7,17 +7,38 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "cn.flutterfirst.weiv"
+        applicationId "cn.flutterfirst.weiv_example"
         minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
     }
 
-    buildTypes {
+    signingConfigs {
+        debug {
+            storeFile file("weiV_example.jks")
+            storePassword "helloweiV"
+            keyAlias "weiV"
+            keyPassword "helloweiV"
+        }
+
         release {
-            minifyEnabled false
+            storeFile file("weiV_example.jks")
+            storePassword "helloweiV"
+            keyAlias "weiV"
+            keyPassword "helloweiV"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -32,6 +53,5 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation project(':weiV')
 }

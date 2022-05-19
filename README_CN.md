@@ -22,51 +22,100 @@ if ("weiV" == "View".reversed()) {
     2. xml 将被抛弃
 3. 你所有的现有 View 系统的经验都将得到保留
 4. 所有的现有 UI 组件都将得以复用
+5. 它使用 Kotlin 编写，但友好的支持 Java
+
+**没有人愿意推翻自己过去在 View 系统的经验，Compose 的设计太过糟糕。**
 
 # 进展
 
 目前完成了 DSL 的定义，可以解析成 Widget 树了，DSL 风格如下：
 
-```kotlin
-class MainActivity : WeiVActivity() {
-    private var switch = false
-    private var text = "weiV"
+Kotlin 风格：
 
-    override fun build(): Widget {
-        return WeiV {
-            Flex(orientation = LinearLayout.HORIZONTAL) {
-                Text(text = text, textSize = 14f)
-                Text(text = text)
-                Flex(
-                    key = Key(),
-                    orientation = LinearLayout.VERTICAL
-                ) {
-                    if (switch) {
-                        Text(text = text)
-                    } else {
-                        Text(text = text)
-                    }
-                    repeat(10) {
-                        Button(text = text + it)
-                    }
-                    for (i in 1..5) {
-                        Text(text = text + i)
+```kotlin
+class WeiVCounter : WeiVActivity() {
+    private var count = 0
+    private val maxCount = 10
+    private val minCount = 0
+
+    override fun build() = WeiV {
+        Flex {
+            it.orientation = FlexDirection.VERTICAL
+
+            Button(text = "Add count", onClick = {
+                setState {
+                    if (count < maxCount) {
+                        count++
                     }
                 }
-            }
+            })
+
+            Button(text = "Sub count", onClick = {
+                setState {
+                    if (count > minCount) {
+                        count--
+                    }
+                }
+            })
+
+            Text(text = "count = $count")
+
+            Button(text = "Open weiV Java", onClick = {
+                startActivity(Intent(this@WeiVCounter, WeiVJavaCounter::class.java))
+            })
         }
     }
 }
 ```
 
+Java 风格：
+
+```java
+public class WeiVJavaCounter extends AppWeiVJavaActivity {
+    private int count = 0;
+    private int maxCount = 10;
+    private int minCount = 0;
+
+    @Override
+    public WeiV build() {
+        return WeiV(() -> {
+            Flex((it) -> {
+                it.wOrientation(FlexDirection.VERTICAL);
+
+                Button().wText("Add count").wOnClick(v -> {
+                    setState(() -> {
+                        if (count < maxCount) {
+                            count++;
+                        }
+                    });
+                });
+
+                Button().wText("Sub count").wOnClick(v -> {
+                    setState(() -> {
+                        if (count > minCount) {
+                            count--;
+                        }
+                    });
+                });
+
+                Text().wText("count = " + count);
+            });
+        });
+    }
+}
+```
+
+![effect.gif](https://github.com/hackware1993/weiV/blob/master/effect.gif?raw=true)
+
 weiV 是可扩展的。它会内置所有常用的 Widget，这些 Widget 都是对系统 View 的包装。但对于第三方库，就需要写扩展，写起来也极其简单，比如给 Button 的扩展如下：
 
 ```kotlin
 class weiVButton(
-    override var key: Key? = null,
-    var text: String? = null,
-    var textSize: Float? = null,
-    var textColor: Int? = null
+    key: Key? = null,
+    var text: String = "",
+    var textSize: Float = TextConst.defaultTextSize,
+    var textColor: Int = TextConst.defaultTextColor,
+    var onClick: View.OnClickListener?
 ) :
     LeafRenderWidget<Button>(key) {
 
@@ -77,27 +126,64 @@ class weiVButton(
             view.text = text
         }
         if (view.currentTextColor != textColor) {
-            view.setTextColor(textColor!!)
+            view.setTextColor(textColor)
         }
         if (view.textSize != textSize) {
-            view.textSize = textSize!!
+            view.textSize = textSize
         }
+        view.setOnClickListener(onClick)
         return view
+    }
+
+    @JavaOnly
+    fun wKey(key: Key? = null): weiVButton {
+        this.key = key
+        return this
+    }
+
+    @JavaOnly
+    fun wText(text: String = ""): weiVButton {
+        this.text = text
+        return this
+    }
+
+    @JavaOnly
+    fun wTextSize(textSize: Float = TextConst.defaultTextSize): weiVButton {
+        this.textSize = textSize
+        return this
+    }
+
+    @JavaOnly
+    fun wTextColor(textColor: Int = TextConst.defaultTextColor): weiVButton {
+        this.textColor = textColor
+        return this
+    }
+
+    @JavaOnly
+    fun wOnClick(onClick: View.OnClickListener?): weiVButton {
+        this.onClick = onClick
+        return this
+    }
+
+    override fun toString(): String {
+        return "weiVButton($text)"
     }
 }
 
 fun WeiV.Button(
     key: Key? = null,
-    text: String? = null,
-    textSize: Float? = null,
-    textColor: Int? = null
+    text: String = "",
+    textSize: Float = TextConst.defaultTextSize,
+    textColor: Int = TextConst.defaultTextColor,
+    onClick: View.OnClickListener? = null
 ) {
-    currentWidgetContext.add(
+    addLeafRenderWidget(
         weiVButton(
             key = key,
             text = text,
             textSize = textSize,
-            textColor = textColor
+            textColor = textColor,
+            onClick = onClick
         )
     )
 }
