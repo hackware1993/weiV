@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.Button
 import cn.flutterfirst.weiv.core.WeiV
+import cn.flutterfirst.weiv.core.extension.IWeiVExtension
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
@@ -14,9 +15,9 @@ class weiVButton(
     var text: String = "",
     var textSize: Float = TextConst.defaultTextSize,
     var textColor: Int = TextConst.defaultTextColor,
-    var onClick: View.OnClickListener?
+    var onClick: View.OnClickListener? = null
 ) :
-    LeafRenderWidget<Button>(key) {
+    LeafRenderWidget<Button>(key), IWeiVExtension {
 
     override fun createView(context: Context): Button = Button(context)
 

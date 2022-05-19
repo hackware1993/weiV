@@ -3,22 +3,26 @@ package cn.flutterfirst.weiv.wrappers.textview
 import android.content.Context
 import android.widget.TextView
 import cn.flutterfirst.weiv.core.WeiV
+import cn.flutterfirst.weiv.core.extension.ExtensionMgr
+import cn.flutterfirst.weiv.core.extension.IExtensionCreator
+import cn.flutterfirst.weiv.core.extension.IWeiVExtension
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
+import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 
-class weiVText(
+open class weiVText<T : TextView>(
     key: Key? = null,
-    var text: String = "",
-    var textSize: Float = TextConst.defaultTextSize,
-    var textColor: Int = TextConst.defaultTextColor
+    open var text: String = "",
+    open var textSize: Float = TextConst.defaultTextSize,
+    open var textColor: Int = TextConst.defaultTextColor
 ) :
-    LeafRenderWidget<TextView>(key) {
+    LeafRenderWidget<T>(key), IWeiVExtension {
 
-    override fun createView(context: Context): TextView = TextView(context)
+    override fun createView(context: Context): T = TextView(context) as T
 
-    override fun doParameter(view: TextView, first: Boolean): TextView {
+    override fun doParameter(view: T, first: Boolean): T {
         if (view.text != text) {
             view.text = text
         }
@@ -32,25 +36,25 @@ class weiVText(
     }
 
     @JavaOnly
-    fun wKey(key: Key? = null): weiVText {
+    open fun wKey(key: Key? = null): weiVText<T> {
         this.key = key
         return this
     }
 
     @JavaOnly
-    fun wText(text: String = ""): weiVText {
+    open fun wText(text: String = ""): weiVText<T> {
         this.text = text
         return this
     }
 
     @JavaOnly
-    fun wTextSize(textSize: Float = TextConst.defaultTextSize): weiVText {
+    open fun wTextSize(textSize: Float = TextConst.defaultTextSize): weiVText<T> {
         this.textSize = textSize
         return this
     }
 
     @JavaOnly
-    fun wTextColor(textColor: Int = TextConst.defaultTextColor): weiVText {
+    open fun wTextColor(textColor: Int = TextConst.defaultTextColor): weiVText<T> {
         this.textColor = textColor
         return this
     }
@@ -60,6 +64,8 @@ class weiVText(
     }
 }
 
+var creator: IExtensionCreator<LeafRenderWidget<*>>? = null
+
 @KotlinOnly
 fun WeiV.Text(
     key: Key? = null,
@@ -67,12 +73,11 @@ fun WeiV.Text(
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor
 ) {
+    if (creator == null) {
+        creator = ExtensionMgr.getExtension(InternalWidgetDesc.TEXT)
+    }
+
     addLeafRenderWidget(
-        weiVText(
-            key = key,
-            text = text,
-            textSize = textSize,
-            textColor = textColor
-        )
+        creator!!.createWidget(key, text, textSize, textColor)
     )
 }
