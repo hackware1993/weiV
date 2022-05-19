@@ -1,8 +1,11 @@
-# weiV(pronounced the same as wave)
+# weiV
 
 [简体中文](https://github.com/hackware1993/weiV/blob/master/README_CN.md)
 
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
+
+weiV (pronounced the same as wave), a new declarative UI development framework based on the Android
+View system. The core source files are only 30 KB.
 
 ```kotlin
 if ("weiV" == "View".reversed()) {
@@ -37,7 +40,7 @@ DSL style is as follows:
 Kotlin style:
 
 ```kotlin
-class WeiVCounter : WeiVActivity() {
+class WeiVCounterKotlinActivity : WeiVActivity() {
     private var count = 0
     private val maxCount = 10
     private val minCount = 0
@@ -46,27 +49,19 @@ class WeiVCounter : WeiVActivity() {
         Flex {
             it.orientation = FlexDirection.VERTICAL
 
-            Button(text = "Add count", onClick = {
+            Button(text = "Add count", enable = count < maxCount, onClick = {
                 setState {
-                    if (count < maxCount) {
-                        count++
-                    }
+                    count++
                 }
             })
 
-            Button(text = "Sub count", onClick = {
+            Button(text = "Sub count", enable = count > minCount, onClick = {
                 setState {
-                    if (count > minCount) {
-                        count--
-                    }
+                    count--
                 }
             })
 
             Text(text = "count = $count")
-
-            Button(text = "Open weiV Java", onClick = {
-                startActivity(Intent(this@WeiVCounter, WeiVJavaCounter::class.java))
-            })
         }
     }
 }
@@ -75,7 +70,7 @@ class WeiVCounter : WeiVActivity() {
 Java style:
 
 ```java
-public class WeiVJavaCounter extends AppWeiVJavaActivity {
+public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
     private int count = 0;
     private int maxCount = 10;
     private int minCount = 0;
@@ -86,19 +81,15 @@ public class WeiVJavaCounter extends AppWeiVJavaActivity {
             Flex((it) -> {
                 it.wOrientation(FlexDirection.VERTICAL);
 
-                Button().wText("Add count").wOnClick(v -> {
+                Button().wText("Add count").wEnable(count < maxCount).wOnClick(v -> {
                     setState(() -> {
-                        if (count < maxCount) {
-                            count++;
-                        }
+                        count++;
                     });
                 });
 
-                Button().wText("Sub count").wOnClick(v -> {
+                Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
                     setState(() -> {
-                        if (count > minCount) {
-                            count--;
-                        }
+                        count--;
                     });
                 });
 
@@ -116,12 +107,13 @@ system View. But for third-party libraries, you need to write extensions, which 
 to write. For example, the extension for Button is as follows:
 
 ```kotlin
-class weiVButton(
+class weiVButton @JvmOverloads constructor(
     key: Key? = null,
     var text: String = "",
     var textSize: Float = TextConst.defaultTextSize,
     var textColor: Int = TextConst.defaultTextColor,
-    var onClick: View.OnClickListener? = null
+    var onClick: View.OnClickListener? = null,
+    var enable: Boolean = true
 ) :
     LeafRenderWidget<Button>(key), IWeiVExtension {
 
@@ -138,6 +130,9 @@ class weiVButton(
             view.textSize = textSize
         }
         view.setOnClickListener(onClick)
+        if (view.isEnabled != enable) {
+            view.isEnabled = enable
+        }
         return view
     }
 
@@ -171,8 +166,14 @@ class weiVButton(
         return this
     }
 
+    @JavaOnly
+    fun wEnable(enable: Boolean = true): weiVButton {
+        this.enable = enable
+        return this
+    }
+
     override fun toString(): String {
-        return "weiVButton($text)"
+        return "weiVButton(text = $text, enable = $enable)"
     }
 }
 
@@ -182,7 +183,8 @@ fun WeiV.Button(
     text: String = "",
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor,
-    onClick: View.OnClickListener? = null
+    onClick: View.OnClickListener? = null,
+    enable: Boolean = true
 ) {
     addLeafRenderWidget(
         weiVButton(
@@ -190,11 +192,16 @@ fun WeiV.Button(
             text = text,
             textSize = textSize,
             textColor = textColor,
-            onClick = onClick
+            onClick = onClick,
+            enable = enable
         )
     )
 }
 ```
+
+weiV is based on the View system, so it can be embedded anywhere in the View tree. You can embed
+Flutter and Compose in weiV, or embed weiV in Compose and Flutter. It is recommended to embed weiV
+on top of Compose to improve Compose performance. 😀
 
 It is expected that weiV will be able to actually run soon. But there is still a long way to go.
 First, you need to transplant Flutter ConstraintLayout, and secondly, you will probably rewrite a

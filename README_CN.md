@@ -1,8 +1,10 @@
-# weiV（发音同 wave）
+# weiV
 
 [English](https://github.com/hackware1993/weiV/blob/master/README.md)
 
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
+
+weiV（发音同 wave），一个基于 Android View 系统的全新声明式 UI 开发框架。核心源文件只有 30 KB。
 
 ```kotlin
 if ("weiV" == "View".reversed()) {
@@ -33,7 +35,7 @@ if ("weiV" == "View".reversed()) {
 Kotlin 风格：
 
 ```kotlin
-class WeiVCounter : WeiVActivity() {
+class WeiVCounterKotlinActivity : WeiVActivity() {
     private var count = 0
     private val maxCount = 10
     private val minCount = 0
@@ -42,27 +44,19 @@ class WeiVCounter : WeiVActivity() {
         Flex {
             it.orientation = FlexDirection.VERTICAL
 
-            Button(text = "Add count", onClick = {
+            Button(text = "Add count", enable = count < maxCount, onClick = {
                 setState {
-                    if (count < maxCount) {
-                        count++
-                    }
+                    count++
                 }
             })
 
-            Button(text = "Sub count", onClick = {
+            Button(text = "Sub count", enable = count > minCount, onClick = {
                 setState {
-                    if (count > minCount) {
-                        count--
-                    }
+                    count--
                 }
             })
 
             Text(text = "count = $count")
-
-            Button(text = "Open weiV Java", onClick = {
-                startActivity(Intent(this@WeiVCounter, WeiVJavaCounter::class.java))
-            })
         }
     }
 }
@@ -71,7 +65,7 @@ class WeiVCounter : WeiVActivity() {
 Java 风格：
 
 ```java
-public class WeiVJavaCounter extends AppWeiVJavaActivity {
+public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
     private int count = 0;
     private int maxCount = 10;
     private int minCount = 0;
@@ -82,19 +76,15 @@ public class WeiVJavaCounter extends AppWeiVJavaActivity {
             Flex((it) -> {
                 it.wOrientation(FlexDirection.VERTICAL);
 
-                Button().wText("Add count").wOnClick(v -> {
+                Button().wText("Add count").wEnable(count < maxCount).wOnClick(v -> {
                     setState(() -> {
-                        if (count < maxCount) {
-                            count++;
-                        }
+                        count++;
                     });
                 });
 
-                Button().wText("Sub count").wOnClick(v -> {
+                Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
                     setState(() -> {
-                        if (count > minCount) {
-                            count--;
-                        }
+                        count--;
                     });
                 });
 
@@ -110,12 +100,13 @@ public class WeiVJavaCounter extends AppWeiVJavaActivity {
 weiV 是可扩展的。它会内置所有常用的 Widget，这些 Widget 都是对系统 View 的包装。但对于第三方库，就需要写扩展，写起来也极其简单，比如给 Button 的扩展如下：
 
 ```kotlin
-class weiVButton(
+class weiVButton @JvmOverloads constructor(
     key: Key? = null,
     var text: String = "",
     var textSize: Float = TextConst.defaultTextSize,
     var textColor: Int = TextConst.defaultTextColor,
-    var onClick: View.OnClickListener? = null
+    var onClick: View.OnClickListener? = null,
+    var enable: Boolean = true
 ) :
     LeafRenderWidget<Button>(key), IWeiVExtension {
 
@@ -132,6 +123,9 @@ class weiVButton(
             view.textSize = textSize
         }
         view.setOnClickListener(onClick)
+        if (view.isEnabled != enable) {
+            view.isEnabled = enable
+        }
         return view
     }
 
@@ -165,8 +159,14 @@ class weiVButton(
         return this
     }
 
+    @JavaOnly
+    fun wEnable(enable: Boolean = true): weiVButton {
+        this.enable = enable
+        return this
+    }
+
     override fun toString(): String {
-        return "weiVButton($text)"
+        return "weiVButton(text = $text, enable = $enable)"
     }
 }
 
@@ -176,7 +176,8 @@ fun WeiV.Button(
     text: String = "",
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor,
-    onClick: View.OnClickListener? = null
+    onClick: View.OnClickListener? = null,
+    enable: Boolean = true
 ) {
     addLeafRenderWidget(
         weiVButton(
@@ -184,11 +185,15 @@ fun WeiV.Button(
             text = text,
             textSize = textSize,
             textColor = textColor,
-            onClick = onClick
+            onClick = onClick,
+            enable = enable
         )
     )
 }
 ```
+
+weiV 基于 View 系统，因此它可以嵌入到 View 树的任何地方。你可以在 weiV 中嵌入 Flutter、Compose，也可以在 Compose、Flutter 里嵌入 weiV。推荐在
+Compose 顶层嵌入 weiV 以改善 Compose 的性能。😀
 
 预计很快 weiV 就可以真正跑起来了。但还任重而道远。首先需要移植 Flutter ConstraintLayout，其次大概率会重写一个 weiV 版本的 RecyclerView，以支持像
 Flutter 那样简单的列表用法，不需要写 Adapter。
