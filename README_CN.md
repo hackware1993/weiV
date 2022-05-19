@@ -189,7 +189,7 @@ fun WeiV.Button(
 }
 ```
 
-预计很快 weiV 就可以真正跑起来了。但还任重而道远。首先需要移植 Flutter ConstraintLayout，其次大概率会重写一个 weiV 版本的 RecyclerView，以支持向
+预计很快 weiV 就可以真正跑起来了。但还任重而道远。首先需要移植 Flutter ConstraintLayout，其次大概率会重写一个 weiV 版本的 RecyclerView，以支持像
 Flutter 那样简单的列表用法，不需要写 Adapter。
 
 订阅我的微信公众号以及时获取 weiV 的最新动态。后续也会分享一些高质量的、独特的、有思想的 Flutter 和 Android 技术文章。
