@@ -11,11 +11,7 @@ open class WeiV {
     var currentWidgetContext = ArrayList<Widget>()
 
     @JavaOnly
-    var tempWidgetContext: ArrayList<Widget>? = null
-
-    @JavaOnly
-    constructor() {
-    }
+    constructor()
 
     @KotlinOnly
     constructor(block: WeiV.(weiV: WeiV) -> Unit) {
@@ -28,7 +24,7 @@ open class WeiV {
     private fun printWidgetTree() {
         iteratorWidgetTree(0, currentWidgetContext) { widget, level ->
             Log.d("weiVWidgetTree", "-------".repeat(level) + "$widget")
-        };
+        }
     }
 
     private fun iteratorWidgetTree(
@@ -44,19 +40,9 @@ open class WeiV {
         }
     }
 
-    @JavaOnly
-    fun enterScope(widget: ContainerRenderWidget<*>) {
-        tempWidgetContext = currentWidgetContext
-        currentWidgetContext = widget.childWidgets!!
-    }
-
-    @JavaOnly
-    fun exitScope() {
-        currentWidgetContext = tempWidgetContext!!
-    }
-
-    fun addLeafRenderWidget(widget: Widget) {
+    fun <WIDGET : Widget> addLeafRenderWidget(widget: WIDGET): WIDGET {
         currentWidgetContext.add(widget)
+        return widget
     }
 
     fun <WIDGET : ContainerRenderWidget<VIEW_GROUP>, VIEW_GROUP> addContainerRenderWidget(

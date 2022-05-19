@@ -1,8 +1,10 @@
-package cn.flutterfirst.weiv.core
+package cn.flutterfirst.weiv.core.activities
 
 import android.app.Activity
 import android.os.Bundle
 import android.view.ViewGroup
+import cn.flutterfirst.weiv.core.WeiV
+import cn.flutterfirst.weiv.core.views.WeiVRoot
 
 abstract class WeiVActivity : Activity() {
     lateinit var weiVRoot: WeiVRoot

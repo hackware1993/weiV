@@ -1,7 +1,8 @@
-package cn.flutterfirst.weiv.core
+package cn.flutterfirst.weiv.core.activities
 
 import android.widget.LinearLayout
 import android.widget.TextView
+import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IExtensionCreator
 import cn.flutterfirst.weiv.core.others.Build

@@ -1,12 +1,19 @@
-package cn.flutterfirst.weiv_example;
+package cn.flutterfirst.weiv_example.embed;
+
+import android.content.Context;
+import android.util.AttributeSet;
 
 import cn.flutterfirst.weiv.core.WeiV;
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection;
 
-public class WeiVJavaCounter extends AppWeiVJavaActivity {
+public class WeiVCounterJavaView extends BaseWeiVJavaView {
     private int count = 0;
     private int maxCount = 10;
     private int minCount = 0;
+
+    public WeiVCounterJavaView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
     @Override
     public WeiV build() {
@@ -14,19 +21,15 @@ public class WeiVJavaCounter extends AppWeiVJavaActivity {
             Flex((it) -> {
                 it.wOrientation(FlexDirection.VERTICAL);
 
-                Button().wText("Add count").wOnClick(v -> {
+                Button().wText("Add count").wEnable(count < maxCount).wOnClick(v -> {
                     setState(() -> {
-                        if (count < maxCount) {
-                            count++;
-                        }
+                        count++;
                     });
                 });
 
-                Button().wText("Sub count").wOnClick(v -> {
+                Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
                     setState(() -> {
-                        if (count > minCount) {
-                            count--;
-                        }
+                        count--;
                     });
                 });
 

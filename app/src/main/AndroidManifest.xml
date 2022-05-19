@@ -10,9 +10,9 @@
         android:supportsRtl="true"
         tools:targetApi="31">
         <activity
-            android:name="cn.flutterfirst.weiv_example.WeiVCounter"
+            android:name="cn.flutterfirst.weiv_example.WeiVCounterKotlinActivity"
             android:exported="true"
-            android:label="weiV Kotlin">
+            android:label="weiV counter(Kotlin)">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cn.flutterfirst.weiv_example.WeiVJavaCounter"
-            android:label="weiV Java" />
+            android:name="cn.flutterfirst.weiv_example.WeiVCounterJavaActivity"
+            android:label="weiV counter(Java)" />
+        <activity
+            android:name="cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterKotlinActivity"
+            android:label="weiV embed counter(Kotlin)" />
+        <activity
+            android:name="cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterJavaActivity"
+            android:label="weiV embed counter(Java)" />
     </application>
 
 </manifest>

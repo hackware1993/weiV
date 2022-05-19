@@ -11,12 +11,13 @@ import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.wrappers.textview.TextConst
 
-class weiVButton(
+class weiVButton @JvmOverloads constructor(
     key: Key? = null,
     var text: String = "",
     var textSize: Float = TextConst.defaultTextSize,
     var textColor: Int = TextConst.defaultTextColor,
-    var onClick: View.OnClickListener? = null
+    var onClick: View.OnClickListener? = null,
+    var enable: Boolean = true
 ) :
     LeafRenderWidget<Button>(key), IWeiVExtension {
 
@@ -33,6 +34,9 @@ class weiVButton(
             view.textSize = textSize
         }
         view.setOnClickListener(onClick)
+        if (view.isEnabled != enable) {
+            view.isEnabled = enable
+        }
         return view
     }
 
@@ -66,8 +70,14 @@ class weiVButton(
         return this
     }
 
+    @JavaOnly
+    fun wEnable(enable: Boolean = true): weiVButton {
+        this.enable = enable
+        return this
+    }
+
     override fun toString(): String {
-        return "weiVButton($text)"
+        return "weiVButton(text = $text, enable = $enable)"
     }
 }
 
@@ -77,7 +87,8 @@ fun WeiV.Button(
     text: String = "",
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor,
-    onClick: View.OnClickListener? = null
+    onClick: View.OnClickListener? = null,
+    enable: Boolean = true
 ) {
     addLeafRenderWidget(
         weiVButton(
@@ -85,7 +96,8 @@ fun WeiV.Button(
             text = text,
             textSize = textSize,
             textColor = textColor,
-            onClick = onClick
+            onClick = onClick,
+            enable = enable
         )
     )
 }

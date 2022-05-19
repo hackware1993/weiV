@@ -1,13 +1,14 @@
-package cn.flutterfirst.weiv.core
+package cn.flutterfirst.weiv.core.views
 
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.elements.ContainerRenderElement
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 
-class WeiVRoot(context: Context) : FrameLayout(context) {
+open class WeiVRoot(context: Context) : FrameLayout(context) {
     lateinit var rootWidget: ContainerRenderWidget<*>
     lateinit var rootElement: ContainerRenderElement<*>
     lateinit var rootView: ViewGroup

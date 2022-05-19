@@ -21,7 +21,7 @@ abstract class LeafRenderWidget<VIEW : View>(
         if (autoDoParameter()) {
             return doParameter(view, true)
         }
-        return view;
+        return view
     }
 
     abstract fun createView(context: Context): VIEW
