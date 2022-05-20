@@ -7,6 +7,6 @@ import cn.flutterfirst.weiv_example.ext.weiVButton;
 abstract class BaseWeiVJavaActivity extends WeiVJavaActivity {
     @JavaOnly
     public weiVButton Button() {
-        return getWeiV().addLeafRenderWidget(new weiVButton());
+        return getWeiVJavaHelper().getWeiV().addLeafRenderWidget(new weiVButton());
     }
 }

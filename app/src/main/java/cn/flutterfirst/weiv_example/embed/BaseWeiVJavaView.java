@@ -15,6 +15,6 @@ abstract class BaseWeiVJavaView extends WeiVJavaView {
 
     @JavaOnly
     public weiVButton Button() {
-        return getWeiV().addLeafRenderWidget(new weiVButton());
+        return getWeiVJavaHelper().getWeiV().addLeafRenderWidget(new weiVButton());
     }
 }
