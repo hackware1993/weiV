@@ -5,6 +5,7 @@ import android.widget.TextView
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IExtensionCreator
+import cn.flutterfirst.weiv.core.widgets.StatefulWidget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import cn.flutterfirst.weiv.wrappers.linearlayout.weiVFlex
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
@@ -52,5 +53,9 @@ class WeiVJavaHelper {
             build.build()
         }
         return weiVFlex
+    }
+
+    fun createStateful(): StatefulWidget {
+        return weiV!!.addLeafRenderWidget(StatefulWidget())
     }
 }

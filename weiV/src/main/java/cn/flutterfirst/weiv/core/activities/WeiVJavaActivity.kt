@@ -6,6 +6,7 @@ import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.others.Build
 import cn.flutterfirst.weiv.core.others.BuildWithContext
 import cn.flutterfirst.weiv.core.others.WeiVJavaHelper
+import cn.flutterfirst.weiv.core.widgets.StatefulWidget
 import cn.flutterfirst.weiv.wrappers.linearlayout.weiVFlex
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
 
@@ -26,6 +27,10 @@ abstract class WeiVJavaActivity : WeiVActivity() {
 
     open fun Flex(build: Build): weiVFlex<LinearLayout> {
         return weiVJavaHelper.createFlex(build)
+    }
+
+    open fun Stateful(): StatefulWidget {
+        return weiVJavaHelper.createStateful()
     }
 
     fun setState(build: Build) {

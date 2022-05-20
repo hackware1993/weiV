@@ -15,7 +15,7 @@ import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.wrappers.textview.TextConst
 import org.json.JSONObject
 
-class weiVButton @JvmOverloads constructor(
+class weiVButton(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     var text: String = "",

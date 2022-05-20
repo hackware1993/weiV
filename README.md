@@ -111,7 +111,7 @@ system View. But for third-party libraries, you need to write extensions, which 
 to write. For example, the extension for Button is as follows:
 
 ```kotlin
-class weiVButton @JvmOverloads constructor(
+class weiVButton(
     key: Key? = null,
     var text: String = "",
     var textSize: Float = TextConst.defaultTextSize,

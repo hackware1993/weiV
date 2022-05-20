@@ -1,6 +1,6 @@
 package cn.flutterfirst.weiv.core.others
 
-open class LayoutParam<T : LayoutParam<T>> @JvmOverloads constructor(
+open class LayoutParam<T : LayoutParam<T>>(
     var width: Int = WRAP_CONTENT,
     var height: Int = WRAP_CONTENT
 ) {

@@ -102,7 +102,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 weiV 是可扩展的。它会内置所有常用的 Widget，这些 Widget 都是对系统 View 的包装。但对于第三方库，就需要写扩展，写起来也极其简单，比如给 Button 的扩展如下：
 
 ```kotlin
-class weiVButton @JvmOverloads constructor(
+class weiVButton(
     key: Key? = null,
     var text: String = "",
     var textSize: Float = TextConst.defaultTextSize,

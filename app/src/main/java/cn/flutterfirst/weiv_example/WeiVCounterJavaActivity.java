@@ -1,6 +1,9 @@
 package cn.flutterfirst.weiv_example;
 
+import org.jetbrains.annotations.NotNull;
+
 import cn.flutterfirst.weiv.core.WeiV;
+import cn.flutterfirst.weiv.core.widgets.StatefulWidget;
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection;
 
 public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
@@ -18,6 +21,22 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                     setState(() -> {
                         count++;
                     });
+                });
+
+                Stateful().wState(new StatefulWidget.State() {
+                    private int innerCount = 0;
+
+                    @NotNull
+                    @Override
+                    public WeiV build() {
+                        return WeiV(() -> {
+                            Button().wText("This button maintains state alone, innerCount = " + innerCount).wOnClick(v -> {
+                                setState(() -> {
+                                    innerCount++;
+                                });
+                            });
+                        });
+                    }
                 });
 
                 Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
