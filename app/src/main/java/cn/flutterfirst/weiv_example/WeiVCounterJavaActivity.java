@@ -47,6 +47,10 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                     moduleItem(i);
                 }
 
+                merge(WeiV(() -> {
+                    Text().wText("Merge with outer layer");
+                }));
+
                 Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
                     setState(() -> {
                         count--;

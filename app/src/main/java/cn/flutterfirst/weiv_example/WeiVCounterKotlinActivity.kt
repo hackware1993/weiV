@@ -58,6 +58,12 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                 moduleItem(it)
             }
 
+            merge {
+                WeiV {
+                    Text(text = "Merge with outer layer")
+                }
+            }
+
             Button(text = "Open weiV counter(Java)", onClick = {
                 startActivity(
                     Intent(

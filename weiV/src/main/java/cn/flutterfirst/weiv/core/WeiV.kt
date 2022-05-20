@@ -56,4 +56,12 @@ open class WeiV {
         currentWidgetContext = temp
         return widget
     }
+
+    fun merge(block: () -> WeiV) {
+        currentWidgetContext.addAll(block().currentWidgetContext)
+    }
+
+    fun merge(weiV: WeiV) {
+        currentWidgetContext.addAll(weiV.currentWidgetContext)
+    }
 }
