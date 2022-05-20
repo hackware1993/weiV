@@ -89,7 +89,7 @@ class weiVButton @JvmOverloads constructor(
     }
 
     override fun toString(): String {
-        return "weiVButton(text = $text, enable = $enable)"
+        return "weiVButton(text='$text', textSize=$textSize, textColor=$textColor, enable=$enable)"
     }
 }
 

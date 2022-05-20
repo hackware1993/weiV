@@ -72,7 +72,7 @@ open class weiVText<T : TextView>(
     }
 
     override fun toString(): String {
-        return "weiVText($text)"
+        return "weiVText(text='$text', textSize=$textSize, textColor=$textColor)"
     }
 }
 

@@ -23,7 +23,7 @@ open class WeiV {
 
     private fun printWidgetTree() {
         iteratorWidgetTree(0, currentWidgetContext) { widget, level ->
-            Log.d("weiVWidgetTree", "-------".repeat(level) + "$widget")
+            Log.d("weiVWidgetTree", "----".repeat(level) + "$widget")
         }
     }
 

@@ -28,6 +28,10 @@ It has the following advantages:
 3. All your existing View system experience will be retained
 4. All existing UI components will be reused
 5. It is written in Kotlin but supports Java friendly
+6. At present, the initial support for real-time effective dynamization has begun. You can issue JS,
+   use JS to write page logic, and generate JSON describing the Widget tree and pass it to the
+   native, and the native uses a non-reflection method to convert it into a real Widget tree and
+   render. I might consider implementing a declarative API in JS later
 
 **No one wants to overturn their past experience with the View system, Compose's design is too
 bad.**

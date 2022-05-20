@@ -48,7 +48,7 @@ open class weiVFlex<T : LinearLayout>(
     }
 
     override fun toString(): String {
-        return "weiVFlex($orientation)"
+        return "weiVFlex(orientation=$orientation, childCount=${childWidgets!!.size})"
     }
 }
 
