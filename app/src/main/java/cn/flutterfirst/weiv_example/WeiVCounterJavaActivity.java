@@ -11,6 +11,10 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
     private int maxCount = 10;
     private int minCount = 0;
 
+    private void moduleItem(int index) {
+        Button().wText("This button is from module, " + index);
+    }
+
     @Override
     public WeiV build() {
         return WeiV(() -> {
@@ -38,6 +42,10 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                         });
                     }
                 });
+
+                for (int i = 0; i < 3; i++) {
+                    moduleItem(i);
+                }
 
                 Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
                     setState(() -> {

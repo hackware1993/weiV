@@ -17,6 +17,10 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
     private val maxCount = 10
     private val minCount = 0
 
+    fun WeiV.moduleItem(index: Int) {
+        Button(text = "This button is from module, $index")
+    }
+
     override fun build() = WeiV {
         Flex {
             it.orientation = FlexDirection.VERTICAL
@@ -49,6 +53,10 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                     )
                 }
             })
+
+            repeat(3) {
+                moduleItem(it)
+            }
 
             Button(text = "Open weiV counter(Java)", onClick = {
                 startActivity(
