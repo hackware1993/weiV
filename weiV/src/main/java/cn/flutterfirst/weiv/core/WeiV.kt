@@ -8,7 +8,7 @@ import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 
 open class WeiV {
-    var currentWidgetContext = ArrayList<Widget>()
+    var currentWidgetContext = ArrayList<Widget<*>>()
 
     @JavaOnly
     constructor()
@@ -29,30 +29,31 @@ open class WeiV {
 
     private fun iteratorWidgetTree(
         level: Int = 0,
-        widgets: ArrayList<Widget>,
-        filter: (widget: Widget, level: Int) -> Unit
+        widgets: ArrayList<Widget<*>>,
+        filter: (widget: Widget<*>, level: Int) -> Unit
     ) {
         widgets.forEach {
             filter.invoke(it, level)
-            if (it is ContainerRenderWidget<*>) {
+            if (it is ContainerRenderWidget<*, *>) {
                 iteratorWidgetTree(level + 1, it.childWidgets!!, filter)
             }
         }
     }
 
-    fun <WIDGET : Widget> addLeafRenderWidget(widget: WIDGET): WIDGET {
+    fun <WIDGET : Widget<*>> addLeafRenderWidget(widget: WIDGET): WIDGET {
         currentWidgetContext.add(widget)
         return widget
     }
 
-    fun <WIDGET : ContainerRenderWidget<VIEW_GROUP>, VIEW_GROUP> addContainerRenderWidget(
+    fun <WIDGET : Widget<*>> addContainerRenderWidget(
         widget: WIDGET,
         block: WeiV.(widget: WIDGET) -> Unit
-    ) {
+    ): WIDGET {
         currentWidgetContext.add(widget)
         val temp = currentWidgetContext
         currentWidgetContext = widget.childWidgets!!
         block(widget)
         currentWidgetContext = temp
+        return widget
     }
 }

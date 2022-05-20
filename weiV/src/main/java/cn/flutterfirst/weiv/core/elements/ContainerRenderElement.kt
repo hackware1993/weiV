@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 
-open class ContainerRenderElement<VIEW_GROUP : ViewGroup>(
-    widget: ContainerRenderWidget<VIEW_GROUP>,
-) : LeafRenderElement<VIEW_GROUP>(widget) {
+open class ContainerRenderElement<VIEW_GROUP : ViewGroup, WIDGET : ContainerRenderWidget<VIEW_GROUP, WIDGET>>(
+    widget: ContainerRenderWidget<VIEW_GROUP, WIDGET>,
+) : LeafRenderElement<VIEW_GROUP, WIDGET>(widget) {
     var childElements: ArrayList<Element> = ArrayList()
     var childViews: ArrayList<View> = ArrayList()
 
@@ -19,7 +19,7 @@ open class ContainerRenderElement<VIEW_GROUP : ViewGroup>(
             childElement.assignParent(this)
             childElement.mount(context)
             childElements.add(childElement)
-            if (childElement is LeafRenderElement<*>) {
+            if (childElement is LeafRenderElement<*, *>) {
                 childViews.add(childElement.view)
                 view.addView(childElement.view)
             } else {
@@ -28,7 +28,7 @@ open class ContainerRenderElement<VIEW_GROUP : ViewGroup>(
         }
     }
 
-    override fun update(newWidget: Widget) {
+    override fun update(newWidget: Widget<*>) {
         val oldChildWidgets = widget.childWidgets!!
 
         super.update(newWidget)
@@ -46,7 +46,7 @@ open class ContainerRenderElement<VIEW_GROUP : ViewGroup>(
                     childElement.mount(context)
 
                     childElements.add(childElement)
-                    if (childElement is LeafRenderElement<*>) {
+                    if (childElement is LeafRenderElement<*, *>) {
                         childViews.add(childElement.view)
                         view.addView(childElement.view)
                     } else {
@@ -55,10 +55,7 @@ open class ContainerRenderElement<VIEW_GROUP : ViewGroup>(
                 }
             }
         } else {
-
         }
-
-
     }
 
     override fun unmount() {

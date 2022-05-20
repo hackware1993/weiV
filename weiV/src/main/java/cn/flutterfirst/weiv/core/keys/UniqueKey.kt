@@ -1,4 +1,3 @@
 package cn.flutterfirst.weiv.core.keys
 
-abstract class Key {
-}
+class UniqueKey : Key()

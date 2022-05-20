@@ -1,7 +1,7 @@
 package cn.flutterfirst.weiv.core.others
 
-import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
+import cn.flutterfirst.weiv.core.widgets.Widget
 
-interface BuildWithContext<T : ContainerRenderWidget<*>> {
+interface BuildWithContext<T : Widget<*>> {
     fun build(context: T)
 }

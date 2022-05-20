@@ -6,21 +6,25 @@ import android.widget.LinearLayout
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IExtensionCreator
+import cn.flutterfirst.weiv.core.extension.ISerializableWidget
 import cn.flutterfirst.weiv.core.extension.IWeiVExtension
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.KotlinOnly
+import cn.flutterfirst.weiv.core.others.LayoutParam
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
-import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
+import org.json.JSONObject
 
 open class weiVFlex<T : LinearLayout>(
     key: Key? = null,
-    childWidgets: ArrayList<Widget> = ArrayList(),
+    layoutParam: LayoutParam<*>? = null,
+    childWidgets: ArrayList<Widget<*>> = ArrayList(),
     open var orientation: Int = FlexDirection.HORIZONTAL,
 ) :
-    ContainerRenderWidget<T>(key, childWidgets), IWeiVExtension {
+    ContainerRenderWidget<T, weiVFlex<T>>(key, layoutParam, childWidgets), IWeiVExtension,
+    ISerializableWidget<weiVFlex<T>> {
 
     override fun createView(context: Context): T = LinearLayout(context) as T
 
@@ -33,14 +37,13 @@ open class weiVFlex<T : LinearLayout>(
     }
 
     @JavaOnly
-    open fun wKey(key: Key? = null): weiVFlex<T> {
-        this.key = key
+    open fun wOrientation(orientation: Int): weiVFlex<T> {
+        this.orientation = orientation
         return this
     }
 
-    @JavaOnly
-    open fun wOrientation(orientation: Int = FlexDirection.HORIZONTAL): weiVFlex<T> {
-        this.orientation = orientation
+    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVFlex<T> {
+        orientation = (param["orientation"] as Int?) ?: FlexDirection.HORIZONTAL
         return this
     }
 
@@ -49,23 +52,25 @@ open class weiVFlex<T : LinearLayout>(
     }
 }
 
-var creator: IExtensionCreator<LeafRenderWidget<*>>? = null
+var creator: IExtensionCreator<weiVFlex<*>>? = null
 
 @KotlinOnly
 fun WeiV.Flex(
     key: Key? = null,
+    layoutParam: LayoutParam<*>? = null,
     orientation: Int = FlexDirection.HORIZONTAL,
-    block: WeiV.(widget: weiVFlex<LinearLayout>) -> Unit
-) {
+    block: WeiV.(widget: weiVFlex<*>) -> Unit
+): weiVFlex<*> {
     if (creator == null) {
         creator = ExtensionMgr.getExtension(InternalWidgetDesc.FLEX)
     }
 
-    addContainerRenderWidget(
+    return addContainerRenderWidget(
         creator!!.createWidget(
             key,
-            ArrayList<Widget>(),
+            layoutParam,
+            ArrayList<Widget<*>>(),
             orientation
-        ) as weiVFlex<LinearLayout>, block
+        ), block
     )
 }

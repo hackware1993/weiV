@@ -1,25 +1,31 @@
 package cn.flutterfirst.weiv_example.ext
 
 import android.content.Context
+import android.graphics.Color
 import android.view.View
 import android.widget.Button
 import cn.flutterfirst.weiv.core.WeiV
+import cn.flutterfirst.weiv.core.extension.ISerializableWidget
 import cn.flutterfirst.weiv.core.extension.IWeiVExtension
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.KotlinOnly
+import cn.flutterfirst.weiv.core.others.LayoutParam
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.wrappers.textview.TextConst
+import org.json.JSONObject
 
 class weiVButton @JvmOverloads constructor(
     key: Key? = null,
+    layoutParam: LayoutParam<*>? = null,
     var text: String = "",
     var textSize: Float = TextConst.defaultTextSize,
     var textColor: Int = TextConst.defaultTextColor,
     var onClick: View.OnClickListener? = null,
     var enable: Boolean = true
 ) :
-    LeafRenderWidget<Button>(key), IWeiVExtension {
+    LeafRenderWidget<Button, weiVButton>(key, layoutParam), IWeiVExtension,
+    ISerializableWidget<weiVButton> {
 
     override fun createView(context: Context): Button = Button(context)
 
@@ -41,25 +47,19 @@ class weiVButton @JvmOverloads constructor(
     }
 
     @JavaOnly
-    fun wKey(key: Key? = null): weiVButton {
-        this.key = key
-        return this
-    }
-
-    @JavaOnly
-    fun wText(text: String = ""): weiVButton {
+    fun wText(text: String): weiVButton {
         this.text = text
         return this
     }
 
     @JavaOnly
-    fun wTextSize(textSize: Float = TextConst.defaultTextSize): weiVButton {
+    fun wTextSize(textSize: Float): weiVButton {
         this.textSize = textSize
         return this
     }
 
     @JavaOnly
-    fun wTextColor(textColor: Int = TextConst.defaultTextColor): weiVButton {
+    fun wTextColor(textColor: Int): weiVButton {
         this.textColor = textColor
         return this
     }
@@ -71,8 +71,20 @@ class weiVButton @JvmOverloads constructor(
     }
 
     @JavaOnly
-    fun wEnable(enable: Boolean = true): weiVButton {
+    fun wEnable(enable: Boolean): weiVButton {
         this.enable = enable
+        return this
+    }
+
+    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVButton {
+        text = (param["text"] as String?) ?: ""
+        textSize = ((param["textSize"] as Double?) ?: TextConst.defaultTextSize).toFloat()
+        val colorStr = param["textColor"] as String?
+        textColor = if (colorStr != null && colorStr.startsWith("#")) {
+            Color.parseColor(colorStr)
+        } else {
+            TextConst.defaultTextColor
+        }
         return this
     }
 
@@ -84,15 +96,17 @@ class weiVButton @JvmOverloads constructor(
 @KotlinOnly
 fun WeiV.Button(
     key: Key? = null,
+    layoutParam: LayoutParam<*>? = null,
     text: String = "",
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor,
     onClick: View.OnClickListener? = null,
     enable: Boolean = true
-) {
-    addLeafRenderWidget(
+): weiVButton {
+    return addLeafRenderWidget(
         weiVButton(
             key = key,
+            layoutParam = layoutParam,
             text = text,
             textSize = textSize,
             textColor = textColor,

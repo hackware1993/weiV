@@ -3,7 +3,7 @@ package cn.flutterfirst.weiv.core.elements
 import android.content.Context
 import cn.flutterfirst.weiv.core.widgets.Widget
 
-abstract class Element(var widget: Widget) {
+abstract class Element(var widget: Widget<*>) {
     var parent: Element? = null
 
     fun assignParent(element: Element) {
@@ -17,7 +17,7 @@ abstract class Element(var widget: Widget) {
         this.context = context
     }
 
-    open fun update(newWidget: Widget) {
+    open fun update(newWidget: Widget<*>) {
         widget = newWidget
     }
 

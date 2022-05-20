@@ -5,12 +5,14 @@ import android.view.View
 import cn.flutterfirst.weiv.core.elements.Element
 import cn.flutterfirst.weiv.core.elements.LeafRenderElement
 import cn.flutterfirst.weiv.core.keys.Key
+import cn.flutterfirst.weiv.core.others.LayoutParam
 
-abstract class LeafRenderWidget<VIEW : View>(
+abstract class LeafRenderWidget<VIEW : View, WIDGET : LeafRenderWidget<VIEW, WIDGET>>(
     key: Key? = null,
-    childWidgets: ArrayList<Widget>? = null
+    layoutParam: LayoutParam<*>? = null,
+    childWidgets: ArrayList<Widget<*>>? = null
 ) :
-    Widget(key, childWidgets) {
+    Widget<WIDGET>(key, layoutParam, childWidgets) {
 
     override fun createElement(): Element {
         return LeafRenderElement(this)

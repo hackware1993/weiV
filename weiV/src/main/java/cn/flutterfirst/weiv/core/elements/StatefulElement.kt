@@ -46,7 +46,7 @@ class StatefulElement(statefulWidget: StatefulWidget) : Element(statefulWidget) 
         child.mount(context)
     }
 
-    override fun update(newWidget: Widget) {
+    override fun update(newWidget: Widget<*>) {
         super.update(newWidget)
         state.didUpdateWidget(newWidget as StatefulWidget)
         val weiV = state.build()

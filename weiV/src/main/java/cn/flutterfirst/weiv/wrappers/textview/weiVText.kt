@@ -1,24 +1,30 @@
 package cn.flutterfirst.weiv.wrappers.textview
 
 import android.content.Context
+import android.graphics.Color
 import android.widget.TextView
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IExtensionCreator
+import cn.flutterfirst.weiv.core.extension.ISerializableWidget
 import cn.flutterfirst.weiv.core.extension.IWeiVExtension
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.KotlinOnly
+import cn.flutterfirst.weiv.core.others.LayoutParam
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
+import org.json.JSONObject
 
 open class weiVText<T : TextView>(
     key: Key? = null,
+    layoutParam: LayoutParam<*>? = null,
     open var text: String = "",
     open var textSize: Float = TextConst.defaultTextSize,
     open var textColor: Int = TextConst.defaultTextColor
 ) :
-    LeafRenderWidget<T>(key), IWeiVExtension {
+    LeafRenderWidget<T, weiVText<T>>(key, layoutParam), IWeiVExtension,
+    ISerializableWidget<weiVText<T>> {
 
     override fun createView(context: Context): T = TextView(context) as T
 
@@ -36,26 +42,32 @@ open class weiVText<T : TextView>(
     }
 
     @JavaOnly
-    open fun wKey(key: Key? = null): weiVText<T> {
-        this.key = key
-        return this
-    }
-
-    @JavaOnly
-    open fun wText(text: String = ""): weiVText<T> {
+    open fun wText(text: String): weiVText<T> {
         this.text = text
         return this
     }
 
     @JavaOnly
-    open fun wTextSize(textSize: Float = TextConst.defaultTextSize): weiVText<T> {
+    open fun wTextSize(textSize: Float): weiVText<T> {
         this.textSize = textSize
         return this
     }
 
     @JavaOnly
-    open fun wTextColor(textColor: Int = TextConst.defaultTextColor): weiVText<T> {
+    open fun wTextColor(textColor: Int): weiVText<T> {
         this.textColor = textColor
+        return this
+    }
+
+    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVText<T> {
+        text = (param["text"] as String?) ?: ""
+        textSize = ((param["textSize"] as Double?) ?: TextConst.defaultTextSize).toFloat()
+        val colorStr = param["textColor"] as String?
+        textColor = if (colorStr != null && colorStr.startsWith("#")) {
+            Color.parseColor(colorStr)
+        } else {
+            TextConst.defaultTextColor
+        }
         return this
     }
 
@@ -64,20 +76,21 @@ open class weiVText<T : TextView>(
     }
 }
 
-var creator: IExtensionCreator<LeafRenderWidget<*>>? = null
+var creator: IExtensionCreator<weiVText<*>>? = null
 
 @KotlinOnly
 fun WeiV.Text(
     key: Key? = null,
+    layoutParam: LayoutParam<*>? = null,
     text: String = "",
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor
-) {
+): weiVText<*> {
     if (creator == null) {
         creator = ExtensionMgr.getExtension(InternalWidgetDesc.TEXT)
     }
 
-    addLeafRenderWidget(
-        creator!!.createWidget(key, text, textSize, textColor)
+    return addLeafRenderWidget(
+        creator!!.createWidget(key, layoutParam, text, textSize, textColor)
     )
 }
