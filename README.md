@@ -134,6 +134,11 @@ Near-term plans:
 5. Support animation in an extremely simple way, property animation is no longer suitable under the
    declarative system
 6. Develop layout preview, this may be a little troublesome
+7. **Implements stateful hot reloading for Android. By developing an Android Studio plugin, when you
+   change the code, the plugin generates the JSON of the widget tree according to the latest code
+   and sends it to the App through ADB. The App restores the JSON to the real widget tree and
+   re-renders the UI. The state of the entire process application is preserved. This will further
+   improve the efficiency of Android development**
 
 It is expected that all the code will be written, and the amount of code will be around 30,000
 lines.

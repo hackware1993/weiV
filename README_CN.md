@@ -120,6 +120,8 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 4. 对所有系统内置常用组件进行包装以实现声明式 API，部分可能会重写
 5. 以极其简单的方式支持动画，属性动画在声明式体系下已不合适
 6. 开发布局预览，这个可能有点麻烦
+7. **为 Android 实现带状态的热重载。通过开发一个 Android Studio 插件，当你更改了代码以后，插件根据最新代码生成 Widget 树的 JSON 并通过 ADB 发送到
+   App，App 将 JSON 还原成真实的 Widget 树并重新渲染 UI。整个过程应用的状态得以保留。这将进一步提升 Android 开发的效率**
 
 预计所有的代码写完，代码量在 3 万行左右。
 
