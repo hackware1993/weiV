@@ -49,7 +49,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
     private val maxCount = 10
     private val minCount = 0
 
-    override fun build() = WeiV {
+    override fun build(buildCount: Int) = WeiV {
         Flex {
             it.orientation = FlexDirection.VERTICAL
 
@@ -80,7 +80,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
     private int minCount = 0;
 
     @Override
-    public WeiV build() {
+    public WeiV build(int buildCount) {
         return WeiV(() -> {
             Flex((it) -> {
                 it.wOrientation(FlexDirection.VERTICAL);
@@ -120,7 +120,29 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 5. Provides StatefulWidget to achieve separate management of subtree state, with it you no longer
    need Fragment
 6. Provides WeiVView, WeiVJavaView to embed weiV anywhere
-7. Provides a UI modular solution
+7. ConstWidget is provided to achieve the same effect as Flutter const Widget
+
+```kotlin
+// Subtree wrapped with Const will not be updated, Lambda will only execute once
+Const(buildCount = buildCount) {
+    Text(text = "Widgets wrapped by Const will not be updated, count = $count")
+}
+```
+
+```java
+class A extends WeiVJavaActivity {
+    public WeiV build(int buildCount) {
+        // Subtree wrapped with Const will not be updated, Lambda will only execute once
+        Const(buildCount, () -> {
+            Text().wText("Widgets wrapped by Const will not be updated, count = " + count);
+        });
+    }
+}
+```
+
+8. Provides a Hook for global Widget creation and update, which can easily achieve skinning and
+   night mode
+9. Provides a UI modular solution
 
 Near-term plans:
 

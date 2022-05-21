@@ -46,6 +46,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
         }
     }
 
+    // Modular
     fun WeiV.moduleItem(index: Int) {
         Button(text = "This button is from module, $index")
     }
@@ -98,6 +99,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                 moduleItem(it)
             }
 
+            // Modular
             merge {
                 WeiV {
                     Text(text = "Merge with outer layer")

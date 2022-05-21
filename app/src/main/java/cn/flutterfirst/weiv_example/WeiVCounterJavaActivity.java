@@ -19,6 +19,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
     private int minCount = 0;
     private String url = "https://baidu.com";
 
+    // Modular
     private void moduleItem(int index) {
         Button().wText("This button is from module, " + index);
     }
@@ -74,6 +75,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                     moduleItem(i);
                 }
 
+                // Modular
                 merge(WeiV(() -> {
                     Text().wText("Merge with outer layer");
                 }));

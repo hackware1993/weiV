@@ -109,7 +109,28 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 4. 提供了 XmlViewWidget 让你无需写扩展即可内嵌所有现有 View 并实现声明式 API
 5. 提供了 StatefulWidget 以实现子树状态的单独管理，有了它你不再需要 Fragment
 6. 提供了 WeiVView、WeiVJavaView 来把 weiV 嵌入到任何地方
-7. 提供了 UI 模块化方案
+7. 提供了 ConstWidget 达到了和 Flutter const Widget 同样的效果
+
+```kotlin
+// 使用 Const 包裹的子树不会得到更新，Lambda 只会执行一次
+Const(buildCount = buildCount) {
+    Text(text = "Widgets wrapped by Const will not be updated, count = $count")
+}
+```
+
+```java
+class A extends WeiVJavaActivity {
+    public WeiV build(int buildCount) {
+        // 使用 Const 包裹的子树不会得到更新，Lambda 只会执行一次
+        Const(buildCount, () -> {
+            Text().wText("Widgets wrapped by Const will not be updated, count = " + count);
+        });
+    }
+}
+```
+
+8. 提供了全局 Widget 创建和更新的 Hook，可轻松实现换肤、夜间模式
+9. 提供了 UI 模块化方案
 
 近期计划：
 
