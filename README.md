@@ -122,15 +122,23 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 6. Provides WeiVView, WeiVJavaView to embed weiV anywhere
 7. ConstWidget is provided to achieve the same effect as Flutter const Widget
 
+Kotlin:
+
 ```kotlin
-// Subtree wrapped with Const will not be updated, Lambda will only execute once
-Const(buildCount = buildCount) {
-    Text(text = "Widgets wrapped by Const will not be updated, count = $count")
+class WeiVCounterKotlinActivity : WeiVActivity() {
+    override fun build(buildCount: Int) = WeiV {
+        // Subtree wrapped with Const will not be updated, Lambda will only execute once
+        Const(buildCount = buildCount) {
+            Text(text = "Widgets wrapped by Const will not be updated, count = $count")
+        }
+    }
 }
 ```
 
+Java:
+
 ```java
-class A extends WeiVJavaActivity {
+class WeiVCounterJavaActivity extends WeiVJavaActivity {
     public WeiV build(int buildCount) {
         // Subtree wrapped with Const will not be updated, Lambda will only execute once
         Const(buildCount, () -> {

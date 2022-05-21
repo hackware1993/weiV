@@ -111,15 +111,23 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 6. 提供了 WeiVView、WeiVJavaView 来把 weiV 嵌入到任何地方
 7. 提供了 ConstWidget 达到了和 Flutter const Widget 同样的效果
 
+Kotlin：
+
 ```kotlin
-// 使用 Const 包裹的子树不会得到更新，Lambda 只会执行一次
-Const(buildCount = buildCount) {
-    Text(text = "Widgets wrapped by Const will not be updated, count = $count")
+class WeiVCounterKotlinActivity : WeiVActivity() {
+    override fun build(buildCount: Int) = WeiV {
+        // 使用 Const 包裹的子树不会得到更新，Lambda 只会执行一次
+        Const(buildCount = buildCount) {
+            Text(text = "Widgets wrapped by Const will not be updated, count = $count")
+        }
+    }
 }
 ```
 
+Java：
+
 ```java
-class A extends WeiVJavaActivity {
+class WeiVCounterJavaActivity extends WeiVJavaActivity {
     public WeiV build(int buildCount) {
         // 使用 Const 包裹的子树不会得到更新，Lambda 只会执行一次
         Const(buildCount, () -> {
