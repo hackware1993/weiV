@@ -120,6 +120,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 5. Provides StatefulWidget to achieve separate management of subtree state, with it you no longer
    need Fragment
 6. Provides WeiVView, WeiVJavaView to embed weiV anywhere
+7. Provides a UI modular solution
 
 Near-term plans:
 

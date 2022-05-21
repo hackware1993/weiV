@@ -109,6 +109,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 4. 提供了 XmlViewWidget 让你无需写扩展即可内嵌所有现有 View 并实现声明式 API
 5. 提供了 StatefulWidget 以实现子树状态的单独管理，有了它你不再需要 Fragment
 6. 提供了 WeiVView、WeiVJavaView 来把 weiV 嵌入到任何地方
+7. 提供了 UI 模块化方案
 
 近期计划：
 
