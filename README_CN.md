@@ -106,7 +106,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
     2. 内部的实现可替换，比如 Text 默认使用 TextView 渲染，你可以替换成 AppCompatTextView
 2. 基于 WebView 提供了 JsContext，配合 WeiVParser 可实现简易的动态化，后面会继续增强
 3. 友好的、完整的支持 Java
-4. 提供 XmlViewWidget 让你无需写扩展即可内嵌所有现有 View 并实现声明式 API
+4. 提供了 XmlViewWidget 让你无需写扩展即可内嵌所有现有 View 并实现声明式 API
 5. 提供了 StatefulWidget 以实现子树状态的单独管理，有了它你不再需要 Fragment
 6. 提供了 WeiVView、WeiVJavaWeiV 来把 weiV 嵌入到任何地方
 
