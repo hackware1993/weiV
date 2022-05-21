@@ -6,8 +6,9 @@
 
 weiV（发音同 wave），一个基于 Android View 系统的全新声明式 UI 开发框架。核心源文件只有 35 KB。
 
-[Download weiV Counter demo apk](https://github.com/hackware1993/weiV/blob/master/weiV_Counter.apk)
-Building the demo release obfuscated package took only 4 seconds and was 41 KB in size.
+[下载 weiV Counter apk](https://github.com/hackware1993/weiV/blob/master/weiV_Counter.apk)
+Building the counter release obfuscated package took only 4 seconds and was 41 KB in size.
+![weiV_Counter.webp](https://github.com/hackware1993/weiV/blob/master/weiV_Counter.webp?raw=true)
 
 ```kotlin
 if ("weiV" == "View".reversed()) {
