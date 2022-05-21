@@ -250,10 +250,6 @@ weiV is based on the View system, so it can be embedded anywhere in the View tre
 Flutter and Compose in weiV, or embed weiV in Compose and Flutter. It is recommended to embed weiV
 on top of Compose to improve Compose performance. 😀
 
-It is expected that weiV will be able to actually run soon. But there is still a long way to go.
-First, you need to transplant Flutter ConstraintLayout, and secondly, you will probably rewrite a
-weiV version of RecyclerView to support simple list usage like Flutter, without writing Adapter.
-
 Subscribe to my WeChat official account to get the latest news of weiV. Follow-up will also share
 some high-quality, unique, and thoughtful Flutter and Android technical articles.
 ![official_account.webp](https://github.com/hackware1993/weiV/blob/master/official_account.webp?raw=true)

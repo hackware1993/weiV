@@ -227,9 +227,6 @@ fun WeiV.Button(
 weiV 基于 View 系统，因此它可以嵌入到 View 树的任何地方。你可以在 weiV 中嵌入 Flutter、Compose，也可以在 Compose、Flutter 里嵌入 weiV。推荐在
 Compose 顶层嵌入 weiV 以改善 Compose 的性能。😀
 
-预计很快 weiV 就可以真正跑起来了。但还任重而道远。首先需要移植 Flutter ConstraintLayout，其次大概率会重写一个 weiV 版本的 RecyclerView，以支持像
-Flutter 那样简单的列表用法，不需要写 Adapter。
-
 订阅我的微信公众号以及时获取 weiV 的最新动态。后续也会分享一些高质量的、独特的、有思想的 Flutter 和 Android 技术文章。
 ![official_account.webp](https://github.com/hackware1993/weiV/blob/master/official_account.webp?raw=true)
 
