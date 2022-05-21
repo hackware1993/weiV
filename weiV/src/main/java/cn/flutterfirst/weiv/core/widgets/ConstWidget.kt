@@ -13,7 +13,8 @@ class ConstWidget(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>>? = null,
-) : LeafRenderWidget<FrameLayout, ConstWidget>(key, layoutParam, childWidgets) {
+    extra: Any? = null,
+) : LeafRenderWidget<FrameLayout, ConstWidget>(key, layoutParam, childWidgets, extra) {
 
     override fun createView(context: Context) = FrameLayout(context)
 
@@ -31,14 +32,16 @@ fun WeiV.Const(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     buildCount: Int,
+    extra: Any? = null,
     block: WeiV.(widget: ConstWidget) -> Unit
 ): ConstWidget {
     if (buildCount == 0) {
         return addContainerRenderWidget(
             ConstWidget(
-                key = key,
-                layoutParam = layoutParam,
-                childWidgets = ArrayList()
+                key,
+                layoutParam,
+                ArrayList(),
+                extra
             ), block
         )
     } else {

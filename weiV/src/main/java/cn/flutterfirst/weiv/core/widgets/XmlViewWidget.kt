@@ -13,8 +13,9 @@ class XmlViewWidget<VIEW : View, PARAM>(
     layoutParam: LayoutParam<*>? = null,
     var param: PARAM? = null,
     var viewCreator: () -> VIEW,
-    var onParamChanged: (view: VIEW, param: PARAM?, first: Boolean) -> Unit
-) : LeafRenderWidget<VIEW, XmlViewWidget<VIEW, PARAM>>(key, layoutParam) {
+    var onParamChanged: (view: VIEW, param: PARAM?, first: Boolean) -> Unit,
+    extra: Any? = null
+) : LeafRenderWidget<VIEW, XmlViewWidget<VIEW, PARAM>>(key, layoutParam, extra = extra) {
 
     override fun createView(context: Context) = viewCreator()
 
@@ -48,15 +49,17 @@ fun <VIEW : View, PARAM> WeiV.XmlView(
     layoutParam: LayoutParam<*>? = null,
     param: PARAM? = null,
     viewCreator: () -> VIEW,
-    onParamChanged: (view: VIEW, param: PARAM?, first: Boolean) -> Unit
+    onParamChanged: (view: VIEW, param: PARAM?, first: Boolean) -> Unit,
+    extra: Any? = null
 ) {
     addLeafRenderWidget(
         XmlViewWidget(
-            key = key,
-            layoutParam = layoutParam,
-            param = param,
-            viewCreator = viewCreator,
-            onParamChanged = onParamChanged
+            key,
+            layoutParam,
+            param,
+            viewCreator,
+            onParamChanged,
+            extra
         )
     )
 }

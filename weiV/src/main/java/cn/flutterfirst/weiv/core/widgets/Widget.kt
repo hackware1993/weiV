@@ -9,7 +9,7 @@ abstract class Widget<T : Widget<T>>(
     var key: Key? = null,
     var layoutParam: LayoutParam<*>? = null,
     var childWidgets: ArrayList<Widget<*>>? = null,
-    var extra: Any? = null,
+    var extra: Any? = null
 ) {
     abstract fun createElement(): Element
 
@@ -22,6 +22,12 @@ abstract class Widget<T : Widget<T>>(
     @JavaOnly
     fun wLayoutParam(layoutParam: LayoutParam<*>?): T {
         this.layoutParam = layoutParam
+        return this as T
+    }
+
+    @JavaOnly
+    fun wExtra(extra: Any?): T {
+        this.extra = extra
         return this as T
     }
 

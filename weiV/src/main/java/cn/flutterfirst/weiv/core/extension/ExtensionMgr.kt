@@ -24,7 +24,8 @@ object ExtensionMgr {
                     it[1] as LayoutParam<*>?,
                     it[2] as String,
                     it[3] as Float,
-                    it[4] as Int
+                    it[4] as Int,
+                    it[5]
                 )
             } else {
                 @JavaOnly weiVText<TextView>()
@@ -38,7 +39,8 @@ object ExtensionMgr {
                     it[0] as Key?,
                     it[1] as LayoutParam<*>?,
                     it[2] as ArrayList<Widget<*>>,
-                    it[3] as Int
+                    it[3] as Int,
+                    it[4]
                 )
             } else {
                 @JavaOnly weiVFlex<LinearLayout>()

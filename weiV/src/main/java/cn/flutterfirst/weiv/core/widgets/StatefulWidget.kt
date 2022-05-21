@@ -14,7 +14,12 @@ class StatefulWidget(
     layoutParam: LayoutParam<*>? = null,
     var state: State,
     var param: HashMap<String, Any?>? = null,
-) : LeafRenderWidget<StatefulWidget.StatefulView, StatefulWidget>(key, layoutParam) {
+    extra: Any? = null
+) : LeafRenderWidget<StatefulWidget.StatefulView, StatefulWidget>(
+    key,
+    layoutParam,
+    extra = extra
+) {
 
     override fun createView(context: Context): StatefulView {
         state.param = param
@@ -95,13 +100,15 @@ fun WeiV.Stateful(
     layoutParam: LayoutParam<*>? = null,
     state: StatefulWidget.State,
     param: HashMap<String, Any?>? = null,
+    extra: Any? = null
 ): StatefulWidget {
     return addLeafRenderWidget(
         StatefulWidget(
-            key = key,
-            layoutParam = layoutParam,
-            state = state,
-            param = param
+            key,
+            layoutParam,
+            state,
+            param,
+            extra
         )
     )
 }

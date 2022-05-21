@@ -22,8 +22,9 @@ open class weiVFlex<T : LinearLayout>(
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>> = ArrayList(),
     open var orientation: Int = FlexDirection.HORIZONTAL,
+    extra: Any? = null
 ) :
-    ContainerRenderWidget<T, weiVFlex<T>>(key, layoutParam, childWidgets), IWeiVExtension,
+    ContainerRenderWidget<T, weiVFlex<T>>(key, layoutParam, childWidgets, extra), IWeiVExtension,
     ISerializableWidget<weiVFlex<T>> {
 
     override fun createView(context: Context): T = LinearLayout(context) as T
@@ -59,6 +60,7 @@ fun WeiV.Flex(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     orientation: Int = FlexDirection.HORIZONTAL,
+    extra: Any? = null,
     block: WeiV.(widget: weiVFlex<*>) -> Unit
 ): weiVFlex<*> {
     if (creator == null) {
@@ -70,7 +72,8 @@ fun WeiV.Flex(
             key,
             layoutParam,
             ArrayList<Widget<*>>(),
-            orientation
+            orientation,
+            extra
         ), block
     )
 }

@@ -10,9 +10,10 @@ import cn.flutterfirst.weiv.core.others.LayoutParam
 abstract class LeafRenderWidget<VIEW : View, WIDGET : LeafRenderWidget<VIEW, WIDGET>>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
-    childWidgets: ArrayList<Widget<*>>? = null
+    childWidgets: ArrayList<Widget<*>>? = null,
+    extra: Any? = null
 ) :
-    Widget<WIDGET>(key, layoutParam, childWidgets) {
+    Widget<WIDGET>(key, layoutParam, childWidgets, extra) {
 
     override fun createElement(): Element {
         return LeafRenderElement(this)

@@ -22,9 +22,10 @@ class weiVButton(
     var textSize: Float = TextConst.defaultTextSize,
     var textColor: Int = TextConst.defaultTextColor,
     var onClick: View.OnClickListener? = null,
-    var enable: Boolean = true
+    var enable: Boolean = true,
+    extra: Any? = null
 ) :
-    LeafRenderWidget<Button, weiVButton>(key, layoutParam), IWeiVExtension,
+    LeafRenderWidget<Button, weiVButton>(key, layoutParam, extra = extra), IWeiVExtension,
     ISerializableWidget<weiVButton> {
 
     override fun createView(context: Context): Button = Button(context)
@@ -101,17 +102,19 @@ fun WeiV.Button(
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor,
     onClick: View.OnClickListener? = null,
-    enable: Boolean = true
+    enable: Boolean = true,
+    extra: Any? = null
 ): weiVButton {
     return addLeafRenderWidget(
         weiVButton(
-            key = key,
-            layoutParam = layoutParam,
-            text = text,
-            textSize = textSize,
-            textColor = textColor,
-            onClick = onClick,
-            enable = enable
+            key,
+            layoutParam,
+            text,
+            textSize,
+            textColor,
+            onClick,
+            enable,
+            extra
         )
     )
 }

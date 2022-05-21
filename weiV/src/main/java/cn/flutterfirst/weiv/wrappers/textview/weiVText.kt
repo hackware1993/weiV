@@ -21,9 +21,10 @@ open class weiVText<T : TextView>(
     layoutParam: LayoutParam<*>? = null,
     open var text: String = "",
     open var textSize: Float = TextConst.defaultTextSize,
-    open var textColor: Int = TextConst.defaultTextColor
+    open var textColor: Int = TextConst.defaultTextColor,
+    extra: Any? = null
 ) :
-    LeafRenderWidget<T, weiVText<T>>(key, layoutParam), IWeiVExtension,
+    LeafRenderWidget<T, weiVText<T>>(key, layoutParam, extra = extra), IWeiVExtension,
     ISerializableWidget<weiVText<T>> {
 
     override fun createView(context: Context): T = TextView(context) as T
@@ -84,13 +85,14 @@ fun WeiV.Text(
     layoutParam: LayoutParam<*>? = null,
     text: String = "",
     textSize: Float = TextConst.defaultTextSize,
-    textColor: Int = TextConst.defaultTextColor
+    textColor: Int = TextConst.defaultTextColor,
+    extra: Any? = null
 ): weiVText<*> {
     if (creator == null) {
         creator = ExtensionMgr.getExtension(InternalWidgetDesc.TEXT)
     }
 
     return addLeafRenderWidget(
-        creator!!.createWidget(key, layoutParam, text, textSize, textColor)
+        creator!!.createWidget(key, layoutParam, text, textSize, textColor, extra)
     )
 }
