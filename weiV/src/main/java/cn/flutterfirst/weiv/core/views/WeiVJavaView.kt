@@ -39,10 +39,10 @@ abstract class WeiVJavaView(context: Context) : WeiVView(context) {
         return weiVJavaHelper.createConst(buildCount, build)
     }
 
-    open fun <VIEW : View, PARAM> XmlView(
-        viewCreator: IBuildValue<VIEW>,
-        onParamChanged: IParamChangedCallback<VIEW, PARAM>
-    ): XmlViewWidget<VIEW, PARAM> {
+    open fun <V : View, P> XmlView(
+        viewCreator: IBuildValue<V>,
+        onParamChanged: IParamChangedCallback<V, P>
+    ): XmlViewWidget<V, P> {
         return weiVJavaHelper.createXmlView({
             viewCreator.build()
         }, onParamChanged = { view, param, first ->

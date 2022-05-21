@@ -1,5 +1,5 @@
 package cn.flutterfirst.weiv.core.others
 
-interface IParamChangedCallback<VIEW, PARAM> {
-    fun onParamChanged(view: VIEW, param: PARAM?, first: Boolean)
+interface IParamChangedCallback<V, P> {
+    fun onParamChanged(view: V, param: P?, first: Boolean)
 }

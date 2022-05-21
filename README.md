@@ -5,7 +5,10 @@
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
 
 weiV (pronounced the same as wave), a new declarative UI development framework based on the Android
-View system. The core source files are only 30 KB.
+View system. The core source files are only 35 KB.
+
+[Download weiV Counter demo apk](https://github.com/hackware1993/weiV/blob/master/weiV_Counter.apk)
+Building the demo release obfuscated package took only 4 seconds and was 41 KB in size.
 
 ```kotlin
 if ("weiV" == "View".reversed()) {

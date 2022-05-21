@@ -40,15 +40,15 @@ open class WeiV {
         }
     }
 
-    fun <WIDGET : Widget<*>> addLeafRenderWidget(widget: WIDGET): WIDGET {
+    fun <W : Widget<*>> addLeafRenderWidget(widget: W): W {
         currentWidgetContext.add(widget)
         return widget
     }
 
-    fun <WIDGET : Widget<*>> addContainerRenderWidget(
-        widget: WIDGET,
-        block: WeiV.(widget: WIDGET) -> Unit
-    ): WIDGET {
+    fun <W : Widget<*>> addContainerRenderWidget(
+        widget: W,
+        block: WeiV.(widget: W) -> Unit
+    ): W {
         currentWidgetContext.add(widget)
         val temp = currentWidgetContext
         currentWidgetContext = widget.childWidgets!!

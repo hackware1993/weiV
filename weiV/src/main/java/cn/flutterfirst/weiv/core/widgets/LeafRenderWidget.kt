@@ -7,19 +7,19 @@ import cn.flutterfirst.weiv.core.elements.LeafRenderElement
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.LayoutParam
 
-abstract class LeafRenderWidget<VIEW : View, WIDGET : LeafRenderWidget<VIEW, WIDGET>>(
+abstract class LeafRenderWidget<V : View, W : LeafRenderWidget<V, W>>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>>? = null,
     extra: Any? = null
 ) :
-    Widget<WIDGET>(key, layoutParam, childWidgets, extra) {
+    Widget<W>(key, layoutParam, childWidgets, extra) {
 
     override fun createElement(): Element {
         return LeafRenderElement(this)
     }
 
-    fun createViewInstance(context: Context): VIEW {
+    fun createViewInstance(context: Context): V {
         val view = createView(context)
         if (autoDoParameter()) {
             return doParameter(view, true)
@@ -27,11 +27,11 @@ abstract class LeafRenderWidget<VIEW : View, WIDGET : LeafRenderWidget<VIEW, WID
         return view
     }
 
-    abstract fun createView(context: Context): VIEW
+    abstract fun createView(context: Context): V
 
-    abstract fun doParameter(view: VIEW, first: Boolean): VIEW
+    abstract fun doParameter(view: V, first: Boolean): V
 
-    open fun updateView(view: VIEW) {
+    open fun updateView(view: V) {
         if (autoDoParameter()) {
             doParameter(view, false)
         }

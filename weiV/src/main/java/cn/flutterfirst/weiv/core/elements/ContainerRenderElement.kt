@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 
-open class ContainerRenderElement<VIEW_GROUP : ViewGroup, WIDGET : ContainerRenderWidget<VIEW_GROUP, WIDGET>>(
-    widget: ContainerRenderWidget<VIEW_GROUP, WIDGET>,
-) : LeafRenderElement<VIEW_GROUP, WIDGET>(widget) {
+open class ContainerRenderElement<V : ViewGroup, W : ContainerRenderWidget<V, W>>(
+    widget: ContainerRenderWidget<V, W>,
+) : LeafRenderElement<V, W>(widget) {
     var childElements: ArrayList<Element> = ArrayList()
     var childViews: ArrayList<View> = ArrayList()
 

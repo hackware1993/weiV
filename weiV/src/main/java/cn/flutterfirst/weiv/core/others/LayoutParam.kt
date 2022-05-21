@@ -1,6 +1,6 @@
 package cn.flutterfirst.weiv.core.others
 
-open class LayoutParam<T : LayoutParam<T>>(
+open class LayoutParam<P : LayoutParam<P>>(
     var width: Int = WRAP_CONTENT,
     var height: Int = WRAP_CONTENT
 ) {
@@ -11,14 +11,14 @@ open class LayoutParam<T : LayoutParam<T>>(
     }
 
     @JavaOnly
-    fun wWidth(width: Int): T {
+    fun wWidth(width: Int): P {
         this.width = width
-        return this as T
+        return this as P
     }
 
     @JavaOnly
-    fun wHeight(height: Int): T {
+    fun wHeight(height: Int): P {
         this.height = height
-        return this as T
+        return this as P
     }
 }

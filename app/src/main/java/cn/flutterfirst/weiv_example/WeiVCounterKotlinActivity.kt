@@ -148,8 +148,11 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                         if (url.startsWith("http")) {
                             return false
                         } else {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                            this@WeiVCounterKotlinActivity.startActivity(intent)
+                            try {
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                this@WeiVCounterKotlinActivity.startActivity(intent)
+                            } catch (e: Exception) {
+                            }
                             return true
                         }
                     }

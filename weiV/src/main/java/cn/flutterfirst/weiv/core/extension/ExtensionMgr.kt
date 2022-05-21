@@ -71,8 +71,8 @@ object ExtensionMgr {
     }
 
     @JvmStatic
-    fun <T : Widget<T>> getExtension(extensionName: String): IExtensionCreator<T>? {
-        return extensionMap[extensionName] as IExtensionCreator<T>?
+    fun <W : Widget<W>> getExtension(extensionName: String): IExtensionCreator<W>? {
+        return extensionMap[extensionName] as IExtensionCreator<W>?
     }
 
     @JvmStatic

@@ -8,48 +8,48 @@ import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
 
-class XmlViewWidget<VIEW : View, PARAM>(
+class XmlViewWidget<V : View, P>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
-    var param: PARAM? = null,
-    var viewCreator: () -> VIEW,
-    var onParamChanged: (view: VIEW, param: PARAM?, first: Boolean) -> Unit,
+    var param: P? = null,
+    var viewCreator: () -> V,
+    var onParamChanged: (view: V, param: P?, first: Boolean) -> Unit,
     extra: Any? = null
-) : LeafRenderWidget<VIEW, XmlViewWidget<VIEW, PARAM>>(key, layoutParam, extra = extra) {
+) : LeafRenderWidget<V, XmlViewWidget<V, P>>(key, layoutParam, extra = extra) {
 
     override fun createView(context: Context) = viewCreator()
 
-    override fun doParameter(view: VIEW, first: Boolean): VIEW {
+    override fun doParameter(view: V, first: Boolean): V {
         onParamChanged(view, param, first)
         return view
     }
 
     @JavaOnly
-    fun wParam(param: PARAM?): XmlViewWidget<VIEW, PARAM> {
+    fun wParam(param: P?): XmlViewWidget<V, P> {
         this.param = param
         return this
     }
 
     @JavaOnly
-    fun wViewCreator(viewCreator: () -> VIEW): XmlViewWidget<VIEW, PARAM> {
+    fun wViewCreator(viewCreator: () -> V): XmlViewWidget<V, P> {
         this.viewCreator = viewCreator
         return this
     }
 
     @JavaOnly
-    fun wOnParamChanged(onParamChanged: (view: VIEW, param: PARAM?, first: Boolean) -> Unit): XmlViewWidget<VIEW, PARAM> {
+    fun wOnParamChanged(onParamChanged: (view: V, param: P?, first: Boolean) -> Unit): XmlViewWidget<V, P> {
         this.onParamChanged = onParamChanged
         return this
     }
 }
 
 @KotlinOnly
-fun <VIEW : View, PARAM> WeiV.XmlView(
+fun <V : View, P> WeiV.XmlView(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
-    param: PARAM? = null,
-    viewCreator: () -> VIEW,
-    onParamChanged: (view: VIEW, param: PARAM?, first: Boolean) -> Unit,
+    param: P? = null,
+    viewCreator: () -> V,
+    onParamChanged: (view: V, param: P?, first: Boolean) -> Unit,
     extra: Any? = null
 ) {
     addLeafRenderWidget(

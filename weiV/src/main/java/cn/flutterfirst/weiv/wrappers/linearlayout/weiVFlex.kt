@@ -17,20 +17,20 @@ import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import org.json.JSONObject
 
-open class weiVFlex<T : LinearLayout>(
+open class weiVFlex<V : LinearLayout>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>> = ArrayList(),
     open var orientation: Int = FlexDirection.HORIZONTAL,
     extra: Any? = null
 ) :
-    ContainerRenderWidget<T, weiVFlex<T>>(key, layoutParam, childWidgets, extra), IWeiVExtension,
-    ISerializableWidget<weiVFlex<T>> {
+    ContainerRenderWidget<V, weiVFlex<V>>(key, layoutParam, childWidgets, extra), IWeiVExtension,
+    ISerializableWidget<weiVFlex<V>> {
 
-    override fun createView(context: Context): T = LinearLayout(context) as T
+    override fun createView(context: Context): V = LinearLayout(context) as V
 
     @SuppressLint("WrongConstant")
-    override fun doParameter(view: T, first: Boolean): T {
+    override fun doParameter(view: V, first: Boolean): V {
         if (view.orientation != orientation) {
             view.orientation = orientation
         }
@@ -38,12 +38,12 @@ open class weiVFlex<T : LinearLayout>(
     }
 
     @JavaOnly
-    open fun wOrientation(orientation: Int): weiVFlex<T> {
+    open fun wOrientation(orientation: Int): weiVFlex<V> {
         this.orientation = orientation
         return this
     }
 
-    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVFlex<T> {
+    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVFlex<V> {
         orientation = (param["orientation"] as Int?) ?: FlexDirection.HORIZONTAL
         return this
     }

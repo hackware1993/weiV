@@ -5,7 +5,7 @@ import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
 
-abstract class Widget<T : Widget<T>>(
+abstract class Widget<W : Widget<W>>(
     var key: Key? = null,
     var layoutParam: LayoutParam<*>? = null,
     var childWidgets: ArrayList<Widget<*>>? = null,
@@ -14,21 +14,21 @@ abstract class Widget<T : Widget<T>>(
     abstract fun createElement(): Element
 
     @JavaOnly
-    fun wKey(key: Key?): T {
+    fun wKey(key: Key?): W {
         this.key = key
-        return this as T
+        return this as W
     }
 
     @JavaOnly
-    fun wLayoutParam(layoutParam: LayoutParam<*>?): T {
+    fun wLayoutParam(layoutParam: LayoutParam<*>?): W {
         this.layoutParam = layoutParam
-        return this as T
+        return this as W
     }
 
     @JavaOnly
-    fun wExtra(extra: Any?): T {
+    fun wExtra(extra: Any?): W {
         this.extra = extra
-        return this as T
+        return this as W
     }
 
     companion object {

@@ -16,7 +16,7 @@ import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import org.json.JSONObject
 
-open class weiVText<T : TextView>(
+open class weiVText<V : TextView>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     open var text: String = "",
@@ -24,12 +24,12 @@ open class weiVText<T : TextView>(
     open var textColor: Int = TextConst.defaultTextColor,
     extra: Any? = null
 ) :
-    LeafRenderWidget<T, weiVText<T>>(key, layoutParam, extra = extra), IWeiVExtension,
-    ISerializableWidget<weiVText<T>> {
+    LeafRenderWidget<V, weiVText<V>>(key, layoutParam, extra = extra), IWeiVExtension,
+    ISerializableWidget<weiVText<V>> {
 
-    override fun createView(context: Context): T = TextView(context) as T
+    override fun createView(context: Context): V = TextView(context) as V
 
-    override fun doParameter(view: T, first: Boolean): T {
+    override fun doParameter(view: V, first: Boolean): V {
         if (view.text != text) {
             view.text = text
         }
@@ -43,24 +43,24 @@ open class weiVText<T : TextView>(
     }
 
     @JavaOnly
-    open fun wText(text: String): weiVText<T> {
+    open fun wText(text: String): weiVText<V> {
         this.text = text
         return this
     }
 
     @JavaOnly
-    open fun wTextSize(textSize: Float): weiVText<T> {
+    open fun wTextSize(textSize: Float): weiVText<V> {
         this.textSize = textSize
         return this
     }
 
     @JavaOnly
-    open fun wTextColor(textColor: Int): weiVText<T> {
+    open fun wTextColor(textColor: Int): weiVText<V> {
         this.textColor = textColor
         return this
     }
 
-    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVText<T> {
+    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVText<V> {
         text = (param["text"] as String?) ?: ""
         textSize = ((param["textSize"] as Double?) ?: TextConst.defaultTextSize).toFloat()
         val colorStr = param["textColor"] as String?
