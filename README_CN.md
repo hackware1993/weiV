@@ -99,6 +99,29 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 
 ![effect.gif](https://github.com/hackware1993/weiV/blob/master/effect.gif?raw=true)
 
+# 目前已实现以下功能，并还在快速迭代中
+
+1. 可扩展
+    1. 轻松适配第三方控件以实现声明式 API
+    2. 内部的实现可替换，比如 Text 默认使用 TextView 渲染，你可以替换成 AppCompatTextView
+2. 基于 WebView 提供了 JsContext，配合 WeiVParser 可实现简易的动态化，后面会继续增强
+3. 友好的、完整的支持 Java
+4. 提供 XmlViewWidget 让你无需写扩展即可内嵌所有现有 View 并实现声明式 API
+5. 提供了 StatefulWidget 以实现子树状态的单独管理，有了它你不再需要 Fragment
+6. 提供了 WeiVView、WeiVJavaWeiV 来把 weiV 嵌入到任何地方
+
+近期计划：
+
+1. 完善声明式架构的核心逻辑，以支持 Widget、Element、View 三棵树高效更新
+2. 移植 Flutter ConstraintLayout 以实现上述性能目标，并带来前所未有的开发效率和体验，Compose 提供的 ConstraintLayout
+   还没摆脱命令式思维，用起来实在是低效
+3. 重写 RecyclerView、ViewPager2 等常用核心控件以实现声明式 API
+4. 对所有系统内置常用组件进行包装以实现声明式 API，部分可能会重写
+5. 以极其简单的方式支持动画，属性动画在声明式体系下已不合适
+6. 开发布局预览，这个可能有点麻烦
+
+预计所有的代码写完，代码量在 3 万行左右。
+
 weiV 是可扩展的。它会内置所有常用的 Widget，这些 Widget 都是对系统 View 的包装。但对于第三方库，就需要写扩展，写起来也极其简单，比如给 Button 的扩展如下：
 
 ```kotlin

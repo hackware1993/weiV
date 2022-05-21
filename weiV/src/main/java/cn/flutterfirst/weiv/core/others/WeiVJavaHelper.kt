@@ -1,11 +1,13 @@
 package cn.flutterfirst.weiv.core.others
 
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IExtensionCreator
 import cn.flutterfirst.weiv.core.widgets.StatefulWidget
+import cn.flutterfirst.weiv.core.widgets.XmlViewWidget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import cn.flutterfirst.weiv.wrappers.linearlayout.weiVFlex
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
@@ -55,7 +57,19 @@ class WeiVJavaHelper {
         return weiVFlex
     }
 
-    fun createStateful(): StatefulWidget {
-        return weiV!!.addLeafRenderWidget(StatefulWidget())
+    fun createStateful(state: StatefulWidget.State): StatefulWidget {
+        return weiV!!.addLeafRenderWidget(StatefulWidget(state = state))
+    }
+
+    fun <VIEW : View, PARAM> createXmlView(
+        viewCreator: () -> VIEW,
+        onParamChanged: (view: VIEW, param: PARAM?, first: Boolean) -> Unit
+    ): XmlViewWidget<VIEW, PARAM> {
+        return weiV!!.addLeafRenderWidget(
+            XmlViewWidget(
+                viewCreator = viewCreator,
+                onParamChanged = onParamChanged
+            )
+        )
     }
 }

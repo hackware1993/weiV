@@ -12,13 +12,13 @@ import cn.flutterfirst.weiv.core.views.WeiVView
 class StatefulWidget(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
-    var state: State? = null,
+    var state: State,
     var param: HashMap<String, Any?>? = null,
 ) : LeafRenderWidget<StatefulWidget.StatefulView, StatefulWidget>(key, layoutParam) {
 
     override fun createView(context: Context): StatefulView {
-        state!!.param = param
-        return StatefulView(context, state!!)
+        state.param = param
+        return StatefulView(context, state)
     }
 
     override fun doParameter(view: StatefulView, first: Boolean): StatefulView {

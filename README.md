@@ -106,6 +106,37 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 
 ![effect.gif](https://github.com/hackware1993/weiV/blob/master/effect.gif?raw=true)
 
+# The following functions have been implemented and are still under rapid iteration
+
+1. Scalable
+    1. Easily adapt third-party UI components to implement declarative APIs
+    2. The internal implementation can be replaced. For example, Text is rendered with TextView by
+       default. You can replace it with AppCompatTextView
+2. Provides JsContext based on WebView, which can be easily dynamic with WeiVParser, and will
+   continue to be enhanced later
+3. Friendly, full support for Java
+4. Provides XmlViewWidget that allows you to inline all existing views and implement a declarative
+   API without writing extensions
+5. Provides StatefulWidget to achieve separate management of subtree state, with it you no longer
+   need Fragment
+6. Provide WeiVView, WeiVJavaWeiV to embed weiV anywhere
+
+Near-term plans:
+
+1. Improve the core logic of the declarative architecture to support efficient updating of the three
+   trees of Widget, Element, and View
+2. Porting Flutter ConstraintLayout to achieve the above performance goals and bring unprecedented
+   development efficiency and experience, ConstraintLayout provided by Compose Haven't gotten rid of
+   imperative thinking, it's really inefficient to use
+3. Rewrite common core controls such as RecyclerView and ViewPager2 to implement declarative API
+4. Wrap all system built-in common components to implement declarative API, some may be rewritten
+5. Support animation in an extremely simple way, property animation is no longer suitable under the
+   declarative system
+6. Develop layout preview, this may be a little troublesome
+
+It is expected that all the code will be written, and the amount of code will be around 30,000
+lines.
+
 weiV is extensible. It will have all the commonly used widgets built in, which are wrappers for the
 system View. But for third-party libraries, you need to write extensions, which are extremely simple
 to write. For example, the extension for Button is as follows:
