@@ -24,7 +24,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
     }
 
     @Override
-    public WeiV build() {
+    public WeiV build(int buildCount) {
         return WeiV(() -> {
             Flex((it) -> {
                 it.wOrientation(FlexDirection.VERTICAL);
@@ -49,12 +49,17 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 
                 Text().wText("count = " + count);
 
+                // Widgets wrapped by Const will not be updated
+                Const(buildCount, () -> {
+                    Text().wText("Widgets wrapped by Const will not be updated, count = " + count);
+                });
+
                 Stateful(new StatefulWidget.State() {
                     private int innerCount = 0;
 
                     @NotNull
                     @Override
-                    public WeiV build() {
+                    public WeiV build(int buildCount) {
                         return WeiV(() -> {
                             Button().wText("This button maintains state alone, innerCount = " + innerCount).wOnClick(v -> {
                                 setState(() -> {

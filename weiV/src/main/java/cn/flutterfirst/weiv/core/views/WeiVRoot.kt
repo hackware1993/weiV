@@ -10,11 +10,12 @@ import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 
 interface IWeiVRootHolder {
-    fun build(): WeiV
+    fun build(buildCount: Int): WeiV
 }
 
 open class WeiVRoot(context: Context) : FrameLayout(context) {
     lateinit var weiVRootHolder: IWeiVRootHolder
+    var buildCount = 0
 
     lateinit var weiVRootWidget: LeafRenderWidget<*, *>
     lateinit var weiVRootElement: LeafRenderElement<*, *>
@@ -26,7 +27,7 @@ open class WeiVRoot(context: Context) : FrameLayout(context) {
         @JvmStatic
         fun buildAll() {
             weiVRoots.forEach {
-                it.update(it.weiVRootHolder.build())
+                it.update(it.weiVRootHolder.build(it.buildCount))
             }
         }
     }
@@ -52,6 +53,7 @@ open class WeiVRoot(context: Context) : FrameLayout(context) {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
+        buildCount++
     }
 
     fun update(weiV: WeiV) {
@@ -72,5 +74,6 @@ open class WeiVRoot(context: Context) : FrameLayout(context) {
             )
         }
         weiVRootWidget = newRootWidget
+        buildCount++
     }
 }

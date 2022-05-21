@@ -54,8 +54,8 @@ class StatefulWidget(
             state.dispose()
         }
 
-        override fun build(): WeiV {
-            return state.build()
+        override fun build(buildCount: Int): WeiV {
+            return state.build(buildCount)
         }
     }
 
@@ -66,7 +66,7 @@ class StatefulWidget(
         open fun initState(context: Context) {
         }
 
-        abstract fun build(): WeiV
+        abstract fun build(buildCount: Int): WeiV
 
         open fun didUpdateParam(param: HashMap<String, Any?>?) {
             this.param = param
@@ -75,13 +75,13 @@ class StatefulWidget(
         @KotlinOnly
         fun setState(block: () -> Unit) {
             block()
-            view.update(build())
+            view.update(build(view.buildCount))
         }
 
         @JavaOnly
         fun setState(build: IBuild) {
             build.build()
-            view.update(build())
+            view.update(build(view.buildCount))
         }
 
         open fun dispose() {

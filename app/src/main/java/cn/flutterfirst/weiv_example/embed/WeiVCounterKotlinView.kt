@@ -14,7 +14,7 @@ class WeiVCounterKotlinView(context: Context, attrs: AttributeSet?) : WeiVView(c
     private val maxCount = 10
     private val minCount = 0
 
-    override fun build() = WeiV {
+    override fun build(buildCount: Int) = WeiV {
         Flex {
             it.orientation = FlexDirection.VERTICAL
 

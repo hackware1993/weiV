@@ -13,7 +13,7 @@ abstract class WeiVActivity : Activity(), IWeiVRootHolder {
         if (firstResume) {
             weiVRoot = WeiVRoot(this)
             weiVRoot.weiVRootHolder = this
-            weiVRoot.init(build())
+            weiVRoot.init(build(0))
             if (containerId() == 0) {
                 setContentView(weiVRoot)
             } else {
@@ -31,7 +31,7 @@ abstract class WeiVActivity : Activity(), IWeiVRootHolder {
 
     fun setState(block: () -> Unit) {
         block()
-        weiVRoot.update(build())
+        weiVRoot.update(build(weiVRoot.buildCount))
     }
 
     open fun containerId(): Int {

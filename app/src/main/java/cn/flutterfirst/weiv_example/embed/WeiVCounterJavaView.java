@@ -16,7 +16,7 @@ public class WeiVCounterJavaView extends BaseWeiVJavaView {
     }
 
     @Override
-    public WeiV build() {
+    public WeiV build(int buildCount) {
         return WeiV(() -> {
             Flex((it) -> {
                 it.wOrientation(FlexDirection.VERTICAL);

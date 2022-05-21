@@ -5,6 +5,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.others.*
+import cn.flutterfirst.weiv.core.widgets.ConstWidget
 import cn.flutterfirst.weiv.core.widgets.StatefulWidget
 import cn.flutterfirst.weiv.core.widgets.XmlViewWidget
 import cn.flutterfirst.weiv.wrappers.linearlayout.weiVFlex
@@ -33,6 +34,10 @@ abstract class WeiVJavaActivity : WeiVActivity() {
         return weiVJavaHelper.createStateful(state = state)
     }
 
+    open fun Const(buildCount: Int, build: IBuild): ConstWidget {
+        return weiVJavaHelper.createConst(buildCount, build)
+    }
+
     open fun <VIEW : View, PARAM> XmlView(
         viewCreator: IBuildValue<VIEW>,
         onParamChanged: IParamChangedCallback<VIEW, PARAM>
@@ -46,6 +51,6 @@ abstract class WeiVJavaActivity : WeiVActivity() {
 
     fun setState(build: IBuild) {
         build.build()
-        weiVRoot.update(build())
+        weiVRoot.update(build(weiVRoot.buildCount))
     }
 }

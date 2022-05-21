@@ -11,10 +11,7 @@ import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.activities.WeiVActivity
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IGlobalWidgetAttachObserver
-import cn.flutterfirst.weiv.core.widgets.Stateful
-import cn.flutterfirst.weiv.core.widgets.StatefulWidget
-import cn.flutterfirst.weiv.core.widgets.Widget
-import cn.flutterfirst.weiv.core.widgets.XmlView
+import cn.flutterfirst.weiv.core.widgets.*
 import cn.flutterfirst.weiv.wrappers.linearlayout.Flex
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection
 import cn.flutterfirst.weiv.wrappers.textview.Text
@@ -53,7 +50,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
         Button(text = "This button is from module, $index")
     }
 
-    override fun build() = WeiV {
+    override fun build(buildCount: Int) = WeiV {
         Flex {
             it.orientation = FlexDirection.VERTICAL
 
@@ -77,10 +74,15 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
 
             Text(text = "count = $count")
 
+            // Widgets wrapped by Const will not be updated
+            Const(buildCount = buildCount) {
+                Text(text = "Widgets wrapped by Const will not be updated, count = $count")
+            }
+
             Stateful(state = object : StatefulWidget.State() {
                 private var innerCount = 0
 
-                override fun build() = WeiV {
+                override fun build(buildCount: Int) = WeiV {
                     Button(
                         text = "This button maintains state alone, innerCount = $innerCount",
                         onClick = {
