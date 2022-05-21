@@ -122,6 +122,13 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 
 预计所有的代码写完，代码量在 3 万行左右。
 
+终极目标：Java 下的唯一声明式 UI 开发框架，Kotlin 下比 Compose 更好的声明式 UI 开发框架。
+
+有人可能会说 Compose 支持跨平台，我想跨平台你应该首选 Flutter 而不是 Compose。
+
+在任何时候都应该优先考虑使用 Flutter 来开发 UI 部分。即便没有跨端的需求，在性能不成问题的时，它带给你的效率是成倍的。未来也许 80% 的 UI 将采用 Flutter
+构建。如果你因为嵌套地狱放弃了 Flutter，那么现在是时候重新捡起来了，因为我的 Flutter ConstraintLayout 已经根治了嵌套地狱。
+
 weiV 是可扩展的。它会内置所有常用的 Widget，这些 Widget 都是对系统 View 的包装。但对于第三方库，就需要写扩展，写起来也极其简单，比如给 Button 的扩展如下：
 
 ```kotlin

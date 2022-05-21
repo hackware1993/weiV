@@ -137,6 +137,18 @@ Near-term plans:
 It is expected that all the code will be written, and the amount of code will be around 30,000
 lines.
 
+The ultimate goal: the only declarative UI development framework under Java, a better declarative UI
+development framework under Kotlin than Compose.
+
+Some might say that Compose supports cross-platform, I think cross-platform you should prefer
+Flutter over Compose.
+
+Flutter should be prioritized at all times for developing UI parts. Even if there is no cross-end
+requirement, when performance is not a problem, the efficiency it brings to you is doubled. Maybe
+80% of UI will be built with Flutter in the future. If you gave up Flutter because of nesting hell,
+now is the time to pick it up again, because my Flutter ConstraintLayout has eliminated nesting
+hell.
+
 weiV is extensible. It will have all the commonly used widgets built in, which are wrappers for the
 system View. But for third-party libraries, you need to write extensions, which are extremely simple
 to write. For example, the extension for Button is as follows:
