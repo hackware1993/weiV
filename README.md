@@ -9,7 +9,7 @@ View system. The core source files are only 35 KB.
 
 [Download weiV Counter apk](https://github.com/hackware1993/weiV/blob/master/weiV_Counter.apk)
 Building the counter release obfuscated package took only 4 seconds and was 41 KB in size.
-![weiV_Counter.webp](https://github.com/hackware1993/weiV/blob/master/weiV_Counter.webp?raw=true)
+![weiV_Counter_effect.webp](https://github.com/hackware1993/weiV/blob/master/weiV_Counter_effect.webp?raw=true)
 
 ```kotlin
 if ("weiV" == "View".reversed()) {
