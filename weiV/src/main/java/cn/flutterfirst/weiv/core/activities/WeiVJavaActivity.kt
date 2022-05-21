@@ -13,7 +13,7 @@ import cn.flutterfirst.weiv.wrappers.textview.weiVText
 abstract class WeiVJavaActivity : WeiVActivity() {
     val weiVJavaHelper = WeiVJavaHelper()
 
-    fun WeiV(build: Build): WeiV {
+    fun WeiV(build: IBuild): WeiV {
         return weiVJavaHelper.createWeiV(build)
     }
 
@@ -21,11 +21,11 @@ abstract class WeiVJavaActivity : WeiVActivity() {
         return weiVJavaHelper.createText()
     }
 
-    open fun Flex(build: BuildWithContext<weiVFlex<LinearLayout>>): weiVFlex<LinearLayout> {
+    open fun Flex(build: IBuildWithContext<weiVFlex<LinearLayout>>): weiVFlex<LinearLayout> {
         return weiVJavaHelper.createFlex(build)
     }
 
-    open fun Flex(build: Build): weiVFlex<LinearLayout> {
+    open fun Flex(build: IBuild): weiVFlex<LinearLayout> {
         return weiVJavaHelper.createFlex(build)
     }
 
@@ -34,8 +34,8 @@ abstract class WeiVJavaActivity : WeiVActivity() {
     }
 
     open fun <VIEW : View, PARAM> XmlView(
-        viewCreator: BuildValue<VIEW>,
-        onParamChanged: ParamChangedCallback<VIEW, PARAM>
+        viewCreator: IBuildValue<VIEW>,
+        onParamChanged: IParamChangedCallback<VIEW, PARAM>
     ): XmlViewWidget<VIEW, PARAM> {
         return weiVJavaHelper.createXmlView({
             viewCreator.build()
@@ -44,7 +44,7 @@ abstract class WeiVJavaActivity : WeiVActivity() {
         })
     }
 
-    fun setState(build: Build) {
+    fun setState(build: IBuild) {
         build.build()
         weiVRoot.update(build())
     }

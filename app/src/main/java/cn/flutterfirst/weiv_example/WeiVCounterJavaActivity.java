@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import org.jetbrains.annotations.NotNull;
 
 import cn.flutterfirst.weiv.core.WeiV;
-import cn.flutterfirst.weiv.core.others.ParamChangedCallback;
+import cn.flutterfirst.weiv.core.others.IParamChangedCallback;
 import cn.flutterfirst.weiv.core.widgets.StatefulWidget;
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection;
 
@@ -29,11 +29,25 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
             Flex((it) -> {
                 it.wOrientation(FlexDirection.VERTICAL);
 
-                Button().wText("Add count").wEnable(count < maxCount).wOnClick(v -> {
-                    setState(() -> {
-                        count++;
+                Flex(() -> {
+                    Button().wText("Add count").wEnable(count < maxCount).wOnClick(v -> {
+                        setState(() -> {
+                            count++;
+                        });
+                    });
+
+                    Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
+                        setState(() -> {
+                            count--;
+                        });
+                    });
+
+                    Button().wText("Change app skin, isLight = " + SkinManager.isLight()).wOnClick(v -> {
+                        SkinManager.changeSkin();
                     });
                 });
+
+                Text().wText("count = " + count);
 
                 Stateful(new StatefulWidget.State() {
                     private int innerCount = 0;
@@ -59,14 +73,6 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                     Text().wText("Merge with outer layer");
                 }));
 
-                Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
-                    setState(() -> {
-                        count--;
-                    });
-                });
-
-                Text().wText("count = " + count);
-
                 Button().wText("Change WebView url").wOnClick(v -> {
                     setState(() -> {
                         url = "https://flutterfirst.cn";
@@ -90,7 +96,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                         }
                     });
                     return webView;
-                }, (ParamChangedCallback<WebView, String>) (webView, url, first) -> {
+                }, (IParamChangedCallback<WebView, String>) (webView, url, first) -> {
                     if (first) {
                         webView.loadUrl(url);
                         webView.setTag(R.id.current_url, url);

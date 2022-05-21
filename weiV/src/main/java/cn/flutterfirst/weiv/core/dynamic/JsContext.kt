@@ -7,7 +7,7 @@ import android.webkit.WebView
 
 class JsContext(context: Context, path: String) {
     val webView = WebView(context)
-    var callback: OnJsCall? = null
+    var callback: IOnJsCall? = null
 
     inner class JsInterface {
         @JavascriptInterface
@@ -16,7 +16,7 @@ class JsContext(context: Context, path: String) {
         }
     }
 
-    interface OnJsCall {
+    interface IOnJsCall {
         fun onJsCallNativeMethod(methodName: String, vararg param: Any?)
     }
 

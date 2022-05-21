@@ -3,7 +3,7 @@ package cn.flutterfirst.weiv.core.widgets
 import android.content.Context
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.keys.Key
-import cn.flutterfirst.weiv.core.others.Build
+import cn.flutterfirst.weiv.core.others.IBuild
 import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
@@ -79,7 +79,7 @@ class StatefulWidget(
         }
 
         @JavaOnly
-        fun setState(build: Build) {
+        fun setState(build: IBuild) {
             build.build()
             view.update(build())
         }

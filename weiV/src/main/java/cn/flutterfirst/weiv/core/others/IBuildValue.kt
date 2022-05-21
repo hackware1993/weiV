@@ -1,5 +1,5 @@
 package cn.flutterfirst.weiv.core.others
 
-interface BuildValue<T> {
+interface IBuildValue<T> {
     fun build(): T
 }

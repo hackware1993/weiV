@@ -1,5 +1,5 @@
 package cn.flutterfirst.weiv.core.others
 
-interface Build {
+interface IBuild {
     fun build()
 }

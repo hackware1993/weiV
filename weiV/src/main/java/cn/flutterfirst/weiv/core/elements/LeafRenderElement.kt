@@ -17,6 +17,6 @@ open class LeafRenderElement<VIEW : View, WIDGET : LeafRenderWidget<VIEW, WIDGET
 
     override fun update(newWidget: Widget<*>) {
         super.update(newWidget)
-        (newWidget as LeafRenderWidget<VIEW, WIDGET>).updateView(view)
+        (widget as LeafRenderWidget<VIEW, WIDGET>).updateView(view)
     }
 }

@@ -9,10 +9,37 @@ import cn.flutterfirst.weiv.core.elements.LeafRenderElement
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 
+interface IWeiVRootHolder {
+    fun build(): WeiV
+}
+
 open class WeiVRoot(context: Context) : FrameLayout(context) {
+    lateinit var weiVRootHolder: IWeiVRootHolder
+
     lateinit var weiVRootWidget: LeafRenderWidget<*, *>
     lateinit var weiVRootElement: LeafRenderElement<*, *>
     lateinit var weiVRootView: View
+
+    companion object {
+        val weiVRoots = ArrayList<WeiVRoot>()
+
+        @JvmStatic
+        fun buildAll() {
+            weiVRoots.forEach {
+                it.update(it.weiVRootHolder.build())
+            }
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        weiVRoots.add(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        weiVRoots.remove(this)
+    }
 
     fun init(weiV: WeiV) {
         assert(weiV.currentWidgetContext.size == 1)

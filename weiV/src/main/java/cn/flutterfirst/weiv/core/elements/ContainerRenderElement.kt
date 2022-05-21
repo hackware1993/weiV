@@ -33,7 +33,7 @@ open class ContainerRenderElement<VIEW_GROUP : ViewGroup, WIDGET : ContainerRend
 
         super.update(newWidget)
 
-        val newChildWidgets = newWidget.childWidgets!!
+        val newChildWidgets = widget.childWidgets!!
 
         // TODO
         if (oldChildWidgets.size == newChildWidgets.size) {

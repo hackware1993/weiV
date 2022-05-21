@@ -1,18 +1,24 @@
 package cn.flutterfirst.weiv_example
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.activities.WeiVActivity
+import cn.flutterfirst.weiv.core.extension.ExtensionMgr
+import cn.flutterfirst.weiv.core.extension.IGlobalWidgetAttachObserver
 import cn.flutterfirst.weiv.core.widgets.Stateful
 import cn.flutterfirst.weiv.core.widgets.StatefulWidget
+import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.core.widgets.XmlView
 import cn.flutterfirst.weiv.wrappers.linearlayout.Flex
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection
 import cn.flutterfirst.weiv.wrappers.textview.Text
+import cn.flutterfirst.weiv.wrappers.textview.weiVText
 import cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterJavaActivity
 import cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterKotlinActivity
 import cn.flutterfirst.weiv_example.ext.Button
@@ -23,6 +29,26 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
     private val minCount = 0
     private var url = "https://baidu.com"
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ExtensionMgr.globalWidgetAttachObserver = object : IGlobalWidgetAttachObserver {
+            val lightSkinTextColor = Color.BLACK
+            val darkSkinTextColor = Color.RED
+
+            override fun onWidgetAttach(widget: Widget<*>): Widget<*> {
+                // For java change skin
+                if (widget is weiVText<*>) {
+                    if (SkinManager.isLight) {
+                        widget.textColor = lightSkinTextColor
+                    } else {
+                        widget.textColor = darkSkinTextColor
+                    }
+                }
+                return widget
+            }
+        }
+    }
+
     fun WeiV.moduleItem(index: Int) {
         Button(text = "This button is from module, $index")
     }
@@ -31,17 +57,23 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
         Flex {
             it.orientation = FlexDirection.VERTICAL
 
-            Button(text = "Add count", enable = count < maxCount, onClick = {
-                setState {
-                    count++
-                }
-            })
+            Flex {
+                Button(text = "Add count", enable = count < maxCount, onClick = {
+                    setState {
+                        count++
+                    }
+                })
 
-            Button(text = "Sub count", enable = count > minCount, onClick = {
-                setState {
-                    count--
-                }
-            })
+                Button(text = "Sub count", enable = count > minCount, onClick = {
+                    setState {
+                        count--
+                    }
+                })
+
+                Button(text = "Change app skin, isLight = ${SkinManager.isLight}", onClick = {
+                    SkinManager.changeSkin()
+                })
+            }
 
             Text(text = "count = $count")
 

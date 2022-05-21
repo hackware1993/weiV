@@ -12,12 +12,14 @@ import cn.flutterfirst.weiv.wrappers.linearlayout.weiVFlex
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
 
 object ExtensionMgr {
-    private val extensionMap: HashMap<String, IExtensionCreator<*>> = HashMap()
+    var extensionMap: HashMap<String, IExtensionCreator<*>> = HashMap()
+    var globalWidgetCreateObserver: IGlobalWidgetCreateObserver? = null
+    var globalWidgetAttachObserver: IGlobalWidgetAttachObserver? = null
 
     init {
         registerExtension(InternalWidgetDesc.TEXT, IExtensionCreator {
-            if (it.isNotEmpty()) {
-                return@IExtensionCreator @KotlinOnly weiVText<TextView>(
+            val widget = if (it.isNotEmpty()) {
+                @KotlinOnly weiVText(
                     it[0] as Key?,
                     it[1] as LayoutParam<*>?,
                     it[2] as String,
@@ -25,22 +27,40 @@ object ExtensionMgr {
                     it[4] as Int
                 )
             } else {
-                return@IExtensionCreator @JavaOnly weiVText<TextView>()
+                @JavaOnly weiVText<TextView>()
             }
+            return@IExtensionCreator dispatchWidgetCreate(InternalWidgetDesc.TEXT, widget)
         })
 
         registerExtension(InternalWidgetDesc.FLEX, IExtensionCreator {
-            if (it.isNotEmpty()) {
-                return@IExtensionCreator @KotlinOnly weiVFlex<LinearLayout>(
+            val widget = if (it.isNotEmpty()) {
+                @KotlinOnly weiVFlex(
                     it[0] as Key?,
                     it[1] as LayoutParam<*>?,
                     it[2] as ArrayList<Widget<*>>,
                     it[3] as Int
                 )
             } else {
-                return@IExtensionCreator @JavaOnly weiVFlex<LinearLayout>()
+                @JavaOnly weiVFlex<LinearLayout>()
             }
+            return@IExtensionCreator dispatchWidgetCreate(InternalWidgetDesc.FLEX, widget)
         })
+    }
+
+    @JvmStatic
+    fun dispatchWidgetCreate(type: String, widget: Widget<*>): Widget<*> {
+        if (globalWidgetCreateObserver == null) {
+            return widget
+        }
+        return globalWidgetCreateObserver!!.onWidgetCreate(type, widget)
+    }
+
+    @JvmStatic
+    fun dispatchWidgetAttach(widget: Widget<*>): Widget<*> {
+        if (globalWidgetAttachObserver == null) {
+            return widget
+        }
+        return globalWidgetAttachObserver!!.onWidgetAttach(widget)
     }
 
     @JvmStatic

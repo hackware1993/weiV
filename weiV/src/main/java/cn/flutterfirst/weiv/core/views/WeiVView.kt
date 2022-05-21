@@ -1,9 +1,12 @@
 package cn.flutterfirst.weiv.core.views
 
 import android.content.Context
-import cn.flutterfirst.weiv.core.WeiV
 
-abstract class WeiVView(context: Context) : WeiVRoot(context) {
+abstract class WeiVView(context: Context) : WeiVRoot(context), IWeiVRootHolder {
+
+    init {
+        weiVRootHolder = this
+    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -14,6 +17,4 @@ abstract class WeiVView(context: Context) : WeiVRoot(context) {
         block()
         update(build())
     }
-
-    abstract fun build(): WeiV
 }

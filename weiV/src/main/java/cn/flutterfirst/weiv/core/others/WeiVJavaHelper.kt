@@ -17,7 +17,7 @@ class WeiVJavaHelper {
     var textViewCreator: IExtensionCreator<weiVText<TextView>>? = null
     var flexCreator: IExtensionCreator<weiVFlex<LinearLayout>>? = null
 
-    fun createWeiV(build: Build): WeiV {
+    fun createWeiV(build: IBuild): WeiV {
         val temp = weiV
         val weiV = WeiV()
         this.weiV = weiV
@@ -35,7 +35,7 @@ class WeiVJavaHelper {
         return weiVText
     }
 
-    fun createFlex(build: BuildWithContext<weiVFlex<LinearLayout>>): weiVFlex<LinearLayout> {
+    fun createFlex(build: IBuildWithContext<weiVFlex<LinearLayout>>): weiVFlex<LinearLayout> {
         if (flexCreator == null) {
             flexCreator = ExtensionMgr.getExtension(InternalWidgetDesc.FLEX)
         }
@@ -46,7 +46,7 @@ class WeiVJavaHelper {
         return weiVFlex
     }
 
-    fun createFlex(build: Build): weiVFlex<LinearLayout> {
+    fun createFlex(build: IBuild): weiVFlex<LinearLayout> {
         if (flexCreator == null) {
             flexCreator = ExtensionMgr.getExtension(InternalWidgetDesc.FLEX)
         }

@@ -2,16 +2,17 @@ package cn.flutterfirst.weiv.core.activities
 
 import android.app.Activity
 import android.view.ViewGroup
-import cn.flutterfirst.weiv.core.WeiV
+import cn.flutterfirst.weiv.core.views.IWeiVRootHolder
 import cn.flutterfirst.weiv.core.views.WeiVRoot
 
-abstract class WeiVActivity : Activity() {
+abstract class WeiVActivity : Activity(), IWeiVRootHolder {
     lateinit var weiVRoot: WeiVRoot
     var firstResume = true
 
     override fun onResume() {
         if (firstResume) {
             weiVRoot = WeiVRoot(this)
+            weiVRoot.weiVRootHolder = this
             weiVRoot.init(build())
             if (containerId() == 0) {
                 setContentView(weiVRoot)
@@ -27,8 +28,6 @@ abstract class WeiVActivity : Activity() {
         }
         super.onResume()
     }
-
-    abstract fun build(): WeiV
 
     fun setState(block: () -> Unit) {
         block()
