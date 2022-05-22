@@ -21,7 +21,9 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
 
     override fun mount(context: Context) {
         super.mount(context)
-        parentView = (view as ViewGroup)
+        if (view is ViewGroup) {
+            parentView = (view as ViewGroup)
+        }
         for ((index, widget) in widget.childWidgets!!.withIndex()) {
             val childElement = widget.createElement()
             childElement.assignParent(this)
@@ -48,6 +50,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         super.update(newWidget)
         val newChildWidgets = widget.childWidgets!!
 
+        // Add padding widgets
         if (oldChildWidgets.size < newChildWidgets.size) {
             repeat(newChildWidgets.size - oldChildWidgets.size) {
                 oldChildWidgets.add(DummyWidget())
@@ -60,6 +63,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             }
         }
 
+        // Rearrange widgets by key
         var newChildWidget: Widget<*>
         for (i in 0 until newChildWidgets.size) {
             newChildWidget = newChildWidgets[i]
@@ -76,8 +80,8 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     childViews[i] = childViews[oldIndex]
                     childViews[oldIndex] = tempView
                     keyMap[newChildWidget.key!!] = i
-                    if (oldChildWidgets[oldIndex].key != null) {
-                        keyMap[oldChildWidgets[oldIndex].key!!] = oldIndex
+                    if (tempWidget.key != null) {
+                        keyMap[tempWidget.key!!] = oldIndex
                     }
                 }
             }
@@ -90,7 +94,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             if (Widget.canUpdate(oldChildWidget, newChildWidget)) {
                 childElements[i].update(newChildWidget)
                 val element = childElements[i] as LeafRenderElement<*, *>
-                val index = parentView.indexOfChild(element.view)
+                val index = indexOfChild(element.view)
                 if (index != i) {
                     parentView.removeView(element.view)
                     parentView.addView(element.view, i)
@@ -109,7 +113,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     }
                 } else if (newChildWidget is ContainerRenderElement<*, *>.DummyWidget) {
                     childElements[i].unmount()
-                    val index = parentView.indexOfChild(childViews[i])
+                    val index = indexOfChild(childViews[i])
                     if (index != -1) {
                         parentView.removeViewAt(index)
                     }
@@ -119,16 +123,16 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     newElement.assignParent(this)
                     newElement.mount(context)
                     childElements[i] = newElement
-                    val index = parentView.indexOfChild(childViews[i])
+                    val index = indexOfChild(childViews[i])
                     if (newElement is LeafRenderElement<*, *>) {
                         childViews[i] = newElement.view
                         if (index != -1) {
                             parentView.removeViewAt(index)
-                            parentView.addView(newElement.view, index)
+                            parentView.addView(newElement.view, i)
                         } else {
                             var prevViewIndex = -1
                             for (j in i - 1 downTo 0) {
-                                prevViewIndex = parentView.indexOfChild(childViews[j])
+                                prevViewIndex = indexOfChild(childViews[j])
                                 if (prevViewIndex != -1) {
                                     break
                                 }
@@ -160,6 +164,16 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                 keyMap[newChildWidgets[i].key!!] = i
             }
         }
+    }
+
+    fun indexOfChild(view: View): Int {
+        if (view is DummyView) {
+            return -1
+        }
+        if (this.view is ViewGroup) {
+            return parentView.indexOfChild(view)
+        }
+        return -1
     }
 
     override fun unmount() {
