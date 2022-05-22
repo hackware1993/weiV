@@ -1,8 +1,11 @@
 package cn.flutterfirst.weiv.core.widgets
 
+import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.elements.Element
 import cn.flutterfirst.weiv.core.keys.Key
+import cn.flutterfirst.weiv.core.others.IBuild
 import cn.flutterfirst.weiv.core.others.JavaOnly
+import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
 
 abstract class Widget<W : Widget<W>>(
@@ -12,6 +15,26 @@ abstract class Widget<W : Widget<W>>(
     var extra: Any? = null
 ) {
     abstract fun createElement(): Element
+
+    @JavaOnly
+    fun open(build: IBuild) {
+        if (this is ContainerRenderWidget<*, *>) {
+            val temp = WeiV.globalWidgetContext
+            WeiV.globalWidgetContext = childWidgets
+            build.build()
+            WeiV.globalWidgetContext = temp
+        }
+    }
+
+    @KotlinOnly
+    fun open(block: () -> Unit) {
+        if (this is ContainerRenderWidget<*, *>) {
+            val temp = WeiV.globalWidgetContext
+            WeiV.globalWidgetContext = childWidgets
+            block()
+            WeiV.globalWidgetContext = temp
+        }
+    }
 
     @JavaOnly
     fun wKey(key: Key?): W {

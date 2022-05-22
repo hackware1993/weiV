@@ -10,6 +10,10 @@ import cn.flutterfirst.weiv.core.widgets.Widget
 open class WeiV {
     var currentWidgetContext = ArrayList<Widget<*>>()
 
+    companion object {
+        var globalWidgetContext: ArrayList<Widget<*>>? = null
+    }
+
     @JavaOnly
     constructor()
 
@@ -41,7 +45,11 @@ open class WeiV {
     }
 
     fun <W : Widget<*>> addLeafRenderWidget(widget: W): W {
-        currentWidgetContext.add(widget)
+        if (globalWidgetContext != null) {
+            globalWidgetContext?.add(widget)
+        } else {
+            currentWidgetContext.add(widget)
+        }
         return widget
     }
 
@@ -49,19 +57,35 @@ open class WeiV {
         widget: W,
         block: WeiV.(widget: W) -> Unit
     ): W {
-        currentWidgetContext.add(widget)
-        val temp = currentWidgetContext
-        currentWidgetContext = widget.childWidgets!!
-        block(widget)
-        currentWidgetContext = temp
+        if (globalWidgetContext != null) {
+            globalWidgetContext?.add(widget)
+            val temp = globalWidgetContext
+            globalWidgetContext = widget.childWidgets!!
+            block(widget)
+            globalWidgetContext = temp
+        } else {
+            currentWidgetContext.add(widget)
+            val temp = currentWidgetContext
+            currentWidgetContext = widget.childWidgets!!
+            block(widget)
+            currentWidgetContext = temp
+        }
         return widget
     }
 
     fun merge(block: () -> WeiV) {
-        currentWidgetContext.addAll(block().currentWidgetContext)
+        if (globalWidgetContext != null) {
+            globalWidgetContext?.addAll(block().currentWidgetContext)
+        } else {
+            currentWidgetContext.addAll(block().currentWidgetContext)
+        }
     }
 
     fun merge(weiV: WeiV) {
-        currentWidgetContext.addAll(weiV.currentWidgetContext)
+        if (globalWidgetContext != null) {
+            globalWidgetContext?.addAll(weiV.currentWidgetContext)
+        } else {
+            currentWidgetContext.addAll(weiV.currentWidgetContext)
+        }
     }
 }

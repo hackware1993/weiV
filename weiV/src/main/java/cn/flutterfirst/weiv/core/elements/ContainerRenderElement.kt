@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 
-open class ContainerRenderElement<V : ViewGroup, W : ContainerRenderWidget<V, W>>(
+open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
     widget: ContainerRenderWidget<V, W>,
 ) : LeafRenderElement<V, W>(widget) {
     var childElements: ArrayList<Element> = ArrayList()
@@ -21,7 +21,7 @@ open class ContainerRenderElement<V : ViewGroup, W : ContainerRenderWidget<V, W>
             childElements.add(childElement)
             if (childElement is LeafRenderElement<*, *>) {
                 childViews.add(childElement.view)
-                view.addView(childElement.view)
+                (view as ViewGroup).addView(childElement.view)
             } else {
                 // Stateful element
             }
@@ -48,7 +48,7 @@ open class ContainerRenderElement<V : ViewGroup, W : ContainerRenderWidget<V, W>
                     childElements.add(childElement)
                     if (childElement is LeafRenderElement<*, *>) {
                         childViews.add(childElement.view)
-                        view.addView(childElement.view)
+                        (view as ViewGroup).addView(childElement.view)
                     } else {
                         // Stateful element
                     }
@@ -63,6 +63,8 @@ open class ContainerRenderElement<V : ViewGroup, W : ContainerRenderWidget<V, W>
         childElements.forEach {
             it.unmount()
         }
-        view.removeAllViews()
+        if (view is ViewGroup) {
+            (view as ViewGroup).removeAllViews()
+        }
     }
 }
