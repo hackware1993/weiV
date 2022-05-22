@@ -2,7 +2,7 @@ package cn.flutterfirst.weiv.core.dynamic
 
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.ISerializableWidget
-import cn.flutterfirst.weiv.core.keys.StringKey
+import cn.flutterfirst.weiv.core.keys.ValueKey
 import cn.flutterfirst.weiv.core.widgets.Widget
 import org.json.JSONArray
 import org.json.JSONObject
@@ -27,10 +27,10 @@ object WeiVParser {
             if (widget is ISerializableWidget<*>) {
                 widget.extra = jsonObj
 
-                var stringKey: StringKey? = null
+                var stringKey: ValueKey<String>? = null
                 val keyString: String? = jsonObj.optString("key", null)
                 if (keyString != null) {
-                    stringKey = StringKey(keyString)
+                    stringKey = ValueKey(keyString)
                 }
                 widget.key = stringKey
 

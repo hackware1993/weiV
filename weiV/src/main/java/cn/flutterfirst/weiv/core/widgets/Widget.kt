@@ -1,6 +1,7 @@
 package cn.flutterfirst.weiv.core.widgets
 
 import cn.flutterfirst.weiv.core.WeiV
+import cn.flutterfirst.weiv.core.elements.ContainerRenderElement
 import cn.flutterfirst.weiv.core.elements.Element
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.IBuild
@@ -56,6 +57,9 @@ abstract class Widget<W : Widget<W>>(
 
     companion object {
         fun canUpdate(oldWidget: Widget<*>, newWidget: Widget<*>): Boolean {
+            if (oldWidget is ContainerRenderElement<*, *>.DummyWidget || newWidget is ContainerRenderElement<*, *>.DummyWidget) {
+                return false
+            }
             return oldWidget.javaClass == newWidget.javaClass && oldWidget.key == newWidget.key
         }
     }

@@ -45,11 +45,23 @@ fun WeiV.Const(
             ), block
         )
     } else {
-        return addLeafRenderWidget(
-            ConstWidget(
-                key = key,
-                layoutParam = layoutParam,
+        if (key == null) {
+            return addContainerRenderWidget(
+                ConstWidget(
+                    key,
+                    layoutParam,
+                    ArrayList(),
+                    extra
+                ), block
             )
-        )
+        } else {
+            return addLeafRenderWidget(
+                ConstWidget(
+                    key,
+                    layoutParam,
+                    extra = extra
+                )
+            )
+        }
     }
 }
