@@ -15,7 +15,7 @@ import cn.flutterfirst.weiv.wrappers.textview.weiVText
 
 class WeiVJavaHelper {
     var weiV: WeiV? = null
-    var textViewCreator: IExtensionCreator<weiVText<TextView>>? = null
+    var textViewCreator: IExtensionCreator<weiVText<TextView, *>>? = null
     var flexCreator: IExtensionCreator<weiVFlex<LinearLayout>>? = null
 
     fun createWeiV(build: IBuild): WeiV {
@@ -27,7 +27,7 @@ class WeiVJavaHelper {
         return weiV
     }
 
-    fun createText(): weiVText<TextView> {
+    fun createText(): weiVText<TextView, *> {
         if (textViewCreator == null) {
             textViewCreator = ExtensionMgr.getExtension(InternalWidgetDesc.TEXT)
         }

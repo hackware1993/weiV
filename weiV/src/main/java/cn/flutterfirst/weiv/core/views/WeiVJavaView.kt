@@ -3,7 +3,6 @@ package cn.flutterfirst.weiv.core.views
 import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.others.*
 import cn.flutterfirst.weiv.core.widgets.ConstWidget
@@ -19,7 +18,7 @@ abstract class WeiVJavaView(context: Context) : WeiVView(context) {
         return weiVJavaHelper.createWeiV(build)
     }
 
-    open fun Text(): weiVText<TextView> {
+    open fun Text(): weiVText<*, *> {
         return weiVJavaHelper.createText()
     }
 

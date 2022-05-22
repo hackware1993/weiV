@@ -8,4 +8,7 @@ interface ISerializableWidget<W : Widget<W>> {
 
     fun parseChildLayoutParam(childWidget: Widget<*>, layoutParam: Map<String, Any?>) {
     }
+
+    fun parseExtra(extraString: String?) {
+    }
 }

@@ -1,0 +1,71 @@
+{
+  "name": "Flex",
+  "param": {
+    "orientation": 0
+  },
+  "layoutParam": {},
+  "children": [
+    {
+      "name": "Text",
+      "param": {
+        "text": "hello weiV"
+      },
+      "layoutParam": {
+        "width": 100,
+        "height": 100
+      }
+    },
+    {
+      "name": "Text",
+      "param": {
+        "text": "hello weiV"
+      },
+      "layoutParam": {
+        "width": 100,
+        "height": 100
+      }
+    },
+    {
+      "name": "Flex",
+      "param": {
+        "orientation": 1
+      },
+      "layoutParam": {},
+      "children": [
+        {
+          "name": "Button",
+          "param": {
+            "text": "hello weiV button",
+            "textSize": 24,
+            "textColor": "#ff0000"
+          },
+          "layoutParam": {
+            "width": 100,
+            "height": 100
+          },
+          "extra": "click://login_btn"
+        },
+        {
+          "name": "Text",
+          "param": {
+            "text": "hello weiV"
+          },
+          "layoutParam": {
+            "width": 100,
+            "height": 100
+          }
+        },
+        {
+          "name": "Text",
+          "param": {
+            "text": "hello weiV"
+          },
+          "layoutParam": {
+            "width": 100,
+            "height": 100
+          }
+        }
+      ]
+    }
+  ]
+}

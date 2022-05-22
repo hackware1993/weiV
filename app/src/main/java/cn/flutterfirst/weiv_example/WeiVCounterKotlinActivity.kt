@@ -34,7 +34,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
 
             override fun onWidgetAttach(widget: Widget<*>): Widget<*> {
                 // For java change skin
-                if (widget is weiVText<*>) {
+                if (widget is weiVText<*, *>) {
                     if (SkinManager.isLight) {
                         widget.textColor = lightSkinTextColor
                     } else {

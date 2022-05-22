@@ -19,7 +19,7 @@ object ExtensionMgr {
     init {
         registerExtension(InternalWidgetDesc.TEXT, IExtensionCreator {
             val widget = if (it.isNotEmpty()) {
-                @KotlinOnly weiVText(
+                @KotlinOnly weiVText<TextView, weiVText<*, *>>(
                     it[0] as Key?,
                     it[1] as LayoutParam<*>?,
                     it[2] as String,
@@ -28,7 +28,7 @@ object ExtensionMgr {
                     it[5]
                 )
             } else {
-                @JavaOnly weiVText<TextView>()
+                @JavaOnly weiVText<TextView, weiVText<*, *>>()
             }
             return@IExtensionCreator dispatchWidgetCreate(InternalWidgetDesc.TEXT, widget)
         })

@@ -16,7 +16,7 @@ import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import org.json.JSONObject
 
-open class weiVText<V : TextView>(
+open class weiVText<V : TextView, W : weiVText<V, W>>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     open var text: String = "",
@@ -24,8 +24,8 @@ open class weiVText<V : TextView>(
     open var textColor: Int = TextConst.defaultTextColor,
     extra: Any? = null
 ) :
-    LeafRenderWidget<V, weiVText<V>>(key, layoutParam, extra = extra), IWeiVExtension,
-    ISerializableWidget<weiVText<V>> {
+    LeafRenderWidget<V, weiVText<V, W>>(key, layoutParam, extra = extra), IWeiVExtension,
+    ISerializableWidget<weiVText<V, W>> {
 
     override fun createView(context: Context): V = TextView(context) as V
 
@@ -43,26 +43,40 @@ open class weiVText<V : TextView>(
     }
 
     @JavaOnly
-    open fun wText(text: String): weiVText<V> {
+    open fun wText(text: String): W {
         this.text = text
-        return this
+        return this as W
     }
 
     @JavaOnly
-    open fun wTextSize(textSize: Float): weiVText<V> {
+    open fun wTextSize(textSize: Float): W {
         this.textSize = textSize
-        return this
+        return this as W
     }
 
     @JavaOnly
-    open fun wTextColor(textColor: Int): weiVText<V> {
+    open fun wTextColor(textColor: Int): W {
         this.textColor = textColor
-        return this
+        return this as W
     }
 
-    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVText<V> {
+    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVText<V, W> {
         text = (param["text"] as String?) ?: ""
-        textSize = ((param["textSize"] as Double?) ?: TextConst.defaultTextSize).toFloat()
+        val textSizeObj = param["textSize"]
+        textSize = when (textSizeObj) {
+            is Int -> {
+                textSizeObj.toFloat()
+            }
+            is Float -> {
+                textSizeObj
+            }
+            is Double -> {
+                textSizeObj.toFloat()
+            }
+            else -> {
+                TextConst.defaultTextSize
+            }
+        }
         val colorStr = param["textColor"] as String?
         textColor = if (colorStr != null && colorStr.startsWith("#")) {
             Color.parseColor(colorStr)
@@ -77,7 +91,7 @@ open class weiVText<V : TextView>(
     }
 }
 
-var creator: IExtensionCreator<weiVText<*>>? = null
+var creator: IExtensionCreator<weiVText<*, *>>? = null
 
 @KotlinOnly
 fun WeiV.Text(
@@ -87,7 +101,7 @@ fun WeiV.Text(
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor,
     extra: Any? = null
-): weiVText<*> {
+): weiVText<*, *> {
     if (creator == null) {
         creator = ExtensionMgr.getExtension(InternalWidgetDesc.TEXT)
     }

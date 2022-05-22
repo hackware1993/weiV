@@ -33,7 +33,11 @@ object WeiVParser {
                     stringKey = StringKey(keyString)
                 }
                 widget.key = stringKey
-                parseMap(jsonObj, "layoutParam")
+
+                widget.fromJson(
+                    jsonObj,
+                    parseMap(jsonObj, "param")
+                )
 
                 val childrenWidgets: ArrayList<Widget<*>>?
                 val children = jsonObj.optJSONArray("children")
@@ -50,15 +54,15 @@ object WeiVParser {
                             "layoutParam"
                         )
                     )
+                    (it as ISerializableWidget<*>).parseExtra((it.extra as JSONObject).optString("extra"))
                 }
 
                 widget.childWidgets = childrenWidgets
-                widget.fromJson(
-                    jsonObj,
-                    parseMap(jsonObj, "param")
-                )
+
+                return widget
+            } else {
+                return null
             }
-            return widget
         }
 
         return null
