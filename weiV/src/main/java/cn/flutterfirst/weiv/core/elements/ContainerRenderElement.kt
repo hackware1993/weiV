@@ -17,8 +17,11 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
     var dummyElement = DummyElement()
     var keyMap = HashMap<Key, Int?>()
 
+    lateinit var parentView: ViewGroup
+
     override fun mount(context: Context) {
         super.mount(context)
+        parentView = (view as ViewGroup)
         for ((index, widget) in widget.childWidgets!!.withIndex()) {
             val childElement = widget.createElement()
             childElement.assignParent(this)
@@ -26,7 +29,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             childElements.add(childElement)
             if (childElement is LeafRenderElement<*, *>) {
                 childViews.add(childElement.view)
-                (view as ViewGroup).addView(childElement.view)
+                parentView.addView(childElement.view)
             } else {
                 childViews.add(DummyView(context))
             }
@@ -58,7 +61,6 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         }
 
         var newChildWidget: Widget<*>
-        val newKeyMap = HashMap<Key, Int?>()
         for (i in 0 until newChildWidgets.size) {
             newChildWidget = newChildWidgets[i]
             if (newChildWidget.key != null) {
@@ -78,20 +80,21 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                         keyMap[oldChildWidgets[oldIndex].key!!] = oldIndex
                     }
                 }
-                newKeyMap[newChildWidget.key!!] = i
             }
         }
-        keyMap = newKeyMap
 
-        val dirtyWidgets = HashSet<Widget<*>>()
-        val dirtyElements = HashSet<Element>()
-        val dirtyViews = HashSet<View>()
         var oldChildWidget: Widget<*>
         for (i in 0 until newChildWidgets.size) {
             oldChildWidget = oldChildWidgets[i]
             newChildWidget = newChildWidgets[i]
             if (Widget.canUpdate(oldChildWidget, newChildWidget)) {
                 childElements[i].update(newChildWidget)
+                val element = childElements[i] as LeafRenderElement<*, *>
+                val index = parentView.indexOfChild(element.view)
+                if (index != i) {
+                    parentView.removeView(element.view)
+                    parentView.addView(element.view, i)
+                }
             } else {
                 if (oldChildWidget is ContainerRenderElement<*, *>.DummyWidget) {
                     val newElement = newChildWidget.createElement()
@@ -100,18 +103,15 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     childElements[i] = newElement
                     if (newElement is LeafRenderElement<*, *>) {
                         childViews[i] = newElement.view
-                        (view as ViewGroup).addView(newElement.view)
+                        parentView.addView(newElement.view, i)
                     } else {
                         childViews[i] = DummyView(context)
                     }
                 } else if (newChildWidget is ContainerRenderElement<*, *>.DummyWidget) {
-                    dirtyWidgets.add(newChildWidget)
-                    dirtyElements.add(childElements[i])
-                    dirtyViews.add(childViews[i])
                     childElements[i].unmount()
-                    val index = (view as ViewGroup).indexOfChild(childViews[i])
+                    val index = parentView.indexOfChild(childViews[i])
                     if (index != -1) {
-                        (view as ViewGroup).removeViewAt(index)
+                        parentView.removeViewAt(index)
                     }
                 } else {
                     childElements[i].unmount()
@@ -119,25 +119,25 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     newElement.assignParent(this)
                     newElement.mount(context)
                     childElements[i] = newElement
-                    val index = (view as ViewGroup).indexOfChild(childViews[i])
+                    val index = parentView.indexOfChild(childViews[i])
                     if (newElement is LeafRenderElement<*, *>) {
                         childViews[i] = newElement.view
                         if (index != -1) {
-                            (view as ViewGroup).removeViewAt(index)
-                            (view as ViewGroup).addView(newElement.view, index)
+                            parentView.removeViewAt(index)
+                            parentView.addView(newElement.view, index)
                         } else {
                             var prevViewIndex = -1
                             for (j in i - 1 downTo 0) {
-                                prevViewIndex = (view as ViewGroup).indexOfChild(childViews[j])
+                                prevViewIndex = parentView.indexOfChild(childViews[j])
                                 if (prevViewIndex != -1) {
                                     break
                                 }
                             }
-                            (view as ViewGroup).addView(newElement.view, prevViewIndex + 1)
+                            parentView.addView(newElement.view, prevViewIndex + 1)
                         }
                     } else {
                         if (index != -1) {
-                            (view as ViewGroup).removeViewAt(index)
+                            parentView.removeViewAt(index)
                         }
                         childViews[i] = DummyView(context)
                     }
@@ -146,9 +146,20 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             }
         }
 
-//        newChildWidgets.removeAll(dirtyWidgets)
-//        childElements.removeAll(dirtyElements)
-//        childViews.removeAll(dirtyViews)
+        for (i in newChildWidgets.size - 1 downTo 0) {
+            if (newChildWidgets[i] is ContainerRenderElement<*, *>.DummyWidget) {
+                newChildWidgets.removeAt(i)
+                childElements.removeAt(i)
+                childViews.removeAt(i)
+            }
+        }
+
+        keyMap.clear()
+        for (i in 0 until newChildWidgets.size) {
+            if (newChildWidgets[i].key != null) {
+                keyMap[newChildWidgets[i].key!!] = i
+            }
+        }
     }
 
     override fun unmount() {
@@ -157,7 +168,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             it.unmount()
         }
         if (view is ViewGroup) {
-            (view as ViewGroup).removeAllViews()
+            parentView.removeAllViews()
         }
     }
 
