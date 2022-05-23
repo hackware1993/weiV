@@ -143,19 +143,19 @@ class WeiVCounterJavaActivity extends WeiVJavaActivity {
 
 8. 提供了全局 Widget 创建和更新的 Hook，可轻松实现换肤、夜间模式
 9. 提供了 UI 模块化方案
+10. 已完善声明式架构的核心逻辑，Diff 算法复杂度为 O(n) 并经过极致优化
 
 近期计划：
 
-1. 完善声明式架构的核心逻辑，以支持 Widget、Element、View 三棵树高效更新
-2. 移植 Flutter ConstraintLayout 以实现上述性能目标，并带来前所未有的开发效率和体验，Compose 提供的 ConstraintLayout
+1. 移植 Flutter ConstraintLayout 以实现上述性能目标，并带来前所未有的开发效率和体验，Compose 提供的 ConstraintLayout
    还没摆脱命令式思维，用起来实在是低效
-3. 重写 RecyclerView、ViewPager2 等常用核心控件以实现声明式 API
-4. 对所有系统内置常用组件进行包装以实现声明式 API，部分可能会重写
-5. 以极其简单的方式支持动画，属性动画在声明式体系下已不合适
-6. 开发布局预览，这个可能有点麻烦
-7. 移植 Flutter PVState，提供在声明式 UI 下更轻量好用的状态管理方案
-8. 内置轻量级的 QuickJS 引擎，使用纯 JS（抛弃 HTML、CSS）来开发跨平台 App，摆脱对 WebView 的依赖并实现原生和 JS 之间互相高性能的同步调用
-9. **为 Android 实现带状态的热重载。通过开发一个 Android Studio 插件，当你更改了代码以后，插件根据最新代码生成 Widget 树的 JSON 并通过 ADB 发送到
+2. 重写 RecyclerView、ViewPager2 等常用核心控件以实现声明式 API
+3. 对所有系统内置常用组件进行包装以实现声明式 API，部分可能会重写
+4. 以极其简单的方式支持动画，属性动画在声明式体系下已不合适
+5. 开发布局预览，这个可能有点麻烦
+6. 移植 Flutter PVState，提供在声明式 UI 下更轻量好用的状态管理方案
+7. 内置轻量级的 QuickJS 引擎，使用纯 JS（抛弃 HTML、CSS）来开发跨平台 App，摆脱对 WebView 的依赖并实现原生和 JS 之间互相高性能的同步调用
+8. **为 Android 实现带状态的热重载。通过开发一个 Android Studio 插件，当你更改了代码以后，插件根据最新代码生成 Widget 树的 JSON 并通过 ADB 发送到
    App，App 将 JSON 还原成真实的 Widget 树并重新渲染 UI。整个过程应用的状态得以保留。这将进一步提升 Android 开发的效率**
 
 预计所有的代码写完，代码量在 3 万行左右。

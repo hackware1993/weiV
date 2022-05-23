@@ -155,25 +155,25 @@ class WeiVCounterJavaActivity extends WeiVJavaActivity {
 8. Provides a Hook for global Widget creation and update, which can easily achieve skinning and
    night mode
 9. Provides a UI modular solution
+10. The core logic of the declarative architecture has been improved, and the complexity of the Diff
+    algorithm is O(n) and is extremely optimized
 
 Near-term plans:
 
-1. Improve the core logic of the declarative architecture to support efficient updating of the three
-   trees of Widget, Element, and View
-2. Porting Flutter ConstraintLayout to achieve the above performance goals and bring unprecedented
+1. Porting Flutter ConstraintLayout to achieve the above performance goals and bring unprecedented
    development efficiency and experience, ConstraintLayout provided by Compose Haven't gotten rid of
    imperative thinking, it's really inefficient to use
-3. Rewrite common core controls such as RecyclerView and ViewPager2 to implement declarative API
-4. Wrap all system built-in common components to implement declarative API, some may be rewritten
-5. Support animation in an extremely simple way, property animation is no longer suitable under the
+2. Rewrite common core controls such as RecyclerView and ViewPager2 to implement declarative API
+3. Wrap all system built-in common components to implement declarative API, some may be rewritten
+4. Support animation in an extremely simple way, property animation is no longer suitable under the
    declarative system
-6. Develop layout preview, this may be a little troublesome
-7. Porting Flutter PVState to provide a more lightweight and easy-to-use state management solution
+5. Develop layout preview, this may be a little troublesome
+6. Porting Flutter PVState to provide a more lightweight and easy-to-use state management solution
    under a declarative UI
-8. Built-in lightweight QuickJS engine, use pure JS (abandon HTML, CSS) to develop cross-platform
+7. Built-in lightweight QuickJS engine, use pure JS (abandon HTML, CSS) to develop cross-platform
    apps, get rid of the dependence on WebView and achieve high-performance synchronous calls between
    native and JS
-9. **Implements stateful hot reloading for Android. By developing an Android Studio plugin, when you
+8. **Implements stateful hot reloading for Android. By developing an Android Studio plugin, when you
    change the code, the plugin generates the JSON of the widget tree according to the latest code
    and sends it to the App through ADB. The App restores the JSON to the real widget tree and
    re-renders the UI. The state of the entire process application is preserved. This will further
