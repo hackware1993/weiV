@@ -70,9 +70,9 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                             });
                         });
                     }
-                });
+                }).wKey(new ValueKey<>("stateful"));
 
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < count; i++) {
                     moduleItem(i);
                 }
 
@@ -118,7 +118,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                             webView.setTag(R.id.current_url, url);
                         }
                     }
-                }).wParam(url);
+                }).wParam(url).wKey(new ValueKey<>("webView"));
             });
         });
     }

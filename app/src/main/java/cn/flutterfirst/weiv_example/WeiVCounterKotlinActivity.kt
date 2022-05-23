@@ -81,7 +81,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                 Text(text = "Widgets wrapped by Const will not be updated, count = $count")
             }
 
-            Stateful(state = object : StatefulWidget.State() {
+            Stateful(key = ValueKey("stateful"), state = object : StatefulWidget.State() {
                 private var innerCount = 0
 
                 override fun build(buildCount: Int) = WeiV {
@@ -96,7 +96,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                 }
             })
 
-            repeat(3) {
+            repeat(count) {
                 moduleItem(it)
             }
 
@@ -140,7 +140,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                 }
             })
 
-            XmlView(viewCreator = {
+            XmlView(key = ValueKey("webView"), viewCreator = {
                 val webView = WebView(this@WeiVCounterKotlinActivity)
                 webView.settings.javaScriptEnabled = true
                 webView.layoutParams = ViewGroup.LayoutParams(-1, -1)
