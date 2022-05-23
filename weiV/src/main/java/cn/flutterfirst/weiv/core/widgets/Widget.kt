@@ -13,7 +13,8 @@ abstract class Widget<W : Widget<W>>(
     var key: Key? = null,
     var layoutParam: LayoutParam<*>? = null,
     var childWidgets: ArrayList<Widget<*>>? = null,
-    var extra: Any? = null
+    var extra: Any? = null,
+    var internalExtra: Any? = null
 ) {
     abstract fun createElement(): Element
 
