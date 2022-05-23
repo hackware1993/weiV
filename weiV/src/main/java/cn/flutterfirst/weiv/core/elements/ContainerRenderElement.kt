@@ -101,7 +101,9 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                 newViewCount++
             }
             if (Widget.canUpdate(oldChildWidget, newChildWidget)) {
-                childElements[i].update(newChildWidget)
+                if (oldChildWidget != newChildWidget) {
+                    childElements[i].update(newChildWidget)
+                }
                 val childView = childViews[i]
                 val oldViewIndex = indexOfChild(childView)
                 val newViewIndex = newViewIndexMap[childView]
