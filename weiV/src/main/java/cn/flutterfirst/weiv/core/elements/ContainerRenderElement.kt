@@ -18,7 +18,6 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
     var dummyPaddingElement = PaddingElement()
     lateinit var dummyPaddingView: PaddingView
     var keyMap = HashMap<Key, Int?>()
-    var childViewIndexMap = HashMap<View, Int>()
 
     lateinit var parentView: ViewGroup
 
@@ -35,7 +34,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             childElements.add(childElement)
             if (childElement is LeafRenderElement<*, *>) {
                 childViews.add(childElement.view)
-                childViewIndexMap[childElement.view] = parentView.childCount
+                childElement.view.tag = parentView.childCount
                 parentView.addView(childElement.view)
             } else {
                 childViews.add(dummyPaddingView)
@@ -111,7 +110,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                 if (oldViewIndex != -1 && oldViewIndex != newViewIndex) {
                     parentView.removeView(childView)
                     parentView.addView(childView, newViewIndex)
-                    childViewIndexMap[childView] = newViewIndex
+                    childView.tag = newViewIndex
                 }
             } else {
                 if (oldChildWidget is ContainerRenderElement<*, *>.PaddingWidget) { // Add
@@ -122,7 +121,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     if (newElement is LeafRenderElement<*, *>) {
                         childViews[i] = newElement.view
                         parentView.addView(newElement.view, newChildWidget.internalExtra as Int)
-                        childViewIndexMap[newElement.view] = newChildWidget.internalExtra as Int
+                        newElement.view.tag = newChildWidget.internalExtra as Int
                     } else {
                         childViews[i] = dummyPaddingView
                     }
@@ -131,7 +130,6 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     val oldViewIndex = indexOfChild(childViews[i])
                     if (oldViewIndex != -1) {
                         parentView.removeView(childViews[i])
-                        childViewIndexMap.remove(childViews[i])
                     }
                 } else {    // Replace
                     childElements[i].unmount()
@@ -143,19 +141,17 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     if (newElement is LeafRenderElement<*, *>) {
                         if (oldViewIndex != -1) {
                             parentView.removeView(childViews[i])
-                            childViewIndexMap.remove(childViews[i])
                             parentView.addView(newElement.view, newChildWidget.internalExtra as Int)
-                            childViewIndexMap[newElement.view] = newChildWidget.internalExtra as Int
+                            newElement.view.tag = newChildWidget.internalExtra as Int
                             childViews[i] = newElement.view
                         } else {
                             parentView.addView(newElement.view, newChildWidget.internalExtra as Int)
-                            childViewIndexMap[newElement.view] = newChildWidget.internalExtra as Int
+                            newElement.view.tag = newChildWidget.internalExtra as Int
                             childViews[i] = newElement.view
                         }
                     } else {
                         if (oldViewIndex != -1) {
                             parentView.removeView(childViews[i])
-                            childViewIndexMap.remove(childViews[i])
                         }
                         childViews[i] = dummyPaddingView
                     }
@@ -186,7 +182,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         if (view is PaddingView) {
             return -1
         }
-        return childViewIndexMap[view] ?: -1
+        return (view.tag as Int?) ?: -1
     }
 
     override fun unmount() {
