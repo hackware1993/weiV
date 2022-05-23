@@ -16,12 +16,14 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
     var childViews: LinkedList<View> = LinkedList()
     var dummyPaddingWidget = PaddingWidget()
     var dummyPaddingElement = PaddingElement()
+    lateinit var dummyPaddingView: PaddingView
     var keyMap = HashMap<Key, Int?>()
 
     lateinit var parentView: ViewGroup
 
     override fun mount(context: Context) {
         super.mount(context)
+        dummyPaddingView = PaddingView(context)
         if (view is ViewGroup) {
             parentView = (view as ViewGroup)
         }
@@ -34,7 +36,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                 childViews.add(childElement.view)
                 parentView.addView(childElement.view)
             } else {
-                childViews.add(PaddingView(context))
+                childViews.add(dummyPaddingView)
             }
             if (widget.key != null) {
                 val value = keyMap[widget.key]
@@ -54,13 +56,13 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         // Add padding objects
         if (oldChildWidgets.size < newChildWidgets.size) {
             repeat(newChildWidgets.size - oldChildWidgets.size) {
-                oldChildWidgets.add(PaddingWidget())
-                childElements.add(PaddingElement())
-                childViews.add(PaddingView(context))
+                oldChildWidgets.add(dummyPaddingWidget)
+                childElements.add(dummyPaddingElement)
+                childViews.add(dummyPaddingView)
             }
         } else if (oldChildWidgets.size > newChildWidgets.size) {
             repeat(oldChildWidgets.size - newChildWidgets.size) {
-                newChildWidgets.add(PaddingWidget())
+                newChildWidgets.add(dummyPaddingWidget)
             }
         }
 
@@ -100,7 +102,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                 }
                 newViewCount++
             }
-            if (Widget.canUpdate(oldChildWidget, newChildWidget)) {
+            if (Widget.canUpdate(oldChildWidget, newChildWidget)) { // Update
                 if (oldChildWidget != newChildWidget) {
                     childElements[i].update(newChildWidget)
                 }
@@ -112,7 +114,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     parentView.addView(childView, newViewIndex!!)
                 }
             } else {
-                if (oldChildWidget is ContainerRenderElement<*, *>.PaddingWidget) {
+                if (oldChildWidget is ContainerRenderElement<*, *>.PaddingWidget) { // Add
                     val newElement = newChildWidget.createElement()
                     newElement.assignParent(this)
                     newElement.mount(context)
@@ -121,15 +123,15 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                         childViews[i] = newElement.view
                         parentView.addView(newElement.view)
                     } else {
-                        childViews[i] = PaddingView(context)
+                        childViews[i] = dummyPaddingView
                     }
-                } else if (newChildWidget is ContainerRenderElement<*, *>.PaddingWidget) {
+                } else if (newChildWidget is ContainerRenderElement<*, *>.PaddingWidget) {  // Delete
                     childElements[i].unmount()
                     val oldViewIndex = indexOfChild(childViews[i])
                     if (oldViewIndex != -1) {
                         parentView.removeViewAt(oldViewIndex)
                     }
-                } else {
+                } else {    // Replace
                     childElements[i].unmount()
                     val newElement = newChildWidget.createElement()
                     newElement.assignParent(this)
@@ -149,7 +151,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                         if (oldViewIndex != -1) {
                             parentView.removeViewAt(oldViewIndex)
                         }
-                        childViews[i] = PaddingView(context)
+                        childViews[i] = dummyPaddingView
                     }
 
                 }
