@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
+import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 import java.util.*
 
@@ -13,8 +14,8 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
 ) : LeafRenderElement<V, W>(widget) {
     var childElements: LinkedList<Element> = LinkedList()
     var childViews: LinkedList<View> = LinkedList()
-    var dummyWidget = DummyWidget()
-    var dummyElement = DummyElement()
+    var dummyPaddingWidget = PaddingWidget()
+    var dummyPaddingElement = PaddingElement()
     var keyMap = HashMap<Key, Int?>()
 
     lateinit var parentView: ViewGroup
@@ -33,7 +34,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                 childViews.add(childElement.view)
                 parentView.addView(childElement.view)
             } else {
-                childViews.add(DummyView(context))
+                childViews.add(PaddingView(context))
             }
             if (widget.key != null) {
                 val value = keyMap[widget.key]
@@ -50,16 +51,16 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         super.update(newWidget)
         val newChildWidgets = widget.childWidgets!!
 
-        // Add padding widgets
+        // Add padding objects
         if (oldChildWidgets.size < newChildWidgets.size) {
             repeat(newChildWidgets.size - oldChildWidgets.size) {
-                oldChildWidgets.add(DummyWidget())
-                childElements.add(DummyElement())
-                childViews.add(DummyView(context))
+                oldChildWidgets.add(PaddingWidget())
+                childElements.add(PaddingElement())
+                childViews.add(PaddingView(context))
             }
         } else if (oldChildWidgets.size > newChildWidgets.size) {
             repeat(oldChildWidgets.size - newChildWidgets.size) {
-                newChildWidgets.add(DummyWidget())
+                newChildWidgets.add(PaddingWidget())
             }
         }
 
@@ -87,35 +88,44 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             }
         }
 
+        val newViewIndexMap = HashMap<View, Int>()
+        var newViewCount = 0
         var oldChildWidget: Widget<*>
         for (i in 0 until newChildWidgets.size) {
             oldChildWidget = oldChildWidgets[i]
             newChildWidget = newChildWidgets[i]
+            if (newChildWidget is LeafRenderWidget<*, *>) {
+                if (oldChildWidget is LeafRenderWidget<*, *>) {
+                    newViewIndexMap[childViews[i]] = newViewCount
+                }
+                newViewCount++
+            }
             if (Widget.canUpdate(oldChildWidget, newChildWidget)) {
                 childElements[i].update(newChildWidget)
-                val element = childElements[i] as LeafRenderElement<*, *>
-                val index = indexOfChild(element.view)
-                if (index != i) {
-                    parentView.removeView(element.view)
-                    parentView.addView(element.view, i)
+                val childView = childViews[i]
+                val oldViewIndex = indexOfChild(childView)
+                val newViewIndex = newViewIndexMap[childView]
+                if (oldViewIndex != -1 && oldViewIndex != newViewIndex) {
+                    parentView.removeViewAt(oldViewIndex)
+                    parentView.addView(childView, newViewIndex!!)
                 }
             } else {
-                if (oldChildWidget is ContainerRenderElement<*, *>.DummyWidget) {
+                if (oldChildWidget is ContainerRenderElement<*, *>.PaddingWidget) {
                     val newElement = newChildWidget.createElement()
                     newElement.assignParent(this)
                     newElement.mount(context)
                     childElements[i] = newElement
                     if (newElement is LeafRenderElement<*, *>) {
                         childViews[i] = newElement.view
-                        parentView.addView(newElement.view, i)
+                        parentView.addView(newElement.view)
                     } else {
-                        childViews[i] = DummyView(context)
+                        childViews[i] = PaddingView(context)
                     }
-                } else if (newChildWidget is ContainerRenderElement<*, *>.DummyWidget) {
+                } else if (newChildWidget is ContainerRenderElement<*, *>.PaddingWidget) {
                     childElements[i].unmount()
-                    val index = indexOfChild(childViews[i])
-                    if (index != -1) {
-                        parentView.removeViewAt(index)
+                    val oldViewIndex = indexOfChild(childViews[i])
+                    if (oldViewIndex != -1) {
+                        parentView.removeViewAt(oldViewIndex)
                     }
                 } else {
                     childElements[i].unmount()
@@ -123,35 +133,30 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     newElement.assignParent(this)
                     newElement.mount(context)
                     childElements[i] = newElement
-                    val index = indexOfChild(childViews[i])
+                    val oldViewIndex = indexOfChild(childViews[i])
                     if (newElement is LeafRenderElement<*, *>) {
-                        childViews[i] = newElement.view
-                        if (index != -1) {
-                            parentView.removeViewAt(index)
-                            parentView.addView(newElement.view, i)
+                        if (oldViewIndex != -1) {
+                            parentView.removeViewAt(oldViewIndex)
+                            parentView.addView(newElement.view, oldViewIndex)
+                            childViews[i] = newElement.view
                         } else {
-                            var prevViewIndex = -1
-                            for (j in i - 1 downTo 0) {
-                                prevViewIndex = indexOfChild(childViews[j])
-                                if (prevViewIndex != -1) {
-                                    break
-                                }
-                            }
-                            parentView.addView(newElement.view, prevViewIndex + 1)
+                            parentView.addView(newElement.view)
+                            childViews[i] = newElement.view
                         }
                     } else {
-                        if (index != -1) {
-                            parentView.removeViewAt(index)
+                        if (oldViewIndex != -1) {
+                            parentView.removeViewAt(oldViewIndex)
                         }
-                        childViews[i] = DummyView(context)
+                        childViews[i] = PaddingView(context)
                     }
 
                 }
             }
         }
 
+        // Clean padding objects
         for (i in newChildWidgets.size - 1 downTo 0) {
-            if (newChildWidgets[i] is ContainerRenderElement<*, *>.DummyWidget) {
+            if (newChildWidgets[i] is ContainerRenderElement<*, *>.PaddingWidget) {
                 newChildWidgets.removeAt(i)
                 childElements.removeAt(i)
                 childViews.removeAt(i)
@@ -166,8 +171,9 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         }
     }
 
+    // To optimize
     fun indexOfChild(view: View): Int {
-        if (view is DummyView) {
+        if (view is PaddingView) {
             return -1
         }
         if (this.view is ViewGroup) {
@@ -186,13 +192,13 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         }
     }
 
-    class DummyView(context: Context) : View(context)
+    class PaddingView(context: Context) : View(context)
 
-    inner class DummyElement : Element(dummyWidget)
+    inner class PaddingElement : Element(dummyPaddingWidget)
 
-    inner class DummyWidget : Widget<DummyWidget>() {
+    inner class PaddingWidget : Widget<PaddingWidget>() {
         override fun createElement(): Element {
-            return dummyElement
+            return dummyPaddingElement
         }
     }
 }

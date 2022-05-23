@@ -6,6 +6,7 @@ import android.widget.TextView
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IExtensionCreator
+import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.widgets.ConstWidget
 import cn.flutterfirst.weiv.core.widgets.StatefulWidget
 import cn.flutterfirst.weiv.core.widgets.XmlViewWidget
@@ -62,13 +63,13 @@ class WeiVJavaHelper {
         return weiV!!.addLeafRenderWidget(StatefulWidget(state = state))
     }
 
-    fun createConst(buildCount: Int, build: IBuild): ConstWidget {
+    fun createConst(key: Key, buildCount: Int, build: IBuild): ConstWidget {
         return if (buildCount == 0) {
-            weiV!!.addContainerRenderWidget(ConstWidget(childWidgets = ArrayList())) {
+            weiV!!.addContainerRenderWidget(ConstWidget(key = key, childWidgets = ArrayList())) {
                 build.build()
             }
         } else {
-            weiV!!.addLeafRenderWidget(ConstWidget())
+            weiV!!.addLeafRenderWidget(ConstWidget(key = key))
         }
     }
 

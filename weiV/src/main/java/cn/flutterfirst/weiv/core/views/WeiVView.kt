@@ -10,7 +10,7 @@ abstract class WeiVView(context: Context) : WeiVRoot(context), IWeiVRootHolder {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        init(build(0))
+        initIfNeeded(build(buildCount))
     }
 
     fun setState(block: () -> Unit) {

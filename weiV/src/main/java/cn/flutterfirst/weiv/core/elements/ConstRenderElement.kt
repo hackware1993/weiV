@@ -9,7 +9,7 @@ import cn.flutterfirst.weiv.core.widgets.Widget
 class ConstRenderElement(
     widget: ConstWidget,
 ) : LeafRenderElement<FrameLayout, ConstWidget>(widget) {
-    private var childElements: ArrayList<Element> = ArrayList()
+    var childElements: ArrayList<Element> = ArrayList()
 
     override fun mount(context: Context) {
         super.mount(context)

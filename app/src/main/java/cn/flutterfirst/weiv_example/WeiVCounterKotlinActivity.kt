@@ -11,6 +11,7 @@ import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.activities.WeiVActivity
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IGlobalWidgetAttachObserver
+import cn.flutterfirst.weiv.core.keys.ValueKey
 import cn.flutterfirst.weiv.core.widgets.*
 import cn.flutterfirst.weiv.wrappers.linearlayout.Flex
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection
@@ -76,7 +77,7 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
             Text(text = "count = $count")
 
             // Widgets wrapped by Const will not be updated
-            Const(buildCount = buildCount) {
+            Const(key = ValueKey("constArea"), buildCount = buildCount) {
                 Text(text = "Widgets wrapped by Const will not be updated, count = $count")
             }
 

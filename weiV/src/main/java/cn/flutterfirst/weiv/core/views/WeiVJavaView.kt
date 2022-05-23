@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
 import cn.flutterfirst.weiv.core.WeiV
+import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.*
 import cn.flutterfirst.weiv.core.widgets.ConstWidget
 import cn.flutterfirst.weiv.core.widgets.StatefulWidget
@@ -34,8 +35,8 @@ abstract class WeiVJavaView(context: Context) : WeiVView(context) {
         return weiVJavaHelper.createStateful(state = state)
     }
 
-    open fun Const(buildCount: Int, build: IBuild): ConstWidget {
-        return weiVJavaHelper.createConst(buildCount, build)
+    open fun Const(key: Key, buildCount: Int, build: IBuild): ConstWidget {
+        return weiVJavaHelper.createConst(key, buildCount, build)
     }
 
     open fun <V : View, P> XmlView(

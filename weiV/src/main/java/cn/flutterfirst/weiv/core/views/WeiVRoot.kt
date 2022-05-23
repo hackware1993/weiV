@@ -17,7 +17,7 @@ open class WeiVRoot(context: Context) : FrameLayout(context) {
     lateinit var weiVRootHolder: IWeiVRootHolder
     var buildCount = 0
 
-    lateinit var weiVRootWidget: LeafRenderWidget<*, *>
+    var weiVRootWidget: LeafRenderWidget<*, *>? = null
     lateinit var weiVRootElement: LeafRenderElement<*, *>
     lateinit var weiVRootView: View
 
@@ -45,7 +45,7 @@ open class WeiVRoot(context: Context) : FrameLayout(context) {
     fun init(weiV: WeiV) {
         assert(weiV.currentWidgetContext.size == 1)
         weiVRootWidget = weiV.currentWidgetContext[0] as LeafRenderWidget<*, *>
-        weiVRootElement = weiVRootWidget.createElement() as LeafRenderElement<*, *>
+        weiVRootElement = weiVRootWidget!!.createElement() as LeafRenderElement<*, *>
         weiVRootElement.mount(context)
         weiVRootView = weiVRootElement.view
         addView(
@@ -56,10 +56,16 @@ open class WeiVRoot(context: Context) : FrameLayout(context) {
         buildCount++
     }
 
+    fun initIfNeeded(weiV: WeiV) {
+        if (weiVRootWidget == null) {
+            init(weiV)
+        }
+    }
+
     fun update(weiV: WeiV) {
         assert(weiV.currentWidgetContext.size == 1)
         val newRootWidget = weiV.currentWidgetContext[0] as LeafRenderWidget<*, *>
-        if (Widget.canUpdate(newRootWidget, weiVRootWidget)) {
+        if (Widget.canUpdate(newRootWidget, weiVRootWidget!!)) {
             weiVRootElement.update(newRootWidget)
         } else {
             weiVRootElement.unmount()

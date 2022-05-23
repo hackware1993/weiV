@@ -10,7 +10,7 @@ import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
 
 class ConstWidget(
-    key: Key? = null,
+    key: Key,
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>>? = null,
     extra: Any? = null,
@@ -29,7 +29,7 @@ class ConstWidget(
 
 @KotlinOnly
 fun WeiV.Const(
-    key: Key? = null,
+    key: Key,
     layoutParam: LayoutParam<*>? = null,
     buildCount: Int,
     extra: Any? = null,
@@ -45,23 +45,12 @@ fun WeiV.Const(
             ), block
         )
     } else {
-        if (key == null) {
-            return addContainerRenderWidget(
-                ConstWidget(
-                    key,
-                    layoutParam,
-                    ArrayList(),
-                    extra
-                ), block
+        return addLeafRenderWidget(
+            ConstWidget(
+                key,
+                layoutParam,
+                extra = extra
             )
-        } else {
-            return addLeafRenderWidget(
-                ConstWidget(
-                    key,
-                    layoutParam,
-                    extra = extra
-                )
-            )
-        }
+        )
     }
 }

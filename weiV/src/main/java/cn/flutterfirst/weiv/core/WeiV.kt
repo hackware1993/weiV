@@ -25,13 +25,13 @@ open class WeiV {
         }
     }
 
-    private fun printWidgetTree() {
+    fun printWidgetTree() {
         iteratorWidgetTree(0, currentWidgetContext) { widget, level ->
             Log.d("weiVWidgetTree", "----".repeat(level) + "$widget")
         }
     }
 
-    private fun iteratorWidgetTree(
+    fun iteratorWidgetTree(
         level: Int = 0,
         widgets: ArrayList<Widget<*>>,
         filter: (widget: Widget<*>, level: Int) -> Unit

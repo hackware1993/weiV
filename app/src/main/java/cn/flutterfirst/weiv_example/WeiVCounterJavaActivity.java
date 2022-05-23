@@ -9,6 +9,7 @@ import android.webkit.WebViewClient;
 import org.jetbrains.annotations.NotNull;
 
 import cn.flutterfirst.weiv.core.WeiV;
+import cn.flutterfirst.weiv.core.keys.ValueKey;
 import cn.flutterfirst.weiv.core.others.IParamChangedCallback;
 import cn.flutterfirst.weiv.core.widgets.StatefulWidget;
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection;
@@ -51,7 +52,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                 Text().wText("count = " + count);
 
                 // Widgets wrapped by Const will not be updated
-                Const(buildCount, () -> {
+                Const(new ValueKey<>("constArea"), buildCount, () -> {
                     Text().wText("Widgets wrapped by Const will not be updated, count = " + count);
                 });
 
