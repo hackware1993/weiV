@@ -170,9 +170,9 @@ Near-term plans:
 6. Develop layout preview, this may be a little troublesome
 7. Porting Flutter PVState to provide a more lightweight and easy-to-use state management solution
    under a declarative UI
-8. A built-in high-performance, lightweight JS engine, using pure JS (abandoning HTML, CSS) to
-   develop cross-platform apps, get rid of the dependence on WebView and achieve high-performance
-   synchronous calls between native and JS
+8. Built-in lightweight QuickJS engine, use pure JS (abandon HTML, CSS) to develop cross-platform
+   apps, get rid of the dependence on WebView and achieve high-performance synchronous calls between
+   native and JS
 9. **Implements stateful hot reloading for Android. By developing an Android Studio plugin, when you
    change the code, the plugin generates the JSON of the widget tree according to the latest code
    and sends it to the App through ADB. The App restores the JSON to the real widget tree and

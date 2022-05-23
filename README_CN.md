@@ -154,7 +154,7 @@ class WeiVCounterJavaActivity extends WeiVJavaActivity {
 5. 以极其简单的方式支持动画，属性动画在声明式体系下已不合适
 6. 开发布局预览，这个可能有点麻烦
 7. 移植 Flutter PVState，提供在声明式 UI 下更轻量好用的状态管理方案
-8. 内置一个高性能、轻量级的 JS 引擎，使用纯 JS（抛弃 HTML、CSS）来开发跨平台 App，摆脱对 WebView 的依赖并实现原生和 JS 之间互相高性能的同步调用
+8. 内置轻量级的 QuickJS 引擎，使用纯 JS（抛弃 HTML、CSS）来开发跨平台 App，摆脱对 WebView 的依赖并实现原生和 JS 之间互相高性能的同步调用
 9. **为 Android 实现带状态的热重载。通过开发一个 Android Studio 插件，当你更改了代码以后，插件根据最新代码生成 Widget 树的 JSON 并通过 ADB 发送到
    App，App 将 JSON 还原成真实的 Widget 树并重新渲染 UI。整个过程应用的状态得以保留。这将进一步提升 Android 开发的效率**
 
