@@ -58,7 +58,7 @@ abstract class Widget<W : Widget<W>>(
 
     companion object {
         fun canUpdate(oldWidget: Widget<*>, newWidget: Widget<*>): Boolean {
-            if (oldWidget is ContainerRenderElement<*, *>.PaddingWidget || newWidget is ContainerRenderElement<*, *>.PaddingWidget) {
+            if (oldWidget is ContainerRenderElement.PaddingWidget || newWidget is ContainerRenderElement.PaddingWidget) {
                 return false
             }
             return oldWidget.javaClass == newWidget.javaClass && oldWidget.key == newWidget.key
