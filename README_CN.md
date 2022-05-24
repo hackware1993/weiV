@@ -143,7 +143,7 @@ class WeiVCounterJavaActivity extends WeiVJavaActivity {
 
 8. 提供了全局 Widget 创建和更新的 Hook，可轻松实现换肤、夜间模式
 9. 提供了 UI 模块化方案
-10. 已完善声明式架构的核心逻辑，Diff 算法复杂度为 O(n) 并经过极致优化
+10. 已完善声明式架构的核心逻辑，Diff 算法复杂度为 O(2n) 或 O(4n)，代码经过极致优化
 
 近期计划：
 

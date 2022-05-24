@@ -23,7 +23,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         val dummyPaddingElement = PaddingElement()
     }
 
-    var keyMap = HashMap<Key, Int?>()
+    var keyMap = HashMap<Key, Int>()
 
     lateinit var parentView: ViewGroup
 
@@ -57,6 +57,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         val newChildWidgets = widget.childWidgets!!
 
         // Add padding objects
+        var childCountNotChanged: Boolean? = null
         if (oldChildWidgets.size < newChildWidgets.size) {
             repeat(newChildWidgets.size - oldChildWidgets.size) {
                 oldChildWidgets.add(dummyPaddingWidget)
@@ -66,9 +67,12 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             repeat(oldChildWidgets.size - newChildWidgets.size) {
                 newChildWidgets.add(dummyPaddingWidget)
             }
+        } else {
+            childCountNotChanged = true
         }
 
         // Rearrange widgets by key
+        val newKeyMap = HashMap<Key, Int>()
         var newChildWidget: Widget<*>
         for (i in 0 until newChildWidgets.size) {
             newChildWidget = newChildWidgets[i]
@@ -85,6 +89,15 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     if (tempWidget.key != null) {
                         keyMap[tempWidget.key!!] = oldIndex
                     }
+                }
+                val value = newKeyMap[newChildWidget.key]
+                if (value != null) {
+                    throw IllegalStateException("Duplicate keys are not allowed between sibling widgets")
+                }
+                if (childCountNotChanged == true) {
+                    newKeyMap[newChildWidget.key!!] = i
+                } else {
+                    newKeyMap[newChildWidget.key!!] = -1
                 }
             }
         }
@@ -163,18 +176,24 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         }
 
         // Clean padding objects
-        for (i in newChildWidgets.size - 1 downTo 0) {
-            if (newChildWidgets[i] is PaddingWidget) {
-                newChildWidgets.removeAt(i)
-                childElements.removeAt(i)
+        if (childCountNotChanged != true) {
+            for (i in newChildWidgets.size - 1 downTo 0) {
+                if (newChildWidgets[i] is PaddingWidget) {
+                    newChildWidgets.removeAt(i)
+                    childElements.removeAt(i)
+                }
             }
-        }
-
-        keyMap.clear()
-        for (i in 0 until newChildWidgets.size) {
-            if (newChildWidgets[i].key != null) {
-                keyMap[newChildWidgets[i].key!!] = i
+            keyMap.clear()
+            for (i in 0 until newChildWidgets.size) {
+                if (newChildWidgets[i].key != null) {
+                    keyMap[newChildWidgets[i].key!!] = i
+                    if (keyMap.size == newKeyMap.size) {
+                        break
+                    }
+                }
             }
+        } else {
+            keyMap = newKeyMap
         }
     }
 

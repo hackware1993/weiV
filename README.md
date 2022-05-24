@@ -155,8 +155,8 @@ class WeiVCounterJavaActivity extends WeiVJavaActivity {
 8. Provides a Hook for global Widget creation and update, which can easily achieve skinning and
    night mode
 9. Provides a UI modular solution
-10. The core logic of the declarative architecture has been improved, and the complexity of the Diff
-    algorithm is O(n) and is extremely optimized
+10. The core logic of the declarative architecture has been improved, the complexity of the Diff
+    algorithm is O(2n) or O(4n), and the code is extremely optimized
 
 Near-term plans:
 
