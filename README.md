@@ -37,6 +37,17 @@ It has the following advantages:
    native, and the native uses a non-reflection method to convert it into a real Widget tree and
    render. I might consider implementing a declarative API in JS later
 
+Why is weiV based on the View system, but it is possible to surpass the View system in performance?
+
+1. Abandoned xml, the first frame always renders faster
+2. Enhanced ConstraintLayout solves performance problems caused by nesting, and for complex layouts,
+   non-first frame rendering may also be faster
+3. Enhanced ConstraintLayout makes the layout level more flat, and for general layout, non-first
+   frame rendering may also be faster
+4. In other cases the performance is quite close
+
+[Experience the Flutter version of the Enhanced ConstraintLayout online example](https://constraintlayout.flutterfirst.cn)
+
 **No one wants to overturn their past experience with the View system, Compose's design is too
 bad.**
 
