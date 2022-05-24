@@ -2,6 +2,7 @@ package cn.flutterfirst.weiv.wrappers.linearlayout
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.View
 import android.widget.LinearLayout
 import cn.flutterfirst.weiv.core.WeiV
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
@@ -35,6 +36,13 @@ open class weiVFlex<V : LinearLayout>(
             view.orientation = orientation
         }
         return view
+    }
+
+    override fun processChildLayoutParam(
+        parent: V,
+        child: View,
+        childLayoutParam: LayoutParam<*>?
+    ) {
     }
 
     @JavaOnly

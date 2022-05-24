@@ -8,6 +8,7 @@ import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
 import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
+import cn.flutterfirst.weiv.wrappers.constraintlayout.weiVConstraintLayout
 import cn.flutterfirst.weiv.wrappers.linearlayout.weiVFlex
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
 
@@ -46,6 +47,23 @@ object ExtensionMgr {
                 @JavaOnly weiVFlex<LinearLayout>()
             }
             return@IExtensionCreator dispatchWidgetCreate(InternalWidgetDesc.FLEX, widget)
+        })
+
+        registerExtension(InternalWidgetDesc.CONSTRAINT_LAYOUT, IExtensionCreator {
+            val widget = if (it.isNotEmpty()) {
+                @KotlinOnly weiVConstraintLayout(
+                    it[0] as Key?,
+                    it[1] as LayoutParam<*>?,
+                    it[2] as ArrayList<Widget<*>>,
+                    it[3]
+                )
+            } else {
+                @JavaOnly weiVConstraintLayout()
+            }
+            return@IExtensionCreator dispatchWidgetCreate(
+                InternalWidgetDesc.CONSTRAINT_LAYOUT,
+                widget
+            )
         })
     }
 

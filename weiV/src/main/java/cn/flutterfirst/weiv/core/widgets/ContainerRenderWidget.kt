@@ -16,4 +16,6 @@ abstract class ContainerRenderWidget<V : View, W : ContainerRenderWidget<V, W>>(
     override fun createElement(): Element {
         return ContainerRenderElement(this)
     }
+
+    abstract fun processChildLayoutParam(parent: V, child: View, childLayoutParam: LayoutParam<*>?)
 }

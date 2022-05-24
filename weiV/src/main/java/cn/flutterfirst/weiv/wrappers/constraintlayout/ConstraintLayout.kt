@@ -1,19 +1,21 @@
 package cn.flutterfirst.weiv.wrappers.constraintlayout
 
 import android.content.Context
+import android.graphics.Canvas
 import android.view.ViewGroup
 
 // ConstraintLayout design for weiV
-class WConstraintLayout(context: Context?) : ViewGroup(context) {
+class ConstraintLayout(context: Context) : ViewGroup(context) {
 
     init {
-
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    }
 
+    override fun dispatchDraw(canvas: Canvas) {
     }
 }

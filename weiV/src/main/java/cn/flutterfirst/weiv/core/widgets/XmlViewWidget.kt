@@ -24,6 +24,13 @@ class XmlViewWidget<V : View, P>(
         return view
     }
 
+    override fun processChildLayoutParam(
+        parent: V,
+        child: View,
+        childLayoutParam: LayoutParam<*>?
+    ) {
+    }
+
     @JavaOnly
     fun wParam(param: P?): XmlViewWidget<V, P> {
         this.param = param

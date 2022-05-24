@@ -26,12 +26,14 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
     var keyMap = HashMap<Key, Int>()
 
     lateinit var parentView: ViewGroup
+    lateinit var parentWidget: ContainerRenderWidget<V, W>
 
     override fun mount(context: Context) {
         super.mount(context)
         if (view is ViewGroup) {
             parentView = (view as ViewGroup)
         }
+        parentWidget = widget as ContainerRenderWidget<V, W>
         for ((index, widget) in widget.childWidgets!!.withIndex()) {
             val childElement = widget.createElement()
             childElement.assignParent(this)
@@ -39,6 +41,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
             childElements.add(childElement)
             if (childElement is LeafRenderElement<*, *>) {
                 childElement.view.tag = parentView.childCount
+                parentWidget.processChildLayoutParam(view, childElement.view, widget.layoutParam)
                 parentView.addView(childElement.view)
             }
             if (widget.key != null) {
@@ -55,6 +58,7 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
         val oldChildWidgets = widget.childWidgets!!
         super.update(newWidget)
         val newChildWidgets = widget.childWidgets!!
+        parentWidget = widget as ContainerRenderWidget<V, W>
 
         // Add padding objects
         var childCountNotChanged: Boolean? = null
@@ -118,6 +122,11 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                 var childView: View? = null
                 if (childElements[i] is LeafRenderElement<*, *>) {
                     childView = (childElements[i] as LeafRenderElement<*, *>).view
+                    parentWidget.processChildLayoutParam(
+                        view,
+                        childView,
+                        newChildWidget.layoutParam
+                    )
                 }
                 val oldViewIndex = indexOfChild(childView)
                 val newViewIndex = newChildWidget.internalExtra as Int
@@ -133,6 +142,11 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     newElement.mount(context)
                     childElements[i] = newElement
                     if (newElement is LeafRenderElement<*, *>) {
+                        parentWidget.processChildLayoutParam(
+                            view,
+                            newElement.view,
+                            newChildWidget.layoutParam
+                        )
                         parentView.addView(newElement.view, newChildWidget.internalExtra as Int)
                         newElement.view.tag = newChildWidget.internalExtra as Int
                     }
@@ -158,6 +172,11 @@ open class ContainerRenderElement<V : View, W : ContainerRenderWidget<V, W>>(
                     childElements[i] = newElement
                     val oldViewIndex = indexOfChild(childView)
                     if (newElement is LeafRenderElement<*, *>) {
+                        parentWidget.processChildLayoutParam(
+                            view,
+                            newElement.view,
+                            newChildWidget.layoutParam
+                        )
                         if (oldViewIndex != -1) {
                             parentView.removeView(childView)
                             parentView.addView(newElement.view, newChildWidget.internalExtra as Int)
