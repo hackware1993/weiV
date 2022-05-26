@@ -2,6 +2,7 @@ package cn.flutterfirst.weiv.core.extension
 
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.KotlinOnly
@@ -10,6 +11,7 @@ import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import cn.flutterfirst.weiv.wrappers.constraintlayout.weiVConstraintLayout
 import cn.flutterfirst.weiv.wrappers.linearlayout.weiVFlex
+import cn.flutterfirst.weiv.wrappers.recyclerview.weiVRecyclerView
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
 
 object ExtensionMgr {
@@ -62,6 +64,25 @@ object ExtensionMgr {
             }
             return@IExtensionCreator dispatchWidgetCreate(
                 InternalWidgetDesc.CONSTRAINT_LAYOUT,
+                widget
+            )
+        })
+
+        registerExtension(InternalWidgetDesc.RECYCLER_VIEW, IExtensionCreator {
+            val widget = if (it.isNotEmpty()) {
+                @KotlinOnly weiVRecyclerView(
+                    it[0] as Key?,
+                    it[1] as LayoutParam<*>?,
+                    it[2] as Int,
+                    it[3] as Int,
+                    it[4] as (index: Int) -> Unit,
+                    it[5]
+                )
+            } else {
+                @JavaOnly weiVRecyclerView<RecyclerView>()
+            }
+            return@IExtensionCreator dispatchWidgetCreate(
+                InternalWidgetDesc.RECYCLER_VIEW,
                 widget
             )
         })
