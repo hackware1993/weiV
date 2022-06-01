@@ -14,6 +14,7 @@ import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
+import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import org.json.JSONObject
@@ -43,6 +44,7 @@ open class weiVFlex<V : LinearLayout>(
         child: View,
         childLayoutParam: LayoutParam<*>?
     ) {
+        assert(childLayoutParam == null || childLayoutParam is FlexLayoutParam)
     }
 
     @JavaOnly
@@ -62,6 +64,12 @@ open class weiVFlex<V : LinearLayout>(
 }
 
 var creator: IExtensionCreator<weiVFlex<*>>? = null
+
+@KotlinOnly
+fun LeafRenderWidget<*, *>.applyFlexParams(block: FlexLayoutParam.() -> Unit) {
+    layoutParam = FlexLayoutParam()
+    block(layoutParam as FlexLayoutParam)
+}
 
 @KotlinOnly
 fun WeiV.Flex(

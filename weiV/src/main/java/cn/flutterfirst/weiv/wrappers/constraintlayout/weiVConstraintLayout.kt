@@ -10,6 +10,7 @@ import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
 import cn.flutterfirst.weiv.core.others.setLayoutParam
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
+import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 
@@ -36,12 +37,18 @@ class weiVConstraintLayout(
         child: View,
         childLayoutParam: LayoutParam<*>?
     ) {
-        assert(childLayoutParam is ConstraintLayoutParam)
+        assert(childLayoutParam == null || childLayoutParam is ConstraintLayoutParam)
         child.setLayoutParam(childLayoutParam as ConstraintLayoutParam)
     }
 }
 
 var creator: IExtensionCreator<weiVConstraintLayout>? = null
+
+@KotlinOnly
+fun LeafRenderWidget<*, *>.applyConstraint(block: ConstraintLayoutParam.() -> Unit) {
+    layoutParam = ConstraintLayoutParam()
+    block(layoutParam as ConstraintLayoutParam)
+}
 
 @KotlinOnly
 fun WeiV.ConstraintLayout(

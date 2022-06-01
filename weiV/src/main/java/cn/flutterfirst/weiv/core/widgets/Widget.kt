@@ -38,6 +38,11 @@ abstract class Widget<W : Widget<W>>(
         }
     }
 
+    @KotlinOnly
+    fun openParams(block: W.() -> Unit) {
+        block(this as W)
+    }
+
     @JavaOnly
     fun wKey(key: Key?): W {
         this.key = key
