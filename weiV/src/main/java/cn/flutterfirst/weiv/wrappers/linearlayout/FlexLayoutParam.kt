@@ -1,5 +1,6 @@
 package cn.flutterfirst.weiv.wrappers.linearlayout
 
+import cn.flutterfirst.weiv.core.others.JavaOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
 
 class FlexLayoutParam(
@@ -12,6 +13,18 @@ class FlexLayoutParam(
     var gravity: Int = -1,
     var weight: Float = 0f,
 ) : LayoutParam<FlexLayoutParam>(width, height, leftMargin, topMargin, rightMargin, bottomMargin) {
+
+    @JavaOnly
+    fun wGravity(gravity: Int): FlexLayoutParam {
+        this.gravity = gravity
+        return this
+    }
+
+    @JavaOnly
+    fun wWeight(weight: Float): FlexLayoutParam {
+        this.weight = weight
+        return this
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -183,7 +183,11 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                         webView.setTag(R.id.current_url, url)
                     }
                 }
-            })
+            }).applyFlexLayoutParams {
+                width = matchParent
+                height = 0
+                weight = 1f
+            }
         }
     }
 }

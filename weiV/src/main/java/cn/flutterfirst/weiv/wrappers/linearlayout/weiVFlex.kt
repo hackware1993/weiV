@@ -76,6 +76,12 @@ open class weiVFlex<V : LinearLayout>(
         return this
     }
 
+    @JavaOnly
+    open fun wGravity(gravity: Int): weiVFlex<V> {
+        this.gravity = gravity
+        return this
+    }
+
     override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVFlex<V> {
         orientation = (param["orientation"] as Int?) ?: FlexDirection.HORIZONTAL
         return this

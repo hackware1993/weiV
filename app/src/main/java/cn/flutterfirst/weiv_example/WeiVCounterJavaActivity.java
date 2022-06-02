@@ -2,6 +2,7 @@ package cn.flutterfirst.weiv_example;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -11,8 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import cn.flutterfirst.weiv.core.WeiV;
 import cn.flutterfirst.weiv.core.keys.ValueKey;
 import cn.flutterfirst.weiv.core.others.IParamChangedCallback;
+import cn.flutterfirst.weiv.core.others.LayoutParam;
 import cn.flutterfirst.weiv.core.widgets.StatefulWidget;
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection;
+import cn.flutterfirst.weiv.wrappers.linearlayout.FlexLayoutParam;
 
 public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
     private int count = 0;
@@ -36,7 +39,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                         setState(() -> {
                             count++;
                         });
-                    });
+                    }).wLayoutParam(new FlexLayoutParam().wLeftMargin(20));
 
                     Button().wText("Sub count").wEnable(count > minCount).wOnClick(v -> {
                         setState(() -> {
@@ -46,8 +49,8 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
 
                     Button().wText("Change app skin, isLight = " + SkinManager.isLight()).wOnClick(v -> {
                         SkinManager.changeSkin();
-                    });
-                });
+                    }).wLayoutParam(new FlexLayoutParam().wWidth(0).wWeight(1));
+                }).wGravity(Gravity.CENTER_VERTICAL).wLayoutParam(new FlexLayoutParam().wWidth(LayoutParam.matchParent).wHeight(300));
 
                 Text().wText("count = " + count);
 
@@ -118,7 +121,7 @@ public class WeiVCounterJavaActivity extends BaseWeiVJavaActivity {
                             webView.setTag(R.id.current_url, url);
                         }
                     }
-                }).wParam(url).wKey(new ValueKey<>("webView"));
+                }).wParam(url).wKey(new ValueKey<>("webView")).wLayoutParam(new FlexLayoutParam().wWidth(LayoutParam.matchParent).wHeight(0).wWeight(1));
             });
         });
     }
