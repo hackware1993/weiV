@@ -14,7 +14,7 @@ class XmlViewWidget<V : View, P>(
     var param: P? = null,
     var viewCreator: () -> V,
     var onParamChanged: (view: V, param: P?, first: Boolean) -> Unit,
-    extra: Any? = null
+    extra: Any? = null,
 ) : ContainerRenderWidget<V, XmlViewWidget<V, P>>(key, layoutParam, ArrayList(), extra) {
 
     override fun createView(context: Context) = viewCreator()
@@ -27,7 +27,7 @@ class XmlViewWidget<V : View, P>(
     override fun processChildLayoutParam(
         parent: V,
         child: View,
-        childLayoutParam: LayoutParam<*>?
+        childLayoutParam: LayoutParam<*>?,
     ) {
     }
 
@@ -57,7 +57,7 @@ fun <V : View, P> WeiV.XmlView(
     param: P? = null,
     viewCreator: () -> V,
     onParamChanged: (view: V, param: P?, first: Boolean) -> Unit,
-    extra: Any? = null
+    extra: Any? = null,
 ): XmlViewWidget<*, *> {
     return addLeafRenderWidget(
         XmlViewWidget(

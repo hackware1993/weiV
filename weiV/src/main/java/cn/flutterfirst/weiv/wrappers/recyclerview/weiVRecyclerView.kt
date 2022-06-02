@@ -25,7 +25,7 @@ open class weiVRecyclerView<V : RecyclerView>(
     open var itemCount: Int = 0,
     open var orientation: Int = RecyclerViewDirection.VERTICAL,
     open var block: ((index: Int) -> Unit)? = null,
-    extra: Any? = null
+    extra: Any? = null,
 ) :
     LeafRenderWidget<V, weiVRecyclerView<V>>(key, layoutParam, extra = extra),
     IWeiVExtension,
@@ -39,7 +39,7 @@ open class weiVRecyclerView<V : RecyclerView>(
         view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(
                 parent: ViewGroup,
-                viewType: Int
+                viewType: Int,
             ): RecyclerView.ViewHolder {
                 val weiVItemView = WeiVItemView(parent.context)
                 return object : RecyclerView.ViewHolder(weiVItemView) {

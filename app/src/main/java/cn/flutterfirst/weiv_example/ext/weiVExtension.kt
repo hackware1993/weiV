@@ -20,7 +20,7 @@ class weiVButton(
     textColor: Int = TextConst.defaultTextColor,
     var onClick: View.OnClickListener? = null,
     var enable: Boolean = true,
-    extra: Any? = null
+    extra: Any? = null,
 ) :
     weiVText<Button, weiVButton>(key, layoutParam, text, textSize, textColor, extra) {
 
@@ -49,7 +49,7 @@ class weiVButton(
 
     override fun fromJson(
         jsonObj: JSONObject,
-        param: Map<String, Any?>
+        param: Map<String, Any?>,
     ): weiVText<Button, weiVButton> {
         super.fromJson(jsonObj, param)
         enable = (param["enable"] as Boolean?) ?: true
@@ -74,7 +74,7 @@ fun WeiV.Button(
     textColor: Int = TextConst.defaultTextColor,
     onClick: View.OnClickListener? = null,
     enable: Boolean = true,
-    extra: Any? = null
+    extra: Any? = null,
 ): weiVButton {
     return addLeafRenderWidget(
         weiVButton(

@@ -10,7 +10,7 @@ abstract class ContainerRenderWidget<V : View, W : ContainerRenderWidget<V, W>>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>>,
-    extra: Any? = null
+    extra: Any? = null,
 ) : LeafRenderWidget<V, W>(key, layoutParam, childWidgets, extra) {
 
     override fun createElement(): Element {

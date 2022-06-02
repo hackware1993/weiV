@@ -22,7 +22,7 @@ open class weiVText<V : TextView, W : weiVText<V, W>>(
     open var text: String = "",
     open var textSize: Float = TextConst.defaultTextSize,
     open var textColor: Int = TextConst.defaultTextColor,
-    extra: Any? = null
+    extra: Any? = null,
 ) :
     LeafRenderWidget<V, weiVText<V, W>>(key, layoutParam, extra = extra), IWeiVExtension,
     ISerializableWidget<weiVText<V, W>> {
@@ -100,7 +100,7 @@ fun WeiV.Text(
     text: String = "",
     textSize: Float = TextConst.defaultTextSize,
     textColor: Int = TextConst.defaultTextColor,
-    extra: Any? = null
+    extra: Any? = null,
 ): weiVText<*, *> {
     if (creator == null) {
         creator = ExtensionMgr.getExtension(InternalWidgetDesc.TEXT)

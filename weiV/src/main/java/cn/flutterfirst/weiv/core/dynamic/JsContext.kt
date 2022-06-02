@@ -29,7 +29,7 @@ class JsContext(context: Context, path: String) {
     fun callJsMethodASync(
         methodName: String,
         resultCallback: ValueCallback<String>,
-        vararg param: Any?
+        vararg param: Any?,
     ) {
         webView.evaluateJavascript("javascript:$methodName()", resultCallback)
     }

@@ -34,7 +34,7 @@ open class WeiV {
     fun iteratorWidgetTree(
         level: Int = 0,
         widgets: ArrayList<Widget<*>>,
-        filter: (widget: Widget<*>, level: Int) -> Unit
+        filter: (widget: Widget<*>, level: Int) -> Unit,
     ) {
         widgets.forEach {
             filter.invoke(it, level)
@@ -55,7 +55,7 @@ open class WeiV {
 
     fun <W : Widget<*>> addContainerRenderWidget(
         widget: W,
-        block: WeiV.(widget: W) -> Unit
+        block: WeiV.(widget: W) -> Unit,
     ): W {
         if (globalWidgetContext != null) {
             globalWidgetContext?.add(widget)

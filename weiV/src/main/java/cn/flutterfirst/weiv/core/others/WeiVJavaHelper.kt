@@ -75,7 +75,7 @@ class WeiVJavaHelper {
 
     fun <V : View, P> createXmlView(
         viewCreator: () -> V,
-        onParamChanged: (view: V, param: P?, first: Boolean) -> Unit
+        onParamChanged: (view: V, param: P?, first: Boolean) -> Unit,
     ): XmlViewWidget<V, P> {
         return weiV!!.addLeafRenderWidget(
             XmlViewWidget(

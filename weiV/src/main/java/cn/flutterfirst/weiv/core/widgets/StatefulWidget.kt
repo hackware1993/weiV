@@ -14,7 +14,7 @@ class StatefulWidget(
     layoutParam: LayoutParam<*>? = null,
     var state: State,
     var param: HashMap<String, Any?>? = null,
-    extra: Any? = null
+    extra: Any? = null,
 ) : LeafRenderWidget<StatefulWidget.StatefulView, StatefulWidget>(
     key,
     layoutParam,
@@ -100,7 +100,7 @@ fun WeiV.Stateful(
     layoutParam: LayoutParam<*>? = null,
     state: StatefulWidget.State,
     param: HashMap<String, Any?>? = null,
-    extra: Any? = null
+    extra: Any? = null,
 ): StatefulWidget {
     return addLeafRenderWidget(
         StatefulWidget(

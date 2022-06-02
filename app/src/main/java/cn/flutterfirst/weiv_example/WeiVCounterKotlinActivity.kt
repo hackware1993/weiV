@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -12,9 +13,11 @@ import cn.flutterfirst.weiv.core.activities.WeiVActivity
 import cn.flutterfirst.weiv.core.extension.ExtensionMgr
 import cn.flutterfirst.weiv.core.extension.IGlobalWidgetAttachObserver
 import cn.flutterfirst.weiv.core.keys.ValueKey
+import cn.flutterfirst.weiv.core.others.LayoutParam.Companion.matchParent
 import cn.flutterfirst.weiv.core.widgets.*
 import cn.flutterfirst.weiv.wrappers.linearlayout.Flex
 import cn.flutterfirst.weiv.wrappers.linearlayout.FlexDirection
+import cn.flutterfirst.weiv.wrappers.linearlayout.applyFlexLayoutParams
 import cn.flutterfirst.weiv.wrappers.textview.Text
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
 import cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterJavaActivity
@@ -61,7 +64,9 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                     setState {
                         count++
                     }
-                })
+                }).applyFlexLayoutParams {
+                    leftMargin = 20
+                }
 
                 Button(text = "Sub count", enable = count > minCount, onClick = {
                     setState {
@@ -71,7 +76,15 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
 
                 Button(text = "Change app skin, isLight = ${SkinManager.isLight}", onClick = {
                     SkinManager.changeSkin()
-                })
+                }).applyFlexLayoutParams {
+                    width = 0
+                    weight = 1f
+                }
+            }.applySelfParams {
+                gravity = Gravity.CENTER_VERTICAL
+            }.applyFlexLayoutParams {
+                width = matchParent
+                height = 300
             }
 
             Text(text = "count = $count")

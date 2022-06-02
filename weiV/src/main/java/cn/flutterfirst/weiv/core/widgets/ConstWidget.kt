@@ -33,7 +33,7 @@ fun WeiV.Const(
     layoutParam: LayoutParam<*>? = null,
     buildCount: Int,
     extra: Any? = null,
-    block: WeiV.(widget: ConstWidget) -> Unit
+    block: WeiV.(widget: ConstWidget) -> Unit,
 ): ConstWidget {
     if (buildCount == 0) {
         return addContainerRenderWidget(

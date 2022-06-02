@@ -6,5 +6,5 @@ data class WidgetDesc(
     val layoutParam: Map<String, Any?>,
     val param: Map<String, Any?>,
     val children: ArrayList<WidgetDesc>,
-    var extra: Any?
+    var extra: Any?,
 )

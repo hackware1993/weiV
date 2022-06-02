@@ -2,6 +2,8 @@ package cn.flutterfirst.weiv.wrappers.linearlayout
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
+import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import cn.flutterfirst.weiv.core.WeiV
@@ -10,9 +12,7 @@ import cn.flutterfirst.weiv.core.extension.IExtensionCreator
 import cn.flutterfirst.weiv.core.extension.ISerializableWidget
 import cn.flutterfirst.weiv.core.extension.IWeiVExtension
 import cn.flutterfirst.weiv.core.keys.Key
-import cn.flutterfirst.weiv.core.others.JavaOnly
-import cn.flutterfirst.weiv.core.others.KotlinOnly
-import cn.flutterfirst.weiv.core.others.LayoutParam
+import cn.flutterfirst.weiv.core.others.*
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
@@ -24,7 +24,8 @@ open class weiVFlex<V : LinearLayout>(
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>> = ArrayList(),
     open var orientation: Int = FlexDirection.HORIZONTAL,
-    extra: Any? = null
+    open var gravity: Int = Gravity.START or Gravity.TOP,
+    extra: Any? = null,
 ) :
     ContainerRenderWidget<V, weiVFlex<V>>(key, layoutParam, childWidgets, extra), IWeiVExtension,
     ISerializableWidget<weiVFlex<V>> {
@@ -36,15 +37,37 @@ open class weiVFlex<V : LinearLayout>(
         if (view.orientation != orientation) {
             view.orientation = orientation
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (view.gravity != gravity) {
+                view.gravity = gravity
+            }
+        } else {
+            view.gravity = gravity
+        }
         return view
     }
 
     override fun processChildLayoutParam(
         parent: V,
         child: View,
-        childLayoutParam: LayoutParam<*>?
+        childLayoutParam: LayoutParam<*>?,
     ) {
         assert(childLayoutParam == null || childLayoutParam is FlexLayoutParam)
+        var flexParam = childLayoutParam as FlexLayoutParam?
+        if (flexParam == null) {
+            flexParam = FlexLayoutParam()
+        }
+        if (flexParam != child.getLayoutParam<FlexLayoutParam>()) {
+            child.setLayoutParam(flexParam)
+            val lp = LinearLayout.LayoutParams(flexParam.width, flexParam.height)
+            lp.gravity = flexParam.gravity
+            lp.leftMargin = flexParam.leftMargin
+            lp.topMargin = flexParam.topMargin
+            lp.rightMargin = flexParam.rightMargin
+            lp.bottomMargin = flexParam.bottomMargin
+            lp.weight = flexParam.weight
+            child.layoutParams = lp
+        }
     }
 
     @JavaOnly
@@ -66,7 +89,7 @@ open class weiVFlex<V : LinearLayout>(
 var creator: IExtensionCreator<weiVFlex<*>>? = null
 
 @KotlinOnly
-fun LeafRenderWidget<*, *>.applyFlexParams(block: FlexLayoutParam.() -> Unit) {
+fun LeafRenderWidget<*, *>.applyFlexLayoutParams(block: FlexLayoutParam.() -> Unit) {
     layoutParam = FlexLayoutParam()
     block(layoutParam as FlexLayoutParam)
 }
@@ -76,8 +99,9 @@ fun WeiV.Flex(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     orientation: Int = FlexDirection.HORIZONTAL,
+    gravity: Int = Gravity.START or Gravity.TOP,
     extra: Any? = null,
-    block: WeiV.(widget: weiVFlex<*>) -> Unit
+    block: WeiV.(widget: weiVFlex<*>) -> Unit,
 ): weiVFlex<*> {
     if (creator == null) {
         creator = ExtensionMgr.getExtension(InternalWidgetDesc.FLEX)
@@ -89,6 +113,7 @@ fun WeiV.Flex(
             layoutParam,
             ArrayList<Widget<*>>(),
             orientation,
+            gravity,
             extra
         ), block
     )

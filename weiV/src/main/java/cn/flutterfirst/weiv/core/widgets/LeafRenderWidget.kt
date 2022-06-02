@@ -11,7 +11,7 @@ abstract class LeafRenderWidget<V : View, W : LeafRenderWidget<V, W>>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>>? = null,
-    extra: Any? = null
+    extra: Any? = null,
 ) :
     Widget<W>(key, layoutParam, childWidgets, extra) {
 

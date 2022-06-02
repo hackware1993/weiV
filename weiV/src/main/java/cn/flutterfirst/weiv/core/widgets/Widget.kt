@@ -14,7 +14,7 @@ abstract class Widget<W : Widget<W>>(
     var layoutParam: LayoutParam<*>? = null,
     var childWidgets: ArrayList<Widget<*>>? = null,
     var extra: Any? = null,
-    var internalExtra: Any? = null
+    var internalExtra: Any? = null,
 ) {
     abstract fun createElement(): Element
 
@@ -39,8 +39,9 @@ abstract class Widget<W : Widget<W>>(
     }
 
     @KotlinOnly
-    fun openParams(block: W.() -> Unit) {
+    fun applySelfParams(block: W.() -> Unit): W {
         block(this as W)
+        return this
     }
 
     @JavaOnly

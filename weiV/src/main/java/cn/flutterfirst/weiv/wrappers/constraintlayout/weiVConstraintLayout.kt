@@ -18,7 +18,7 @@ class weiVConstraintLayout(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     childWidgets: ArrayList<Widget<*>> = ArrayList(),
-    extra: Any? = null
+    extra: Any? = null,
 ) : ContainerRenderWidget<ConstraintLayout, weiVConstraintLayout>(
     key,
     layoutParam,
@@ -35,7 +35,7 @@ class weiVConstraintLayout(
     override fun processChildLayoutParam(
         parent: ConstraintLayout,
         child: View,
-        childLayoutParam: LayoutParam<*>?
+        childLayoutParam: LayoutParam<*>?,
     ) {
         assert(childLayoutParam == null || childLayoutParam is ConstraintLayoutParam)
         child.setLayoutParam(childLayoutParam as ConstraintLayoutParam)
@@ -55,7 +55,7 @@ fun WeiV.ConstraintLayout(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     extra: Any? = null,
-    block: WeiV.(widget: weiVConstraintLayout) -> Unit
+    block: WeiV.(widget: weiVConstraintLayout) -> Unit,
 ): weiVConstraintLayout {
     if (creator == null) {
         creator = ExtensionMgr.getExtension(InternalWidgetDesc.CONSTRAINT_LAYOUT)
