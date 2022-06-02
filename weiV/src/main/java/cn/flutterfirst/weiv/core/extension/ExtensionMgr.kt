@@ -11,7 +11,7 @@ import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import cn.flutterfirst.weiv.wrappers.constraintlayout.weiVConstraintLayout
 import cn.flutterfirst.weiv.wrappers.linearlayout.weiVFlex
-import cn.flutterfirst.weiv.wrappers.recyclerview.weiVRecyclerView
+import cn.flutterfirst.weiv.wrappers.recyclerview.weiVListView
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
 
 object ExtensionMgr {
@@ -69,9 +69,9 @@ object ExtensionMgr {
             )
         })
 
-        registerExtension(InternalWidgetDesc.RECYCLER_VIEW, IExtensionCreator {
+        registerExtension(InternalWidgetDesc.LIST_VIEW, IExtensionCreator {
             val widget = if (it.isNotEmpty()) {
-                @KotlinOnly weiVRecyclerView(
+                @KotlinOnly weiVListView(
                     it[0] as Key?,
                     it[1] as LayoutParam<*>?,
                     it[2] as Int,
@@ -80,10 +80,10 @@ object ExtensionMgr {
                     it[5]
                 )
             } else {
-                @JavaOnly weiVRecyclerView<RecyclerView>()
+                @JavaOnly weiVListView<RecyclerView>()
             }
             return@IExtensionCreator dispatchWidgetCreate(
-                InternalWidgetDesc.RECYCLER_VIEW,
+                InternalWidgetDesc.LIST_VIEW,
                 widget
             )
         })

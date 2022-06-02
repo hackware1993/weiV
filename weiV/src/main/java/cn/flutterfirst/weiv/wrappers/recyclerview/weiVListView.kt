@@ -19,17 +19,17 @@ import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
 import org.json.JSONObject
 
-open class weiVRecyclerView<V : RecyclerView>(
+open class weiVListView<V : RecyclerView>(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     open var itemCount: Int = 0,
-    open var orientation: Int = RecyclerViewDirection.VERTICAL,
+    open var orientation: Int = ListViewDirection.VERTICAL,
     open var block: ((index: Int) -> Unit)? = null,
     extra: Any? = null,
 ) :
-    LeafRenderWidget<V, weiVRecyclerView<V>>(key, layoutParam, extra = extra),
+    LeafRenderWidget<V, weiVListView<V>>(key, layoutParam, extra = extra),
     IWeiVExtension,
-    ISerializableWidget<weiVRecyclerView<V>> {
+    ISerializableWidget<weiVListView<V>> {
 
     override fun createView(context: Context): V = RecyclerView(context) as V
 
@@ -56,30 +56,30 @@ open class weiVRecyclerView<V : RecyclerView>(
             }
 
             override fun getItemCount(): Int {
-                return this@weiVRecyclerView.itemCount
+                return this@weiVListView.itemCount
             }
         }
         return view
     }
 
-    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVRecyclerView<V> {
+    override fun fromJson(jsonObj: JSONObject, param: Map<String, Any?>): weiVListView<V> {
         return this
     }
 }
 
-var creator: IExtensionCreator<weiVRecyclerView<*>>? = null
+var creator: IExtensionCreator<weiVListView<*>>? = null
 
 @KotlinOnly
-fun WeiV.RecyclerView(
+fun WeiV.ListView(
     key: Key? = null,
     layoutParam: LayoutParam<*>? = null,
     extra: Any? = null,
     itemCount: Int,
-    orientation: Int = RecyclerViewDirection.VERTICAL,
+    orientation: Int = ListViewDirection.VERTICAL,
     block: (index: Int) -> Unit,
-): weiVRecyclerView<*> {
+): weiVListView<*> {
     if (creator == null) {
-        creator = ExtensionMgr.getExtension(InternalWidgetDesc.RECYCLER_VIEW)
+        creator = ExtensionMgr.getExtension(InternalWidgetDesc.LIST_VIEW)
     }
 
     return addLeafRenderWidget(

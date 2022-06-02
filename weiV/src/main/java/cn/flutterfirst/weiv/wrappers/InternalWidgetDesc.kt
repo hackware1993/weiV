@@ -5,6 +5,6 @@ class InternalWidgetDesc {
         const val TEXT = "Text"
         const val FLEX = "Flex"
         const val CONSTRAINT_LAYOUT = "ConstraintLayout"
-        const val RECYCLER_VIEW = "RecyclerView"
+        const val LIST_VIEW = "ListView"
     }
 }

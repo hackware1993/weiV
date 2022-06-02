@@ -22,6 +22,7 @@ import cn.flutterfirst.weiv.wrappers.textview.Text
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
 import cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterJavaActivity
 import cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterKotlinActivity
+import cn.flutterfirst.weiv_example.examples.ListViewExampleKotlinActivity
 import cn.flutterfirst.weiv_example.ext.Button
 
 class WeiVCounterKotlinActivity : WeiVActivity() {
@@ -147,11 +148,22 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                 )
             })
 
-            Button(text = "Change WebView url", onClick = {
-                setState {
-                    url = "https://flutterfirst.cn"
-                }
-            })
+            Flex {
+                Button(text = "Change WebView url", onClick = {
+                    setState {
+                        url = "https://flutterfirst.cn"
+                    }
+                })
+
+                Button(text = "Open ListView example(Kotlin)", onClick = {
+                    startActivity(
+                        Intent(
+                            this@WeiVCounterKotlinActivity,
+                            ListViewExampleKotlinActivity::class.java
+                        )
+                    )
+                })
+            }
 
             XmlView(key = ValueKey("webView"), viewCreator = {
                 val webView = WebView(this@WeiVCounterKotlinActivity)
