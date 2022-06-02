@@ -42,6 +42,15 @@ open class weiVListView<V : RecyclerView>(
                 viewType: Int,
             ): RecyclerView.ViewHolder {
                 val weiVItemView = WeiVItemView(parent.context)
+                if (orientation == ListViewDirection.VERTICAL) {
+                    weiVItemView.layoutParams =
+                        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT)
+                } else {
+                    weiVItemView.layoutParams =
+                        RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT)
+                }
                 return object : RecyclerView.ViewHolder(weiVItemView) {
                 }
             }

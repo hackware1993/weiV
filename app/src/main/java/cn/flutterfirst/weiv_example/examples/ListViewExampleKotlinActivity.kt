@@ -11,7 +11,7 @@ import cn.flutterfirst.weiv_example.SkinManager
 import cn.flutterfirst.weiv_example.ext.Button
 
 class ListViewExampleKotlinActivity : WeiVActivity() {
-    private var itemCount = 20
+    private var itemCount = 30
 
     override fun build(buildCount: Int) = WeiV {
         Flex {
