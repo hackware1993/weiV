@@ -2,6 +2,8 @@
 
 [English](https://github.com/hackware1993/weiV/blob/master/README.md)
 
+**我开发了世界上最快的通用排序算法，它平均比快速排序快 3 倍，最多快 20 倍**，[ChenSort](https://github.com/hackware1993/ChenSort)
+
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
 
 weiV（发音同 wave），一个基于 Android View 系统的全新声明式 UI 开发框架。核心源文件只有 35 KB。
