@@ -2,6 +2,8 @@
 
 [简体中文](https://github.com/hackware1993/weiV/blob/master/README_CN.md)
 
+**I have developed the world's fastest general purpose sorting algorithm, which is on average 3 times faster than Quicksort and up to 20 times faster**, [ChenSort](https://github.com/hackware1993/ChenSort)
+
 ![wave.webp](https://github.com/hackware1993/weiV/blob/master/wave.webp?raw=true)
 
 weiV (pronounced the same as wave), a new declarative UI development framework based on the Android
