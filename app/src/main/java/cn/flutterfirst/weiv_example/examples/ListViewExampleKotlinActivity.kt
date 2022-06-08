@@ -34,8 +34,7 @@ class ListViewExampleKotlinActivity : WeiVActivity() {
 
                         Button(text = "Change app skin", onClick = {
                             SkinManager.changeSkin()
-                        }
-                        ).applyFlexLayoutParams {
+                        }).applyFlexLayoutParams {
                             width = 0
                             weight = 1f
                         }

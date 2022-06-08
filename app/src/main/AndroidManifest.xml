@@ -32,7 +32,7 @@
             android:label="weiV embed counter(Java)" />
         <activity
             android:name="cn.flutterfirst.weiv_example.examples.ListViewExampleKotlinActivity"
-            android:label="RecyclerView example(Kotlin)" />
+            android:label="ListView example(Kotlin)" />
     </application>
 
 </manifest>

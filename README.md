@@ -316,7 +316,12 @@ If it helps you a lot, consider sponsoring me a cup of milk tea, or giving a sta
 the driving force for me to continue to maintain.
 
 [Paypal](https://www.paypal.com/paypalme/hackware1993)
+
 ![support.webp](https://github.com/hackware1993/weiV/blob/master/support.webp?raw=true)
+
+Thanks to the following netizens for their sponsorship, let's make weiV better and better together.
+
+1. 庸人自扰 2022.06.06
 
 # Contact
 
