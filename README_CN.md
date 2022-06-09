@@ -277,6 +277,7 @@ weiV 基于 View 系统，因此它可以嵌入到 View 树的任何地方。你
 Compose 顶层嵌入 weiV 以改善 Compose 的性能。😀
 
 订阅我的微信公众号以及时获取 weiV 的最新动态。后续也会分享一些高质量的、独特的、有思想的 Flutter 和 Android 技术文章。
+
 ![official_account.webp](https://github.com/hackware1993/weiV/blob/master/official_account.webp?raw=true)
 
 # 支持我
@@ -285,7 +286,7 @@ Compose 顶层嵌入 weiV 以改善 Compose 的性能。😀
 
 [Paypal](https://www.paypal.com/paypalme/hackware1993)
 
-![support.webp](https://github.com/hackware1993/weiV/blob/master/support.webp?raw=true)
+![sponsorship.webp](https://github.com/hackware1993/weiV/blob/master/sponsorship.webp?raw=true)
 
 感谢以下网友的赞助，我们一起让 weiV 越来越好。
 

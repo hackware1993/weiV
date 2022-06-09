@@ -310,6 +310,7 @@ on top of Compose to improve Compose performance. 😀
 
 Subscribe to my WeChat official account to get the latest news of weiV. Follow-up will also share
 some high-quality, unique, and thoughtful Flutter and Android technical articles.
+
 ![official_account.webp](https://github.com/hackware1993/weiV/blob/master/official_account.webp?raw=true)
 
 # Support me
@@ -319,7 +320,7 @@ the driving force for me to continue to maintain.
 
 [Paypal](https://www.paypal.com/paypalme/hackware1993)
 
-![support.webp](https://github.com/hackware1993/weiV/blob/master/support.webp?raw=true)
+![sponsorship.webp](https://github.com/hackware1993/weiV/blob/master/sponsorship.webp?raw=true)
 
 Thanks to the following netizens for their sponsorship, let's make weiV better and better together.
 
