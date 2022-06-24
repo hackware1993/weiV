@@ -8,12 +8,15 @@ import cn.flutterfirst.weiv.core.extension.IExtensionCreator
 import cn.flutterfirst.weiv.core.keys.Key
 import cn.flutterfirst.weiv.core.others.KotlinOnly
 import cn.flutterfirst.weiv.core.others.LayoutParam
+import cn.flutterfirst.weiv.core.others.LayoutParam.Companion.matchParent
+import cn.flutterfirst.weiv.core.others.LayoutParam.Companion.wrapContent
 import cn.flutterfirst.weiv.core.others.getLayoutParam
 import cn.flutterfirst.weiv.core.others.setLayoutParam
 import cn.flutterfirst.weiv.core.widgets.ContainerRenderWidget
 import cn.flutterfirst.weiv.core.widgets.LeafRenderWidget
 import cn.flutterfirst.weiv.core.widgets.Widget
 import cn.flutterfirst.weiv.wrappers.InternalWidgetDesc
+
 
 class weiVConstraintLayout(
     key: Key? = null,
@@ -53,6 +56,7 @@ class weiVConstraintLayout(
             var right = newLayoutParam.right
             var bottom = newLayoutParam.bottom
             var baseline = newLayoutParam.baseline
+
             var width = newLayoutParam.width
             var height = newLayoutParam.height
             if (newLayoutParam.size != null) {
@@ -221,13 +225,235 @@ class weiVConstraintLayout(
                 bottom = newLayoutParam.centerBottomRightTo!!.bottom
             }
 
-            val margin = newLayoutParam.margin
-            val goneMargin = newLayoutParam.goneMargin
-            if (left?.margin != null) {
-                margin.addLeft(left.margin!!)
+            var margin = newLayoutParam.margin
+            var goneMargin = newLayoutParam.goneMargin
+
+            if (left != null) {
+                if (left.margin != null) {
+                    margin = margin.addLeft(left.margin!!)
+                }
+                if (left.goneMargin != null) {
+                    goneMargin = goneMargin.addLeft(left.goneMargin!!)
+                }
+            }
+
+            if (top != null) {
+                if (top.margin != null) {
+                    margin = margin.addTop(top.margin!!)
+                }
+                if (top.goneMargin != null) {
+                    goneMargin = goneMargin.addTop(top.goneMargin!!)
+                }
+            }
+
+            if (right != null) {
+                if (right.margin != null) {
+                    margin = margin.addRight(right.margin!!)
+                }
+                if (right.goneMargin != null) {
+                    goneMargin = goneMargin.addRight(right.goneMargin!!)
+                }
+            }
+
+            if (bottom != null) {
+                if (bottom.margin != null) {
+                    margin = margin.addBottom(bottom.margin!!)
+                }
+                if (bottom.goneMargin != null) {
+                    goneMargin = goneMargin.addBottom(bottom.goneMargin!!)
+                }
+            }
+
+            if (baseline != null) {
+                if (baseline.margin != null) {
+                    margin = margin.addBottom(baseline.margin!!)
+                }
+                if (baseline.goneMargin != null) {
+                    goneMargin = goneMargin.addBottom(baseline.goneMargin!!)
+                }
+            }
+
+            if (width == matchParent) {
+                left = CL.parent.left
+                right = CL.parent.right
+            }
+
+            if (height == matchParent) {
+                top = CL.parent.top
+                bottom = CL.parent.bottom
+                baseline = null
+            }
+
+            var needsRecalculateConstraints = false
+            var needsLayout = false
+            var needsReorderPaintingOrder = false
+            var needsPaint = false
+            var needsReorderEventOrder = false
+
+            if (oldLayoutParam.id != newLayoutParam.id) {
+                needsRecalculateConstraints = true
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.width != newLayoutParam.width) {
+                needsRecalculateConstraints = true
+                if (getMinimalConstraintCount(oldLayoutParam.width) == getMinimalConstraintCount(
+                        width)
+                ) {
+                    needsRecalculateConstraints = false
+                }
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.height != newLayoutParam.height) {
+                needsRecalculateConstraints = true
+                if (getMinimalConstraintCount(oldLayoutParam.height) == getMinimalConstraintCount(
+                        height)
+                ) {
+                    needsRecalculateConstraints = false
+                }
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.visibility != newLayoutParam.visibility) {
+                if (oldLayoutParam.visibility == View.GONE || newLayoutParam.visibility == View.GONE) {
+                    needsLayout = true
+                } else {
+                    needsPaint = true
+                }
+            }
+
+            if (oldLayoutParam.percentageMargin != newLayoutParam.percentageMargin) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.margin != margin) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.goneMargin != goneMargin) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.left != left) {
+                needsRecalculateConstraints = true
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.right != right) {
+                needsRecalculateConstraints = true
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.top != top) {
+                needsRecalculateConstraints = true
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.bottom != bottom) {
+                needsRecalculateConstraints = true
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.baseline != baseline) {
+                needsRecalculateConstraints = true
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.zIndex != newLayoutParam.zIndex) {
+                needsReorderPaintingOrder = true
+                needsReorderEventOrder = true
+                needsPaint = true
+            }
+
+            if (oldLayoutParam.translateConstraint != newLayoutParam.translateConstraint) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.widthPercent != newLayoutParam.widthPercent) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.heightPercent != newLayoutParam.heightPercent) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.widthPercentageAnchor != newLayoutParam.widthPercentageAnchor) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.heightPercentageAnchor != newLayoutParam.heightPercentageAnchor) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.horizontalBias != newLayoutParam.horizontalBias) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.verticalBias != newLayoutParam.verticalBias) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.percentageTranslate != newLayoutParam.percentageTranslate) {
+                needsPaint = true
+            }
+
+            if (oldLayoutParam.minWidth != newLayoutParam.minWidth) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.maxWidth != newLayoutParam.maxWidth) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.minHeight != newLayoutParam.minHeight) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.maxHeight != newLayoutParam.maxHeight) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.widthHeightRatio != newLayoutParam.widthHeightRatio) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.ratioBaseOnWidth != newLayoutParam.ratioBaseOnWidth) {
+                needsLayout = true
+            }
+
+            if (oldLayoutParam.eIndex != newLayoutParam.eIndex) {
+                needsReorderEventOrder = true
+            }
+
+            if (needsLayout) {
+                if (needsRecalculateConstraints) {
+                    parent.markNeedsRecalculateConstraints()
+                }
+                parent.markNeedsLayout()
+            } else {
+                if (needsReorderPaintingOrder) {
+                    parent.markNeedsReorderPaintingOrder()
+                }
+                if (needsReorderEventOrder) {
+                    parent.markNeedsReorderEventOrder()
+                }
+                if (needsPaint) {
+                    parent.markNeedsPaint()
+                }
             }
         }
         child.setLayoutParam(newLayoutParam)
+    }
+}
+
+fun getMinimalConstraintCount(size: Int): Int {
+    return if (size == matchParent) {
+        0
+    } else if (size == wrapContent || size >= 0) {
+        1
+    } else {
+        2
     }
 }
 

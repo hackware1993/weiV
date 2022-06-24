@@ -1,10 +1,12 @@
 package cn.flutterfirst.weiv.wrappers.constraintlayout
 
 import android.content.Context
+import android.view.View
 import android.view.ViewGroup
 
 // ConstraintLayout design for weiV
 class ConstraintLayout(context: Context) : ViewGroup(context) {
+    var childrenList = ArrayList<View>()
 
     init {
     }

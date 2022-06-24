@@ -42,26 +42,64 @@ class EdgeInsets {
         }
     }
 
-    fun add(insets: EdgeInsets) {
-        left += insets.left
-        top += insets.top
-        right += insets.right
-        bottom += insets.bottom
+    fun copy(): EdgeInsets {
+        val edgeInsets = EdgeInsets()
+        edgeInsets.left = left
+        edgeInsets.top = top
+        edgeInsets.right = right
+        edgeInsets.bottom = bottom
+        return edgeInsets
     }
 
-    fun addLeft(value: Int) {
-        left += value
+    fun add(insets: EdgeInsets): EdgeInsets {
+        val edgeInsets = EdgeInsets()
+        edgeInsets.left = left + insets.left
+        edgeInsets.top = top + insets.top
+        edgeInsets.right = right + insets.right
+        edgeInsets.bottom = bottom + insets.bottom
+        return edgeInsets
     }
 
-    fun addTop(value: Int) {
-        top += value
+    fun addLeft(value: Int): EdgeInsets {
+        return copy().apply {
+            left += value
+        }
     }
 
-    fun addRight(value: Int) {
-        right += value
+    fun addTop(value: Int): EdgeInsets {
+        return copy().apply {
+            top += value
+        }
     }
 
-    fun addBottom(value: Int) {
-        bottom += value
+    fun addRight(value: Int): EdgeInsets {
+        return copy().apply {
+            right += value
+        }
+    }
+
+    fun addBottom(value: Int): EdgeInsets {
+        return copy().apply {
+            bottom += value
+        }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as EdgeInsets
+        if (left != other.left) return false
+        if (top != other.top) return false
+        if (right != other.right) return false
+        if (bottom != other.bottom) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = left
+        result = 31 * result + top
+        result = 31 * result + right
+        result = 31 * result + bottom
+        return result
     }
 }
