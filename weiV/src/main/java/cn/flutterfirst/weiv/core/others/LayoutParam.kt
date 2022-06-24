@@ -14,6 +14,7 @@ open class LayoutParam<P : LayoutParam<P>>(
     companion object {
         const val matchParent = -1
         const val wrapContent = -2
+        const val matchConstraint = -3
     }
 
     @JavaOnly

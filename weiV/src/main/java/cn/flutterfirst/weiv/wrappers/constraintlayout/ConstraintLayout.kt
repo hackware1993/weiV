@@ -17,4 +17,19 @@ class ConstraintLayout(context: Context) : ViewGroup(context) {
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         getChildAt(0).layout(0, 0, getChildAt(0).measuredWidth, getChildAt(0).measuredHeight)
     }
+
+    fun markNeedsRecalculateConstraints() {
+    }
+
+    fun markNeedsLayout() {
+    }
+
+    fun markNeedsReorderPaintingOrder() {
+    }
+
+    fun markNeedsPaint() {
+    }
+
+    fun markNeedsReorderEventOrder() {
+    }
 }

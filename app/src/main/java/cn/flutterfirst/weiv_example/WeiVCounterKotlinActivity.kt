@@ -22,6 +22,7 @@ import cn.flutterfirst.weiv.wrappers.textview.Text
 import cn.flutterfirst.weiv.wrappers.textview.weiVText
 import cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterJavaActivity
 import cn.flutterfirst.weiv_example.embed.WeiVEmbedCounterKotlinActivity
+import cn.flutterfirst.weiv_example.examples.ConstraintLayoutExampleKotlinActivity
 import cn.flutterfirst.weiv_example.examples.ListViewExampleKotlinActivity
 import cn.flutterfirst.weiv_example.ext.Button
 
@@ -164,6 +165,15 @@ class WeiVCounterKotlinActivity : WeiVActivity() {
                     )
                 })
             }
+
+            Button(text = "Open ConstraintLayout example(Kotlin)", onClick = {
+                startActivity(
+                    Intent(
+                        this@WeiVCounterKotlinActivity,
+                        ConstraintLayoutExampleKotlinActivity::class.java
+                    )
+                )
+            })
 
             XmlView(key = ValueKey("webView"), viewCreator = {
                 val webView = WebView(this@WeiVCounterKotlinActivity)

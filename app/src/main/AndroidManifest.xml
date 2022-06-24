@@ -33,6 +33,9 @@
         <activity
             android:name="cn.flutterfirst.weiv_example.examples.ListViewExampleKotlinActivity"
             android:label="ListView example(Kotlin)" />
+        <activity
+            android:name=".examples.ConstraintLayoutExampleKotlinActivity"
+            android:label="ConstraintLayout example(Kotlin)" />
     </application>
 
 </manifest>
