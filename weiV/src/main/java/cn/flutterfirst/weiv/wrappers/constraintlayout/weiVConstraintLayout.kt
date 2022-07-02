@@ -316,7 +316,7 @@ class weiVConstraintLayout(
             }
 
             if (oldLayoutParam.visibility != newLayoutParam.visibility) {
-                if (oldLayoutParam.visibility == View.GONE || newLayoutParam.visibility == View.GONE) {
+                if (oldLayoutParam.visibility == CL.gone || newLayoutParam.visibility == CL.gone) {
                     needsLayout = true
                 } else {
                     needsPaint = true

@@ -1,7 +1,6 @@
 package cn.flutterfirst.weiv.wrappers.constraintlayout
 
 import android.graphics.Point
-import android.view.View
 import cn.flutterfirst.weiv.core.others.LayoutParam
 
 class ConstraintLayoutParam(
@@ -10,7 +9,7 @@ class ConstraintLayoutParam(
     var id: ConstraintId? = null,
     var size: Int? = null,
     var clickPadding: EdgeInsets = EdgeInsets.zero,
-    var visibility: Int = View.VISIBLE,
+    var visibility: CLVisibility = CL.visible,
     var percentageMargin: Boolean = false,
     var margin: EdgeInsets = EdgeInsets.zero,
     var goneMargin: EdgeInsets = EdgeInsets.zero,
@@ -69,8 +68,9 @@ class ConstraintLayoutParam(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ConstraintLayoutParam) return false
+        if (javaClass != other?.javaClass) return false
         if (!super.equals(other)) return false
+        other as ConstraintLayoutParam
         if (id != other.id) return false
         if (size != other.size) return false
         if (clickPadding != other.clickPadding) return false
@@ -137,7 +137,7 @@ class ConstraintLayoutParam(
         result = 31 * result + (id?.hashCode() ?: 0)
         result = 31 * result + (size ?: 0)
         result = 31 * result + clickPadding.hashCode()
-        result = 31 * result + visibility
+        result = 31 * result + visibility.hashCode()
         result = 31 * result + percentageMargin.hashCode()
         result = 31 * result + margin.hashCode()
         result = 31 * result + goneMargin.hashCode()
