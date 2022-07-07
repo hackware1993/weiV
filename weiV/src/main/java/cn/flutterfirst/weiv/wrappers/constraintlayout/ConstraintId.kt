@@ -77,7 +77,7 @@ open class ConstraintId(var id: String) {
         ConstraintAlign(this, ConstraintAlignType.center)
     }
 
-    protected fun copy(): ConstraintId {
+    protected open fun copy(): ConstraintId {
         return ConstraintId(id)
     }
 
